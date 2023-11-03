@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     overflow: 'auto',
+    zIndex: 1,
   },
 });
 

@@ -6,7 +6,7 @@ import { PIXELS } from "../../utils/styles/dimensions";
 const Header = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.comfyTitle}>Dating</Text>
+      <Text style={styles.comfyTitle}>Divy</Text>
       <View style={styles.avatar}></View>
     </View>
   );
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
     alignItems: 'center',
     backgroundColor: BACKGROUND_COLOR,
+    zIndex: 5,
   },
   comfyTitle: {
     color: ACTIVE_ICON,
