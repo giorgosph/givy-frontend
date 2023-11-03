@@ -3,7 +3,7 @@ import { Button } from "react-native";
 
 const SettingButton = ({ title, onPress }) => {
   return (
-   <Button onPress={onPress}>{title}</Button>
+   <Button title={title} onPress={onPress}>{title}</Button>
   )
 };
 

@@ -6,14 +6,14 @@ import MainContainer from "../../components/general/MainContainer";
 import SettingButton from "../../components/settings/SettingButton";
 
 const SettingsScreen = ({ navigation }) => {
-  const navTo = (screen) => navigation.navigate(screen);
+  const navTo = (screen) => () => navigation.navigate(screen);
 
   return (
    <>
     <Header />
     <MainContainer>
       <View>
-        <SettingButton title="Log In/Sign Up" onPress={navTo("LogIn")} />
+        <SettingButton title="Log In/Sign Up" onPress={navTo("Auth")} />
       </View>
       <View>
         <SettingButton title="Terms & Conditions" onPress={navTo("TermsConditions")} />
