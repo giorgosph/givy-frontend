@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { HEIGHT, PIXELS, WIDTH } from "../../utils/styles/dimensions";
+
+import { HEIGHT, MAIN_HEIGHT, MAIN_MARGIN_TOP, PIXELS, WIDTH } from "../../utils/styles/dimensions";
 import { BACKGROUND_COLOR } from "../../utils/styles/colors";
 
 const MainContainer = ({ children }) => {
@@ -14,12 +15,14 @@ const MainContainer = ({ children }) => {
 const styles = StyleSheet.create({
   container: {
     width: WIDTH,
-    height: HEIGHT - PIXELS * 7.25,
+    height: MAIN_HEIGHT,
     paddingHorizontal: PIXELS,
     backgroundColor: BACKGROUND_COLOR,
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'auto',
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    position: 'relative',
     zIndex: 1,
   },
 });

@@ -1,0 +1,1 @@
+export const isAndroid = Platform.OS === 'android';

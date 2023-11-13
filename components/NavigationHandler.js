@@ -4,8 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import useNavigator from "../hooks/useNavigator";
-import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, INACTIVE_ICON_COLOR, NAV_BG_COLOR } from "../utils/styles/colors";
-import { PIXELS } from "../utils/styles/dimensions";
+import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, INACTIVE_ICON_COLOR } from "../utils/styles/colors";
+import { NAV_HEIGHT } from "../utils/styles/dimensions";
 
 const Tab = createBottomTabNavigator();
 
@@ -24,9 +24,11 @@ const NavigationHandler = () => {
           headerShown: false,
           tabBarShowLabel: false,
           tabBarStyle: {
-            width: "100%",
-            height: PIXELS * 3, 
+            width: "100vw",
+            height: NAV_HEIGHT, 
             backgroundColor: BACKGROUND_COLOR, 
+            borderBlockColor: BACKGROUND_COLOR,
+            shadowColor: '#fff',
           },
           tabBarActiveTintColor: ACTIVE_ICON_COLOR,
           tabBarInactiveTintColor: INACTIVE_ICON_COLOR,
