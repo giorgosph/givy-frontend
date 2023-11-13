@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import Header from "../../components/general/Header";
 import MainContainer from "../../components/general/MainContainer";
@@ -12,14 +12,14 @@ const SettingsScreen = ({ navigation }) => {
    <>
     <Header />
     <MainContainer>
-      <View>
+      <View style={styles.settingWrap} >
         <SettingButton title="Log In/Sign Up" onPress={navTo("Auth")} />
       </View>
-      <View>
+      <View style={styles.settingWrap} >
         <SettingButton title="Terms & Conditions" onPress={navTo("TermsConditions")} />
         <SettingButton title="Privacy Policy" onPress={navTo("PrivacyPolicy")} />
       </View>
-      <View>
+      <View style={styles.settingWrap} >
         <SettingButton title="FAQ" onPress={navTo("FAQ")} />
         <SettingButton title="About Us" onPress={navTo("AboutUs")} />
         <SettingButton title="Contact Us" onPress={navTo("ContactUs")} />
@@ -28,5 +28,13 @@ const SettingsScreen = ({ navigation }) => {
    </>
   )
 };
+
+const styles = StyleSheet.create({
+  settingWrap: {
+    display: "flex",
+    flexDirection: "column",
+    marginVertical: 32,
+  }
+});
 
 export default SettingsScreen;

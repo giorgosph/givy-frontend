@@ -5,7 +5,7 @@ import Header from "../../components/general/Header"
 import MainContainer from "../../components/general/MainContainer"
 
 import { WIDTH } from "../../utils/styles/dimensions";
-import { HEADER_COLOR } from "../../utils/styles/colors";
+import { HEADING_COLOR } from "../../utils/styles/colors";
 
 const HomeScreen = () => {
   return (
@@ -46,14 +46,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     // fontFamily: 'Inter',
     fontWeight: '800',
-    color: HEADER_COLOR,
+    color: HEADING_COLOR,
     textTransform: 'capitalize',
   },
   paragraph: {
     fontSize: 14,
     // fontFamily: 'Inter',
     fontWeight: '400',
-    color: HEADER_COLOR,
+    color: HEADING_COLOR,
     textTransform: 'capitalize',
   }
 });
