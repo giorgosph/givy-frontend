@@ -7,9 +7,7 @@ import { Provider } from "react-redux";
 
 import NavigationHandler from "./components/NavigationHandler";
 import AuthContextProvider from "./context/store";
-import { PIXELS } from "./utils/styles/dimensions";
 
-//TODO: Make separate stacks depending on authorization
 export default function App() {
   return (
     <SafeAreaProvider>

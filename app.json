@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "dating-app",
-    "slug": "dating-app",
+    "name": "givy-app",
+    "slug": "givy-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
