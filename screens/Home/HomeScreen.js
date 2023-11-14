@@ -4,14 +4,14 @@ import { View, Text, StyleSheet } from "react-native";
 import Header from "../../components/general/Header"
 import MainContainer from "../../components/general/MainContainer"
 
-import { WIDTH } from "../../utils/styles/dimensions";
+import { PIXELS, WIDTH } from "../../utils/styles/dimensions";
 import { HEADING_COLOR } from "../../utils/styles/colors";
 
 const HomeScreen = () => {
   return (
    <>
     <Header />
-    < MainContainer>
+    <MainContainer>
       <View style={styles.contentLeftWrap} >
         <Text style={styles.title} >Lorem Ipsum</Text>
         <Text style={styles.paragraph} >Lorem ipsum dolor sit amet consectetur adipiscing elit. Nulla a ultrices quam, nec congue sapien.Nullam nisl dolor,</Text>
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   contentLeftWrap: {
     width: WIDTH * 3/4,
     height: '50%',
+    paddingLeft: PIXELS,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   },
   contentRightWrap: {
     height: '50%',
-    marginLeft: WIDTH / 4,
+    marginLeft: WIDTH / 4 + PIXELS,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',

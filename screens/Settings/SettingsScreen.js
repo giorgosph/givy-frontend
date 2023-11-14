@@ -11,7 +11,7 @@ const SettingsScreen = ({ navigation }) => {
   return (
    <>
     <Header />
-    <MainContainer>
+    <MainContainer centered>
       <View style={styles.settingWrap} >
         <SettingButton title="Log In/Sign Up" onPress={navTo("Auth")} />
       </View>
