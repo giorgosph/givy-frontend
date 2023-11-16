@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 
-import { BACKGROUND_COLOR } from "../../utils/styles/colors";
-import { MAIN_HEIGHT, WIDTH } from "../../utils/styles/dimensions";
+import { BACKGROUND_COLOR } from "../../utils/constants/styles/colors";
+import { MAIN_HEIGHT, WIDTH } from "../../utils/constants/styles/dimensions";
 
 const MainContainer = ({ children, centered }) => {
   return (

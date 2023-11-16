@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
 
 import CustomInput from '../general/CustomInput';
 import CustomButton from '../general/CustomButton';
 
-import { PIXELS } from '../../utils/styles/dimensions';
+import { PIXELS } from '../../utils/constants/styles/dimensions';
+
+import useLogin from '../../hooks/components/useLogin';
 
 const Login = () => {
-  const [isDisabled, setIsDisabled] = useState([false, 1]);
-
-  const { control, handleSubmit } = useForm();
-
-  const onSubmit = async (data) => {
-    setIsDisabled([true, 0.4]);
-    console.log("onSubmit LOGIN:", data);
-    // add login logic
-    setIsDisabled([false, 1]);
-  }
+  const { loading, error, control, handleSubmit } = useLogin();
 
   return (
+    // TODO -> loading && loadingModal
+    // TODO -> !loading && error && errorModal
     <> 
       <ScrollView style={styles.container} contentContainerStyle={{alignItems: 'flex-start'}}>
         {/* Add regex rules */}
@@ -29,9 +23,9 @@ const Login = () => {
       <View style={styles.buttonContainer}>
         <CustomButton 
           title='submit'
-          disabled={isDisabled[0]} 
-          style={{opacity: isDisabled[1]}}
-          onPress={handleSubmit(onSubmit)}
+          disabled={loading} 
+          style={{opacity: loading ? 0.4 : 1}}
+          onPress={handleSubmit()}
         />
       </View>
    </>

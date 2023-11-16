@@ -2,8 +2,8 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 
-import { HEADING_COLOR } from "../../utils/styles/colors";
-import { PIXELS } from "../../utils/styles/dimensions";
+import { HEADING_COLOR } from "../../utils/constants/styles/colors";
+import { PIXELS } from "../../utils/constants/styles/dimensions";
 
 const CustomInput = ({ control, name, rules }) => {
 

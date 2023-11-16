@@ -4,8 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import useNavigator from "../hooks/useNavigator";
-import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, INACTIVE_ICON_COLOR } from "../utils/styles/colors";
-import { NAV_HEIGHT } from "../utils/styles/dimensions";
+import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, INACTIVE_ICON_COLOR } from "../utils/constants/styles/colors";
+import { NAV_HEIGHT } from "../utils/constants/styles/dimensions";
 
 const Tab = createBottomTabNavigator();
 

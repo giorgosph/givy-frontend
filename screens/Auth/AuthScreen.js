@@ -7,8 +7,8 @@ import Signup from '../../components/auth/Signup';
 import AuthNavbar from '../../components/auth/AuthNavbar';
 import MainContainer from '../../components/general/MainContainer';
 
-import { WIDTH } from '../../utils/styles/dimensions';
-import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR } from '../../utils/styles/colors';
+import { WIDTH } from '../../utils/constants/styles/dimensions';
+import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR } from '../../utils/constants/styles/colors';
 
 const AuthScreen = () => { 
   const animation = useRef(new Animated.Value(0)).current;

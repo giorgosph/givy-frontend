@@ -2,7 +2,7 @@ import React from "react";
 import { TouchableHighlight, Text, StyleSheet, View } from "react-native";
 
 import ArrowIcon from "../icons/ArrowIcon";
-import { SETTING_BUTTON_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/styles/colors";
+import { SETTING_BUTTON_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/constants/styles/colors";
 
 const SettingButton = ({ title, onPress }) => {
   return (

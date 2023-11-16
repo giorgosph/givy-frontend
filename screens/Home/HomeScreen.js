@@ -4,8 +4,8 @@ import { View, Text, StyleSheet } from "react-native";
 import Header from "../../components/general/Header"
 import MainContainer from "../../components/general/MainContainer"
 
-import { PIXELS, WIDTH } from "../../utils/styles/dimensions";
-import { HEADING_COLOR } from "../../utils/styles/colors";
+import { PIXELS, WIDTH } from "../../utils/constants/styles/dimensions";
+import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
 const HomeScreen = () => {
   return (

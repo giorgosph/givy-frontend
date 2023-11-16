@@ -1,28 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
-
-import { useForm } from 'react-hook-form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import CustomInput from '../general/CustomInput';
 import CustomButton from '../general/CustomButton';
 
-import { isAndroid } from '../../utils/device';
-import { PIXELS } from '../../utils/styles/dimensions';
+import { isAndroid } from '../../utils/constants/device';
+import { PIXELS } from '../../utils/constants/styles/dimensions';
+
+import useSignup from '../../hooks/components/useSignup';
 
 const Signup = () => {
-  const [isDisabled, setIsDisabled] = useState([false, 1]);
-
-  const { control, handleSubmit } = useForm();
-
-  const onSubmit = (data) => {
-    setIsDisabled([true, 0.4]);
-    console.log("onSubmit SIGNUP:", data);
-    // add login logic
-    setIsDisabled([false, 1]);
-  }
+  const { loading, error, control, handleSubmit } = useSignup();
 
   return (
+    // TODO -> loading && loadingModal
+    // TODO -> !loading && error && errorModal
     <KeyboardAvoidingView behavior={isAndroid ? 'padding' : 'height'}>
       <KeyboardAwareScrollView enableOnAndroid={true} style={styles.container}>
         {/* Add regex rules */}
@@ -35,9 +28,9 @@ const Signup = () => {
       <View style={styles.buttonContainer}>
         <CustomButton 
           title='submit'
-          disabled={isDisabled[0]} 
-          style={{opacity: isDisabled[1]}}
-          onPress={handleSubmit(onSubmit)}
+          disabled={loading} 
+          style={{opacity: loading ? 0.4 : 1}}
+          onPress={handleSubmit()}
         />
       </View>
     </KeyboardAvoidingView>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-import { TEXT_COLOR } from '../../utils/styles/colors';
-import { PIXELS } from '../../utils/styles/dimensions';
+import { TEXT_COLOR } from '../../utils/constants/styles/colors';
+import { PIXELS } from '../../utils/constants/styles/dimensions';
 
 const CustomButton = ({ title, onPress, disabled, style={}, textStyle={} }) => {
   return (

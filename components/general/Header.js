@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR } from "../../utils/styles/colors";
-import { HEADER_HEIGHT, HEADER_PADDING_TOP, PIXELS } from "../../utils/styles/dimensions";
+import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR } from "../../utils/constants/styles/colors";
+import { HEADER_HEIGHT, HEADER_PADDING_TOP, PIXELS } from "../../utils/constants/styles/dimensions";
 
 const Header = () => {
   return (
