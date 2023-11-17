@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { useForm } from "react-hook-form";
 import useAxiosFetch from '../useAxiosFetch';
@@ -11,17 +11,16 @@ const useSignup = () => {
   const { fetchAPI, data, loading, error } = useAxiosFetch();
   const authCtx = useContext(AuthContext);
 
-  const onSubmit = async (formData) => {
-    console.log("onSubmit SIGNUP:\n", formData);
-    await fetchAPI('post', formData, SIGNUP_EP);
+  const onSubmit = async (formData) => await fetchAPI('post', SIGNUP_EP,  formData);
 
+  useEffect(() => {
     if(!loading && !error) {
       if(data.success) {
         alert("Acount Created!\n Logging in ...");
         authCtx.authenticate(data.body.token);
-      } else alert(`${data.body.type} is already registered!`);
+      } else if(data) alert(`${data.body.type} is already registered!`);
     }
-  };
+  }, [data, loading, error]);
 
   return { loading, error, control, handleSubmit: () => handleSubmit(onSubmit) };
 }

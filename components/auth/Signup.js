@@ -19,11 +19,11 @@ const Signup = () => {
     <KeyboardAvoidingView behavior={isAndroid ? 'padding' : 'height'}>
       <KeyboardAwareScrollView enableOnAndroid={true} style={styles.container}>
         {/* Add regex rules */}
-        <CustomInput control={control} name="full name" rules={{ required: "Required field" }} />
+        <CustomInput control={control} name="fullName" rules={{ required: "Required field" }} />
         <CustomInput control={control} name="username" rules={{ required: "Required field" }} />
         <CustomInput control={control} name="email" rules={{ required: "Required field" }} />
         <CustomInput control={control} name="password" rules={{ required: "Required field" }} />
-        <CustomInput control={control} name="confirm password" rules={{ required: "Required field" }} />
+        <CustomInput control={control} name="confirmPassword" rules={{ required: "Required field" }} />
       </KeyboardAwareScrollView>
       <View style={styles.buttonContainer}>
         <CustomButton 

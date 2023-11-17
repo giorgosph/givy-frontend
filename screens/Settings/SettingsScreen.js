@@ -1,40 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
+
+import { AuthContext } from "../../context/store";
 
 import Header from "../../components/general/Header";
 import MainContainer from "../../components/general/MainContainer";
 import SettingButton from "../../components/settings/SettingButton";
+import SharedSettings from "../../components/settings/SharedSettings";
+import UserSettings from "../../components/settings/UserSettings";
+import ClientSettings from "../../components/settings/ClientSettings";
 
 const SettingsScreen = ({ navigation }) => {
+  const authCtx = useContext(AuthContext);
+
   const navTo = (screen) => () => navigation.navigate(screen);
 
   return (
    <>
-    <Header />
+    <Header inSettings />
     <MainContainer centered>
-      <View style={styles.settingWrap} >
-        <SettingButton title="Log In/Sign Up" onPress={navTo("Auth")} />
-      </View>
-      <View style={styles.settingWrap} >
-        <SettingButton title="Terms & Conditions" onPress={navTo("TermsConditions")} />
-        <SettingButton title="Privacy Policy" onPress={navTo("PrivacyPolicy")} />
-      </View>
-      <View style={styles.settingWrap} >
-        <SettingButton title="FAQ" onPress={navTo("FAQ")} />
-        <SettingButton title="About Us" onPress={navTo("AboutUs")} />
-        <SettingButton title="Contact Us" onPress={navTo("ContactUs")} />
-      </View>
+      {!authCtx.isAuthenticated ? 
+        <UserSettings navTo={navTo} /> : <ClientSettings navTo={navTo} logout={authCtx.logout} />
+      }
+      <SharedSettings navTo={navTo} />
     </MainContainer>
    </>
   )
 };
-
-const styles = StyleSheet.create({
-  settingWrap: {
-    display: "flex",
-    flexDirection: "column",
-    marginVertical: 32,
-  }
-});
 
 export default SettingsScreen;

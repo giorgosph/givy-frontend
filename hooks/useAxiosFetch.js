@@ -20,20 +20,23 @@ const useAxiosFetch = () => {
   const fetchAPI = async (type, endpoint, body=null, extraHeaders=[]) => {
     try {
       setLoading(true);
+      setData(false);
+      setStatus(false);
       setError(false);
 
       const { data, status } = await fetchAxios(type, endpoint, body, extraHeaders);
-      console.log(`Fetched succeed with status ${status} and data:\n\t ${data}`);
+      console.log(`Fetched succeed with status ${status} and data:\n\t ${JSON.stringify(data)}`);
       setData(data);
       setStatus(status);
     } catch (err) {
+      console.log("Fetched failed:\n", err);
       setError(true);
     } finally {
       setLoading(false);
     }
   }
 
-  return { fetchAPI, data, loading, status, error };
+  return { fetchAPI, data, loading, status, error, setData };
 };
 
 export default useAxiosFetch;

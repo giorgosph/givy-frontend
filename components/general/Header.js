@@ -1,13 +1,31 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useContext } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
-import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR } from "../../utils/constants/styles/colors";
-import { HEADER_HEIGHT, HEADER_PADDING_TOP, PIXELS } from "../../utils/constants/styles/dimensions";
+import { AuthContext } from "../../context/store";
 
-const Header = () => {
+import SettingIcon from "../icons/SettingsIcon";
+import { HEADER_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
+import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, INACTIVE_ICON_COLOR } from "../../utils/constants/styles/colors";
+
+const Header = ({ inSettings }) => {
+  const authCtx = useContext(AuthContext);
+  const navigation = useNavigation();
+
+  const handleSettingsPress = () => navigation.navigate('Settings');
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Givy</Text>
+      {authCtx.isAuthenticated && (
+        <View style={styles.iconWrap}>
+          <TouchableWithoutFeedback onPress={handleSettingsPress}>
+            <View style={styles.touchableView}>
+              <SettingIcon color={inSettings ? ACTIVE_ICON_COLOR : INACTIVE_ICON_COLOR} />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      )}
     </View>
   );
 };
@@ -29,6 +47,16 @@ const styles = StyleSheet.create({
     color: ACTIVE_ICON_COLOR,
     fontSize: 30,
     fontWeight: '800',
+  },
+  iconWrap: {
+    width: 32,
+    height: 32,
+  },
+  touchableView: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
