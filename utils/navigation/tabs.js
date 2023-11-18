@@ -4,13 +4,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeIcon from "../../components/icons/HomeIcon"
 import UserIcon from "../../components/icons/UserIcon"
 import SearchIcon from "../../components/icons/SearchIcon"
-import MessageIcon from "../../components/icons/MessageIcon"
 import SettingsIcon from "../../components/icons/SettingsIcon"
 
+import { ClientHomeTab, ClientProfileTab, ClientSearchTab } from "./clientNav";
 import { DefaultHomeTab, DefaultProfileTab, DefaultSettingsTab } from "./defaultNav";
-import { ClientHomeTab, ClientMessageTab, ClientProfileTab, ClientSearchTab } from "./clientNav";
 
 const Tab = createBottomTabNavigator();
+
+/* ----------------------- User Tabs ----------------------- */
+/* --------------------------------------------------------- */
 
 export function defaultTabs() {
   return (
@@ -43,6 +45,9 @@ export function defaultTabs() {
   );
 }
 
+/* ----------------------- Client Tabs ----------------------- */
+/* ----------------------------------------------------------- */
+
 export function clientTabs() {
   return (
     <Tab.Group screenOptions={{ headerShown: false }}>
@@ -62,14 +67,7 @@ export function clientTabs() {
           tabBarIcon: ({ color }) => <SearchIcon color={color} />,
         }}
       />
-      <Tab.Screen
-        name="ClientMessageTab"
-        component={ClientMessageTab}
-        options={{
-          title: "Message",
-          tabBarIcon: ({ color }) => <MessageIcon color={color} />,
-        }}
-      />
+
       <Tab.Screen
         name="ClientProfileTab"
         component={ClientProfileTab}

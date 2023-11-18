@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '800',
     color: HEADING_COLOR,
     textTransform: 'capitalize',

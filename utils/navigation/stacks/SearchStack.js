@@ -1,17 +1,16 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Stack = createNativeStackNavigator();
+import DrawsListScreen from "../../../screens/Search/DrawsListScreen";
+import DrawDetailsScreen from "../../../screens/Search/DrawDetailsScreen";
 
-import SearchScreen from "../../../screens/Search/SearchScreen";
-import UserListingScreen from "../../../screens/Search/UserListingScreen";
+const Stack = createNativeStackNavigator();
 
 export function SearchStack() {
   return (
     <Stack.Group>
-      <Stack.Screen name="Search" component={SearchScreen} />
-      <Stack.Screen name="UserListing" component={UserListingScreen} />
-      {/* Will need to navigate to MessageTab */}
+      <Stack.Screen name="DrawsList" component={DrawsListScreen} />
+      <Stack.Screen name="DrawDetails" component={DrawDetailsScreen} />
     </Stack.Group>
   );
 }

@@ -1,0 +1,17 @@
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "email": "smith@gmail.com",
+  "password": "test",
+  "paidPlan": "basic",
+  "mobile": "99222222",
+  "mobileExt": "00357", 
+  "creationDate": "", 
+  "isConfirmed": "true",
+  "gender": "male",
+  "country": "Cyprus",
+  "city": "Nicosia",
+  "address1": "Penta 3",
+  "address2": "House",
+  "postalCode": "2020"
+}

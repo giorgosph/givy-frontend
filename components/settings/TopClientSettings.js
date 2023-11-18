@@ -3,10 +3,11 @@ import { View } from "react-native";
 
 import SettingButton from "./SettingButton";
 
-const UserSettings = ({ navTo }) => {
+const TopClientSettings = ({ navTo, logout }) => {
   return (
     <View style={styles.settingWrap} >
-      <SettingButton title="Log In/Sign Up" onPress={navTo("Auth")} />
+      <SettingButton title="Reset Password" onPress={navTo("ResetPassword")} />
+      <SettingButton title="Sign Out" onPress={logout} />
     </View>
   )
 };
@@ -19,4 +20,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default UserSettings;
+export default TopClientSettings;

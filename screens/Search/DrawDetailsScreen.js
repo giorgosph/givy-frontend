@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const MyChatsScreen = () => {
+const DrawDetailsScreen = () => {
   return (
    <View>
      <Text>
-       MyChatsScreen
+       DrawDetailsScreen
      </Text>
    </View>
   )
 };
 
-export default MyChatsScreen;
+export default DrawDetailsScreen;

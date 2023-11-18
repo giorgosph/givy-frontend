@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const SearchScreen = () => {
+const DrawListing = () => {
   return (
    <View>
      <Text>
-       SearchScreen
+       DrawListing
      </Text>
    </View>
   )
 };
 
-export default SearchScreen;
+export default DrawListing;
