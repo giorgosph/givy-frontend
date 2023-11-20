@@ -1,6 +1,7 @@
 {
   "firstName": "John",
   "lastName": "Smith",
+  "username": "Johny",
   "email": "smith@gmail.com",
   "password": "test",
   "paidPlan": "basic",

@@ -12,8 +12,9 @@ const DrawsListScreen = () => {
    <>
     <Header />
     <MainContainer>
-      {draws.length ? draws.map((draw) => {
+      {draws.length > 0? draws.map((draw) => {
         // TODO -> DrawListing component
+        <Text>HERE!</Text>
       }) : (
         <View>
           <Text>There are no upcoming Draws, check again later!</Text>

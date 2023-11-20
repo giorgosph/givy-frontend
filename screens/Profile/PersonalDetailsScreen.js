@@ -2,33 +2,33 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import Header from "../../components/general/Header";
+import CustomTitle from "../../components/general/CustomTitle";
+import UserDetails from "../../components/profile/UserDetails";
 import CustomButton from "../../components/general/CustomButton";
 import MainContainer from "../../components/general/MainContainer";
-import ContactDetails from "../../components/profile/ContactDetails";
-import ShippingDetails from "../../components/profile/ShippingDetails";
 
 import userDetails from "../../utils/constants/data/userDetails.json";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
-import { HEADING_COLOR } from "../../utils/constants/styles/colors";
+import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_COLOR_FADE } from "../../utils/constants/styles/colors";
 
-const PersonalDetailsScreen = ({navigation}) => {
+const PersonalDetailsScreen = ({ navigation }) => {
   // TODO -> get user's personal details from redux
   const user = userDetails;
+  const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
    <>
     <Header />
     <MainContainer>
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{`${user.firstName} ${user.lastName}`}</Text>
-        <Text style={styles.text}>{user.username}</Text>
-        <ContactDetails user={user} />
-        <ShippingDetails user={user} />
+        <CustomTitle text={fullName} size={1} extraStyles={styles.title} />
+        <CustomTitle text={`@${user.username}`} size={3} lowercase extraStyles={styles.subTitle} />
+        <UserDetails user={user} />
       </View>
-      <View>
-        <CustomButton title={'My Draws'} />
-        <CustomButton title={'My Wins'} />
+      <View style={styles.buttonsContainer}>
+        <CustomButton title={'My Draws'} style={styles.button1} textStyle={styles.buttonText1} />
+        <CustomButton title={'My Wins'} style={styles.button2} textStyle={styles.buttonText2} />
       </View>
     </MainContainer>
    </>
@@ -38,29 +38,40 @@ const PersonalDetailsScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   detailsContainer: {
     flex: 8,
-    // display: 'flex',
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // alignItems: 'flex-start',
     margin: PIXELS,
   },
-  title: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: HEADING_COLOR,
-    textTransform: 'capitalize',
-  },
-  text: {
-    fontSize: 14,
-    fontWeight: '400',
-    // color: 'red',
-    textTransform: 'lowercase',
-  },
   buttonsContainer: {
-    flex: 1,
-    // display: 'flex',
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  title: {
+    fontSize: 32,
+    marginLeft: PIXELS,
+  },
+  subTitle: {
+    marginLeft: PIXELS,
+    color: HEADING_COLOR_FADE,
+  },
+  button1: {
+    margin: 0, 
+    width: '65%',
+    backgroundColor: AUTH_ACTIVE_COLOR
+  },
+  buttonText1: {
+    fontSize: 18,
+    color: BACKGROUND_COLOR
+  },
+  button2: {
+    width: '65%',
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: AUTH_ACTIVE_COLOR
+  },
+  buttonText2: {
+    fontSize: 18,
+    color: AUTH_ACTIVE_COLOR
+  },
 });
+
 export default PersonalDetailsScreen;

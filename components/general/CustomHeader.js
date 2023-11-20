@@ -3,8 +3,8 @@ import { View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native";
 
 import ArrowIcon from "../icons/ArrowIcon";
 
-import { HEADER_HEIGHT } from "../../utils/constants/styles/dimensions";
-import { ACTIVE_ICON_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/constants/styles/colors";
+import { HEADER_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
+import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/constants/styles/colors";
 
 const CustomHeader = ({ title, navigation }) => {
   const back = () => navigation.goBack();

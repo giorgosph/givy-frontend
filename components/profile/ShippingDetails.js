@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import CustomButton from "../general/CustomButton";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
-import { TEXT_TITLE } from "../../utils/constants/styles/colors";
+import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
 const ShippingDetails = ({ user }) => {
   return (
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     // color: HEADING_COLOR,
-    color: TEXT_TITLE,
+    color: HEADING_COLOR,
     textTransform: 'capitalize',
   },
   text: {
