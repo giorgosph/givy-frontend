@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { AuthContext } from "../../context/store";
 
 import SettingIcon from "../icons/SettingsIcon";
-import { HEADER_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
+import { HEADER_HEIGHT, ICON_SIZE, PIXELS } from "../../utils/constants/styles/dimensions";
 import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, INACTIVE_ICON_COLOR } from "../../utils/constants/styles/colors";
 
 const Header = ({ inSettings }) => {
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   iconWrap: {
-    width: 32,
-    height: 32,
+    width: ICON_SIZE,
+    height: ICON_SIZE,
   },
   touchableView: {
     width: '100%',

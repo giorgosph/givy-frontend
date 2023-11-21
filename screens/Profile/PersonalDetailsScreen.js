@@ -10,25 +10,27 @@ import MainContainer from "../../components/general/MainContainer";
 import userDetails from "../../utils/constants/data/userDetails.json";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
-import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_COLOR_FADE } from "../../utils/constants/styles/colors";
+import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
 const PersonalDetailsScreen = ({ navigation }) => {
   // TODO -> get user's personal details from redux
   const user = userDetails;
   const fullName = `${user.firstName} ${user.lastName}`;
 
+  const navTo = (screen) => navigation.navigate(screen);
+
   return (
    <>
     <Header />
     <MainContainer>
       <View style={styles.detailsContainer}>
-        <CustomTitle text={fullName} size={1} extraStyles={styles.title} />
-        <CustomTitle text={`@${user.username}`} size={3} lowercase extraStyles={styles.subTitle} />
+        <CustomTitle text={fullName} extraStyles={styles.title} />
+        <CustomTitle text={`@${user.username}`} size={4} lowercase extraStyles={styles.subTitle} />
         <UserDetails user={user} />
       </View>
       <View style={styles.buttonsContainer}>
-        <CustomButton title={'My Draws'} style={styles.button1} textStyle={styles.buttonText1} />
-        <CustomButton title={'My Wins'} style={styles.button2} textStyle={styles.buttonText2} />
+        <CustomButton title={'My Draws'} style={styles.button1} textStyle={styles.buttonText1} onPress={navTo('MyDraws')} />
+        <CustomButton title={'My Wins'} style={styles.button2} textStyle={styles.buttonText2} onPress={navTo('MyWins')} />
       </View>
     </MainContainer>
    </>
@@ -51,7 +53,8 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     marginLeft: PIXELS,
-    color: HEADING_COLOR_FADE,
+    marginBottom: PIXELS,
+    color: HEADING_FADE_COLOR,
   },
   button1: {
     margin: 0, 

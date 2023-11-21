@@ -18,6 +18,9 @@ const CustomTitle = ({ text, size, color, lowercase, extraStyles }) => {
     case 4: 
       titleStyle = styles.title4
       break;
+    case 5: 
+      titleStyle = styles.title5
+      break;
     default:
       titleStyle = styles.title2
       break;
@@ -43,18 +46,24 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
   },
   title2: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '700',
     color: HEADING_COLOR,
     textTransform: 'capitalize',
   },
   title3: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '700',
     color: HEADING_COLOR,
     textTransform: 'capitalize',
   },
   title4: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: HEADING_COLOR,
+    textTransform: 'capitalize',
+  },
+  title5: {
     fontSize: 16,
     fontWeight: '600',
     color: HEADING_COLOR,

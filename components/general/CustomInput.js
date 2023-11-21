@@ -5,15 +5,14 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 
-const CustomInput = ({ control, name, rules }) => {
-
+const CustomInput = ({ control, name, rules, title, defaultValue }) => {
   return (
    <View style={styles.container}>
-    <Text style={styles.title}>{name}</Text>
+    <Text style={styles.title}>{title || name}</Text>
     <Controller
       control={control}
       name={name}
-      defaultValue=''
+      defaultValue={defaultValue || ''}
       rules={rules || {}}
       render={({ field: { onBlur, onChange, value }, fieldState}) => {
         return (

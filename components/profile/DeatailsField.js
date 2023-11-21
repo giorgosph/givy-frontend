@@ -9,7 +9,7 @@ const DetailsField = ({ title, text }) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <CustomTitle text={title} size={3}/>
+        <CustomTitle text={title} size={5}/>
       </View>
       <CustomText text={text} />
     </View>
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row', 
     alignItems: 'center', 
-    marginTop: PIXELS / 2,
+    marginTop: PIXELS / 4,
   },
   titleContainer: {
     marginHorizontal: PIXELS / 2,

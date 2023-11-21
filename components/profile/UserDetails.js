@@ -1,45 +1,74 @@
-import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 import DetailsField from "./DeatailsField";
 import CustomTitle from "../general/CustomTitle";
 import CustomButton from "../general/CustomButton";
+import EditContactDetails from "./EditContactDetails";
+import EditShippingDetails from "./EditShippingDetails";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
-import { AUTH_INACTIVE_COLOR, INACTIVE_ICON_COLOR } from "../../utils/constants/styles/colors";
+import { AUTH_INACTIVE_COLOR, HEADING_BRIGHT_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
 const UserDetails = ({ user }) => {
+  const [editContact, setEditContact] = useState(false);
+  const [editShipping, setEditShipping] = useState(false);
+
   return (
-   <ScrollView contentContainerStyle={styles.container}>
-      <CustomTitle text={"Contact Details"} color={INACTIVE_ICON_COLOR} />
+    <>
+     {editContact ? <EditContactDetails /> 
+     : editShipping ? <EditShippingDetails />
+    : (
+    <ScrollView contentContainerStyle={styles.container}>
 
-      <DetailsField title={"email:"} text={user.email} />
-      <DetailsField title={"phone number:"} text={user.mobile} />
-      <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} />
-
-      <CustomTitle text={"Shipping Details"} color={INACTIVE_ICON_COLOR} />
-
-      <DetailsField title={"country:"} text={user.country} />
-      <DetailsField title={"city:"} text={user.city} />
-      <DetailsField title={"address 1:"} text={user.address1} />
-      <DetailsField title={"address 2:"} text={user.address2} />
-
-      <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} />
-   </ScrollView>
+      <View style={styles.section}>
+        <CustomTitle text={"Contact Details"} color={HEADING_BRIGHT_COLOR} />
+        <View style={styles.separator} />
+        <DetailsField title={"email:"} text={user.email} />
+        <DetailsField title={"phone number:"} text={user.mobile} />
+        <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} />
+      </View>
+      
+      <View style={styles.section}>
+        <CustomTitle text={"Shipping Details"} color={HEADING_BRIGHT_COLOR} />
+        <View style={styles.separator} />
+        <DetailsField title={"country:"} text={user.country} />
+        <DetailsField title={"city:"} text={user.city} />
+        <DetailsField title={"address 1:"} text={user.address1} />
+        <DetailsField title={"address 2:"} text={user.address2} />
+        <DetailsField title={"postal code:"} text={user.postalCode} />
+        <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} />
+      </View>
+      </ScrollView>
+    )}
+    </>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: PIXELS * 2,
     alignItems: 'center',
   },
+  section: {
+    width: '95%',
+    alignItems: 'center',
+    marginVertical: PIXELS / 2,
+    borderRadius: PIXELS,
+    borderWidth: 1,
+    borderColor: HEADING_FADE_COLOR,
+  },
   button:{
-    width: '40%',
+    width: '60%',
     height: 40,
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: AUTH_INACTIVE_COLOR,
+  },
+  separator: {
+    width: '80%',
+    borderBottomColor: HEADING_FADE_COLOR,
+    borderBottomWidth: 1,
+    marginVertical: PIXELS / 4,
   },
 });
 
