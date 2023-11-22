@@ -14,7 +14,11 @@ const useEditShippingDetails = () => {
   const onSubmit = async (formData) => await fetchAPI('put', SHIPPING_DETAILS_EP,  formData);
 
   useEffect(() => {
-    if(!loading && !error) alert("Details Updated Successfully!");
+    if(!loading && !error) {
+      if(data.success) {
+        alert("Details Updated Successfully!");
+      }
+    }
   }, [data, loading, error]);
 
   return { loading, error, control, handleSubmit: () => handleSubmit(onSubmit) };

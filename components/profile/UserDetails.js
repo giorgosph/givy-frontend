@@ -1,32 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import DetailsField from "./DeatailsField";
 import CustomTitle from "../general/CustomTitle";
 import CustomButton from "../general/CustomButton";
-import EditContactDetails from "./EditContactDetails";
-import EditShippingDetails from "./EditShippingDetails";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { AUTH_INACTIVE_COLOR, HEADING_BRIGHT_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
-const UserDetails = ({ user }) => {
-  const [editContact, setEditContact] = useState(false);
-  const [editShipping, setEditShipping] = useState(false);
-
+const UserDetails = ({ user, setEditContact, setEditShipping }) => {
   return (
-    <>
-     {editContact ? <EditContactDetails /> 
-     : editShipping ? <EditShippingDetails />
-    : (
     <ScrollView contentContainerStyle={styles.container}>
-
       <View style={styles.section}>
         <CustomTitle text={"Contact Details"} color={HEADING_BRIGHT_COLOR} />
         <View style={styles.separator} />
         <DetailsField title={"email:"} text={user.email} />
         <DetailsField title={"phone number:"} text={user.mobile} />
-        <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} />
+        <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} onPress={()=>setEditContact(true)} />
       </View>
       
       <View style={styles.section}>
@@ -37,11 +27,9 @@ const UserDetails = ({ user }) => {
         <DetailsField title={"address 1:"} text={user.address1} />
         <DetailsField title={"address 2:"} text={user.address2} />
         <DetailsField title={"postal code:"} text={user.postalCode} />
-        <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} />
+        <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} onPress={()=>setEditShipping(true)} />
       </View>
-      </ScrollView>
-    )}
-    </>
+    </ScrollView>
   )
 };
 

@@ -2,17 +2,19 @@ import React from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native";
 
 import ArrowIcon from "../icons/ArrowIcon";
+import { useNavigation } from "@react-navigation/native";
 
 import { HEADER_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
 import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/constants/styles/colors";
 
-const CustomHeader = ({ title, navigation }) => {
+const CustomHeader = ({ title, onPress }) => {
+  const navigation = useNavigation();
   const back = () => navigation.goBack();
 
   return (
     <View style={styles.container}>
       <View style={styles.iconWrap}>
-        <TouchableWithoutFeedback onPress={back}>
+        <TouchableWithoutFeedback onPress={onPress || back}>
           <View style={styles.touchableView}>
             <ArrowIcon color={SETTING_BUTTON_TEXT_COLOR} />
           </View>

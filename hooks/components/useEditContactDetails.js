@@ -15,8 +15,10 @@ const useEditContactDetails = () => {
 
   useEffect(() => {
     if(!loading && !error) {
-      alert("Details Change!");
-      navigation.navigate("AccountConfirmarion");
+      if(data?.success) {
+        alert("Details Change!");
+        navigation.navigate("AccountConfirmarion");
+      }
     }
   }, [data, loading, error]);
 
