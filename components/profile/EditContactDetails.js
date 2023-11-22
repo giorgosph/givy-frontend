@@ -4,6 +4,8 @@ import { View, StyleSheet } from "react-native";
 import CustomInput from "../general/CustomInput";
 import CustomButton from "../general/CustomButton";
 
+import { PIXELS } from "../../utils/constants/styles/dimensions";
+
 import useEditContactDetails from "../../hooks/components/useEditContactDetails";
 
 const EditContactDetails = ({ user }) => {

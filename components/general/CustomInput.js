@@ -1,30 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
+import { View, Text, TextInput, StyleSheet, Animated, Easing } from "react-native";
+
 import { Controller } from "react-hook-form";
-import { View, Text, TextInput, StyleSheet } from "react-native";
 
-import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
-const CustomInput = ({ control, name, rules, title, defaultValue }) => {
+const CustomInput = ({ control, name, rules, title, defaultValue, type }) => {
+  const [isFocused] = useState(new Animated.Value(defaultValue ? 1 : 0));
+  const isPass = type === 'password';
+
+  const handleFocus = () => {
+    Animated.timing(isFocused, {
+      toValue: 1,
+      duration: 800,
+      easing: Easing.easeOut,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const handleBlur = (value) => {
+    Animated.timing(isFocused, {
+      toValue: value ? 1 : 0,
+      duration: 300,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  };
+
   return (
-   <View style={styles.container}>
-    <Text style={styles.title}>{title || name}</Text>
     <Controller
       control={control}
       name={name}
       defaultValue={defaultValue || ''}
       rules={rules || {}}
-      render={({ field: { onBlur, onChange, value }, fieldState}) => {
+      render={({ field: { onChange, value }, fieldState}) => {
+        const hasValue = value && value.length > 0;
+        const top = isFocused.interpolate({
+          inputRange: [0, 1],
+          outputRange: [24, -5],
+        });
+        const zIndex = isFocused.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1000],
+        });
+        const color = isFocused.interpolate({
+          inputRange: [0, 1],
+          outputRange: ['#fff', '#000'],
+        });
+
         return (
-          <>
-            <TextInput style={styles.input} value={value} onChangeText={onChange} onBlur={onBlur} />
+          <View style={styles.container}>
+            <View style={styles.inputContainer}>
+              <Animated.View style={[styles.titleContainer, {top: top, zIndex: zIndex, backgroundColor: color}]}>
+                <Text style={styles.title}>{title || name}</Text>
+              </Animated.View>
+              {rules?.required && 
+                <View style={styles.asteriskConatiner}><Text style={styles.asterisk}>*</Text></View>}
+              <TextInput
+                style={styles.input}
+                value={isPass ? value : value.toLowerCase()}
+                onChangeText={onChange}
+                onFocus={handleFocus}
+                onBlur={()=>handleBlur(hasValue)}
+                placeholder={title || name}
+                defaultValue={defaultValue || ''}
+                textContentType={ type || 'none'}
+                secureTextEntry={isPass}
+              />
+            </View>
             {fieldState.error && 
-              <Text style={styles.errorText}>{fieldState.error.message || "Invalid Input"}</Text>}
-          </>
+              <Text style={styles.errorText}>{fieldState.error.message || "Invalid Input"}</Text>
+            }
+          </View>
         );
       }}
     />
-   </View>
   )
 };
 
@@ -36,27 +87,62 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
+  inputContainer: {
+    width: '90%',
+    height: 56,
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  input: {
+    width: '100%',
+    height: 44,
+    marginTop: PIXELS / 2,
+    paddingHorizontal: PIXELS * 1.5,
+    paddingTop: 2,
+    backgroundColor: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+    borderRadius: PIXELS,
+  },
+  titleContainer: {
+    paddingHorizontal: 12,
+    paddingBottom: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    borderRadius: 12,
+    position: 'absolute',
+    left: 16,
+    zIndex: 1000,
+  },
   title: {
     fontSize: 18,
     fontWeight: '800',
     color: HEADING_COLOR,
     textTransform: 'capitalize',
   },
+  asteriskConatiner: {
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    borderRadius: 20,
+    position: 'absolute',
+    top: 0,
+    right: 24,
+    zIndex: 1000,
+  },
+  asterisk: {
+    fontSize: 22,
+    color: 'red',
+  },
   errorText: {
-    fontSize: 14,
+    marginLeft: PIXELS,
+    fontSize: 12,
     fontWeight: '400',
     color: 'red',
   },
-  input: {
-    width: '85%',
-    height: 32,
-    marginTop: PIXELS / 2,
-    paddingHorizontal: PIXELS,
-    backgroundColor: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
-    borderRadius: PIXELS,
-  }
 });
 
 export default CustomInput;

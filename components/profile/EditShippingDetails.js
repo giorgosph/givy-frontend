@@ -5,6 +5,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import CustomInput from "../general/CustomInput";
 import CustomButton from "../general/CustomButton";
 
+import { PIXELS } from "../../utils/constants/styles/dimensions";
+
 import useEditShippingDetails from "../../hooks/components/useEditShippingDetails";
 
 const EditShippingDetails = ({ user }) => {

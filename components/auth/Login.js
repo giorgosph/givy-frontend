@@ -5,6 +5,7 @@ import CustomInput from '../general/CustomInput';
 import CustomButton from '../general/CustomButton';
 
 import { PIXELS } from '../../utils/constants/styles/dimensions';
+import { inputTypes as it } from '../../utils/constants/data/inputTypes';
 
 import useLogin from '../../hooks/components/useLogin';
 
@@ -17,8 +18,8 @@ const Login = () => {
     <> 
       <ScrollView style={styles.container} contentContainerStyle={{alignItems: 'flex-start'}}>
         {/* Add regex rules */}
-        <CustomInput control={control} name="username" rules={{ required: "Required field" }} />
-        <CustomInput control={control} name="password" rules={{ required: "Required field" }} />
+        <CustomInput control={control} name="username" rules={{ required: "Required field" }} type={it.username} />
+        <CustomInput control={control} name="password" rules={{ required: "Required field" }} type={it.password} />
       </ScrollView>
       <View style={styles.buttonContainer}>
         <CustomButton 
