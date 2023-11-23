@@ -19,7 +19,7 @@ const Login = () => {
       <ScrollView style={styles.container} contentContainerStyle={{alignItems: 'flex-start'}}>
         {/* Add regex rules */}
         <CustomInput control={control} name="username" rules={{ required: "Required field" }} type={it.username} />
-        <CustomInput control={control} name="password" rules={{ required: "Required field" }} type={it.password} />
+        <CustomInput control={control} name="password" rules={{ required: "Required field" }} type={it.currentPassword} />
       </ScrollView>
       <View style={styles.buttonContainer}>
         <CustomButton 

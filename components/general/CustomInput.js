@@ -6,7 +6,7 @@ import { Controller } from "react-hook-form";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
-const CustomInput = ({ control, name, rules, title, defaultValue, type }) => {
+const CustomInput = ({ control, name, rules, title, defaultValue, type, numeric, email }) => {
   const [isFocused] = useState(new Animated.Value(defaultValue ? 1 : 0));
   const isPass = type === 'password';
 
@@ -62,16 +62,17 @@ const CustomInput = ({ control, name, rules, title, defaultValue, type }) => {
               <TextInput
                 // TODO -> improve logic of inputMode etc. (make inputMode options constant and pass as an argument
                 // or do it based on type prop) 
-                inputMode={isString ? 'text' : 'numeric'}
                 style={styles.input}
-                value={isString ? (!isPass && value.toLowerCase()) : String(value) }
+                value={!isPass ? value.toLowerCase() : String(value) }
                 onChangeText={onChange}
                 onFocus={handleFocus}
                 onBlur={()=>handleBlur(hasValue)}
                 placeholder={title || name}
                 defaultValue={defaultValue || ''}
-                textContentType={ type || 'none'}
+                inputMode={numeric ? 'numeric' : email ? 'email' : 'text'}
+                autoComplete={ type || 'none'}
                 secureTextEntry={isPass}
+                autoCapitalize="none"
               />
             </View>
             {fieldState.error && 

@@ -25,14 +25,14 @@ const Signup = () => {
         <CustomInput control={control} name="firstName" title={"first name"} rules={{ required: "Required field" }} type={it.name} />
         <CustomInput control={control} name="lastName" title={"last name"} rules={{ required: "Required field" }} type={it.familyName} />
         <CustomInput control={control} name="username" rules={{ required: "Required field" }} type={it.username} />
-        <CustomInput control={control} name="email" rules={{ required: "Required field" }} type={it.emailAddress} />
-        <CustomInput control={control} name="password" rules={{ required: "Required field" }} type={it.password} />
-        <CustomInput control={control} name="confPassword" title={"confirm password"} rules={{ required: "Required field" }} type={it.password} />
+        <CustomInput control={control} name="email" rules={{ required: "Required field" }} type={it.email} />
+        <CustomInput control={control} name="password" rules={{ required: "Required field" }} type={it.newPassword} />
+        <CustomInput control={control} name="confPassword" title={"confirm password"} rules={{ required: "Required field" }} type={it.newPassword} />
         <CustomDropdown control={control} name="gender" rules={{ required: "Required field" }} data={genderData} />
-        <CustomInput control={control} name="country" type={it.countryName} />
-        <CustomInput control={control} name="city" type={it.addressCity} />
-        <CustomInput control={control} name="address1" title="address 1" type={it.streetAddressLine1} />
-        <CustomInput control={control} name="address2" title="address 2" type={it.streetAddressLine2} />
+        <CustomInput control={control} name="country" type={it.country} />
+        <CustomInput control={control} name="city" />
+        <CustomInput control={control} name="address1" title="address 1" type={it.addressLine1} />
+        <CustomInput control={control} name="address2" title="address 2" type={it.addressLine2} />
         <CustomInput control={control} name="postalCode" title="postal code" type={it.postalCode} />
       </KeyboardAwareScrollView>
       <View style={styles.buttonContainer}>

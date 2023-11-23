@@ -12,7 +12,7 @@ export const AuthContext = createContext({
 });
 
 function AuthContextProvider({ children }) {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState("true");
   // const [isVenue, setVenue] = useState(false);
   // const [isAdmin, setAdmin] = useState(false);
   // const [roleStatus, setRoleStatus] = useState(false);
