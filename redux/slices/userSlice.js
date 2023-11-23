@@ -1,43 +1,49 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  user: null, // You can initialize the user object with null or an empty object
-  isLoading: false,
-  error: null,
+  user: null,
+  date: null, // const date = new Date(user.date); to get in components
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // Action to set the user data
     setUser: (state, action) => {
-      state.user = action.payload;
-      state.isLoading = false;
-      state.error = null;
-    },
+      const message = `User ${action.payload.user.username} has been set on ${action.payload.date}`;
 
-    // Action to set loading state
-    setLoading: (state) => {
-      state.isLoading = true;
-      state.error = null;
+      state.user = action.payload.user;
+      state.date = action.payload.date;
+      console.log(message);
     },
+    updateContactDetails: (state, action) => {
+      const { email, mobile, username } = action.payload.user;
+      const message = `Contact details for ${username} has been updated on ${action.payload.date}`;
 
-    // Action to set an error message
-    setError: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
+      if(email) state.user.email = email;
+      if(mobile) state.user.mobile = mobile;
+      state.date = action.payload.date;
+      console.log(message);
     },
+    updateShippingDetails: (state, action) => {
+      const { country, city, address1, address2, postalCode, username } = action.payload.user;
+      const message = `Contact details for ${username} has been updated on ${action.payload.date}`;
 
-    // Action to clear the user data
+      state.user.country = country;
+      state.user.city = city;
+      state.user.address1 = address1;
+      state.user.address2 = address2;
+      state.user.postalCode = postalCode;
+      state.date = action.payload.date;
+      console.log(message);
+    },
     clearUser: (state) => {
       state.user = null;
-      state.isLoading = false;
-      state.error = null;
+      state.date = null;
     },
   },
 });
 
-export const { setUser, setLoading, setError, clearUser } = userSlice.actions;
+export const { setUser, updateContactDetails, updateShippingDetails, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 
 import Header from "../../components/general/Header";
 import CustomTitle from "../../components/general/CustomTitle";
@@ -9,33 +9,31 @@ import MainContainer from "../../components/general/MainContainer";
 import EditContactDetails from "../../components/profile/EditContactDetails";
 import EditShippingDetails from "../../components/profile/EditShippingDetails";
 
-import userDetails from "../../utils/constants/data/userDetails.json";
-
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
+import usePersonalDetails from "../../hooks/components/usePersonalDetails";
+
 const PersonalDetailsScreen = ({ navigation }) => {
-  const [editContact, setEditContact] = useState(false);
-  const [editShipping, setEditShipping] = useState(false);
-  
-  // TODO -> get user's personal details from redux
-  const user = userDetails;
-  const fullName = `${user.firstName} ${user.lastName}`;
+  const { loading, error, edit, user} = usePersonalDetails();
+
+  const fullName = `${user?.firstName} ${user?.lastName}`;
 
   const navTo = (screen) => navigation.navigate(screen);
 
   return (
    <>
-      {editContact ? <EditContactDetails user={user} setEditContact={setEditContact} /> 
-      : editShipping ? <EditShippingDetails user={user} setEditShipping={setEditShipping} />
+      {/* TODO -> ? make a loading skeleton/animation to remove 'user?.' */}
+      {edit.contact ? <EditContactDetails user={user} setEditContact={edit.setContact} /> 
+      : edit.shipping ? <EditShippingDetails user={user} setEditShipping={edit.setShipping} />
       : (
         <>
           <Header />
           <MainContainer >
             <View style={styles.detailsContainer}>
               <CustomTitle text={fullName} extraStyles={styles.title} />
-              <CustomTitle text={`@${user.username}`} size={4} lowercase extraStyles={styles.subTitle} />
-              <UserDetails user={user} setEditContact={setEditContact} setEditShipping={setEditShipping} />
+              <CustomTitle text={`@${user?.username}`} size={4} lowercase extraStyles={styles.subTitle} />
+              <UserDetails user={user} setEditContact={edit.setContact} setEditShipping={edit.setShipping} />
             </View>
             <View style={styles.buttonsContainer}>
               <CustomButton title={'My Draws'} style={styles.button1} textStyle={styles.buttonText1} onPress={()=>navTo('MyDraws')} />

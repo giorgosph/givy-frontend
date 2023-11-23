@@ -22,8 +22,9 @@ const EditContactDetails = ({ user, setEditContact }) => {
       <MainContainer>
         <View style={styles.container}>
           {/* Add regex rules */}
-          <CustomInput control={control} name="email" defaultValue={user.email} />
-          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user.mobile} />
+          <CustomInput control={control} name="email" defaultValue={user?.email} />
+          {/* replace mobile with number input */}
+          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user?.mobile} /> 
         </View>
         <View style={styles.buttonContainer}>
           <CustomButton 

@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { HEADER_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
 import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/constants/styles/colors";
+import CustomTitle from "./CustomTitle";
 
 const CustomHeader = ({ title, onPress }) => {
   const navigation = useNavigation();
@@ -16,13 +17,13 @@ const CustomHeader = ({ title, onPress }) => {
       <View style={styles.iconWrap}>
         <TouchableWithoutFeedback onPress={onPress || back}>
           <View style={styles.touchableView}>
-            <ArrowIcon color={SETTING_BUTTON_TEXT_COLOR} />
+            <ArrowIcon color={SETTING_BUTTON_TEXT_COLOR} size={24} />
           </View>
         </TouchableWithoutFeedback>
       </View>
 
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.iconWrap}></View>
+      {/* <Text style={styles.title}>{title}</Text> */}
+      <CustomTitle text={title} size={1} extraStyles={{ color: ACTIVE_ICON_COLOR }}/>
     </View>
   )
 };
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: ACTIVE_ICON_COLOR,
-    fontSize: 30,
+    fontSize: 26,
     fontWeight: '800',
     justifyContent: 'center',
     textAlign: 'center',
@@ -50,6 +51,9 @@ const styles = StyleSheet.create({
   iconWrap: {
     width: 32,
     height: 32,
+    position: 'absolute',
+    top: HEADER_HEIGHT / 2 - PIXELS,
+    left: PIXELS / 2,
   },
   touchableView: {
     width: '100%',

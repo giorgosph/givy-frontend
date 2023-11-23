@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import ArrowIcon from "../icons/ArrowIcon";
 import { Controller } from "react-hook-form";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
@@ -39,6 +40,7 @@ const CustomDropdown = ({ control, name, title, rules, data }) => {
                 <View style={styles.asteriskConatiner}><Text style={styles.asterisk}>*</Text></View>
               }
               <Text style={[styles.inputText, {color: color}]}>{value || label}</Text>
+              <View style={styles.iconContainer}><ArrowIcon color='black' direction='D' size={22} /></View>
             </TouchableOpacity>
 
             <Modal animationType="slide" transparent={true} visible={isVisible}>
@@ -89,6 +91,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     borderRadius: PIXELS,
   },
+  iconContainer: {
+    position: 'absolute',
+    top: 20,
+    right: PIXELS * 1.5,
+    zIndex: 1001,
+  },
   modal: {
     flex: 1,
     justifyContent: "center",
@@ -113,7 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     borderRadius: 12,
     position: 'absolute',
-    left: 16,
+    left: PIXELS,
     zIndex: 1000,
   },
   title: {
@@ -131,7 +139,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     position: 'absolute',
     top: -3,
-    right: 24,
+    right: PIXELS,
     zIndex: 1000,
   },
   asterisk: {

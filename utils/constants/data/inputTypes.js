@@ -1,3 +1,7 @@
+/* 
+* Can be used when using CustomInput (or when taking input from user)
+* to set the type of the input element for SEO purposes (e.g. autofill).
+*/
 export const inputTypes = {
   none: 'none',
   URL: 'URL',

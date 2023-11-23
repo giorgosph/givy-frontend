@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import userReducer from "./slices/userSlice";
 
 // import debounceMiddleware from "./favouritesMiddleware";
@@ -6,7 +7,7 @@ import userReducer from "./slices/userSlice";
 const store = configureStore({
   reducer: {
     user: userReducer,
-//     // favourites: favouritesReducer,
+
   },
 //   middleware: (getDefaultMiddleware) =>
 //     getDefaultMiddleware().concat(debounceMiddleware),

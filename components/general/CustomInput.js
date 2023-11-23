@@ -36,6 +36,8 @@ const CustomInput = ({ control, name, rules, title, defaultValue, type }) => {
       rules={rules || {}}
       render={({ field: { onChange, value }, fieldState}) => {
         const hasValue = value && value.length > 0;
+        const isString = typeof value === 'string';
+
         const top = isFocused.interpolate({
           inputRange: [0, 1],
           outputRange: [24, -5],
@@ -58,8 +60,11 @@ const CustomInput = ({ control, name, rules, title, defaultValue, type }) => {
               {rules?.required && 
                 <View style={styles.asteriskConatiner}><Text style={styles.asterisk}>*</Text></View>}
               <TextInput
+                // TODO -> improve logic of inputMode etc. (make inputMode options constant and pass as an argument
+                // or do it based on type prop) 
+                inputMode={isString ? 'text' : 'numeric'}
                 style={styles.input}
-                value={isPass ? value : value.toLowerCase()}
+                value={isString ? (!isPass && value.toLowerCase()) : String(value) }
                 onChangeText={onChange}
                 onFocus={handleFocus}
                 onBlur={()=>handleBlur(hasValue)}
@@ -112,7 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     borderRadius: 12,
     position: 'absolute',
-    left: 16,
+    left: PIXELS,
     zIndex: 1000,
   },
   title: {
@@ -130,7 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     position: 'absolute',
     top: 0,
-    right: 24,
+    right: PIXELS,
     zIndex: 1000,
   },
   asterisk: {
