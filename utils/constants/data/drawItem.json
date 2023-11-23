@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "drawId": 1,
+  "title": "Small Item Title",
+  "description": "Description of the small item for sale.",
+  "imagePath": "/path/to/image.jpg",
+  "brief": "Brief overview of the small item's features."
+}

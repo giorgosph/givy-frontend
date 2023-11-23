@@ -25,7 +25,7 @@ const Signup = () => {
         <CustomInput control={control} name="firstName" title={"first name"} rules={{ required: "Required field" }} type={it.name} />
         <CustomInput control={control} name="lastName" title={"last name"} rules={{ required: "Required field" }} type={it.familyName} />
         <CustomInput control={control} name="username" rules={{ required: "Required field" }} type={it.username} />
-        <CustomInput control={control} name="email" rules={{ required: "Required field" }} type={it.email} />
+        <CustomInput control={control} name="email" rules={{ required: "Required field" }} type={it.email} email />
         <CustomInput control={control} name="password" rules={{ required: "Required field" }} type={it.newPassword} />
         <CustomInput control={control} name="confPassword" title={"confirm password"} rules={{ required: "Required field" }} type={it.newPassword} />
         <CustomDropdown control={control} name="gender" rules={{ required: "Required field" }} data={genderData} />

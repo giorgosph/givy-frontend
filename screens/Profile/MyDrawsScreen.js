@@ -12,12 +12,12 @@ const MyDraws = ({ navigation }) => {
   return (
     <>
       <CustomHeader title="My Draws" navigation={navigation} />
-      <MainContainer>
+      <MainContainer centered>
         {draws.length ? draws.map((draw) => {
           // TODO -> DrawListing component
         }) : (
           <View>
-            <Text>You are not registered to any draw yet.</Text>
+            <Text style={{color: 'white'}}>You are not registered to any draw yet.</Text>
             {/* TODO -> onPress navigate to SearchTab */}
             <CustomButton title="Find a new Draw!" />
           </View>

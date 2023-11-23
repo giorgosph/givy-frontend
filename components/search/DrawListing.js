@@ -1,68 +1,89 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native'; 
+
+import CustomText from '../general/CustomText';
+import CustomTitle from '../general/CustomTitle';
+
 import { PIXELS } from '../../utils/constants/styles/dimensions';
+import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR, HEADING_FADE_COLOR } from '../../utils/constants/styles/colors';
 
 const DrawListing = ({ draw }) => {
-  const handleNav = () => navigation.navigate('DrawDetailsScreen', {draw});
+  const navigation = useNavigation();
+
+  const handleNav = () => navigation.navigate('DrawDetailsScreen', { draw });
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={handleNav} >
-        <View style={styles.imageContainer}>
-          <Text style={styles.image}>Image</Text>
-        </View>
-        <View style={styles.detailsContainer}>
-          <Text style={styles.title}>{draw.title}</Text>
-          <Text style={styles.text}>{draw.date}</Text>
-          <Text style={styles.text}>{draw.brief}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={styles.container} onPress={handleNav}>
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} source={{ uri: draw.imagePath }} resizeMode="cover" />
+      </View>
+      <View style={styles.detailsContainer}>
+        <CustomTitle text={draw.title} size={3} />
+        <CustomText text={`brief`} size={3} extraStyles={styles.title} color={HEADING_FADE_COLOR} />
+        <CustomText text={`Available From: ${draw.openingDate}`} extraStyles={styles.text} />
+        <CustomText text={`Results On: ${draw.closingDate}`} extraStyles={styles.text} />
+      </View>
+      <View style={styles.textContainer}>
+        <CustomTitle text="Click to Join!" color={HEADING_FADE_COLOR} />
+      </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     width: '80%',
+    height: '21%',
+    maxHeight: 180,
     minHeight: 120,
+    padding: PIXELS / 2, 
+    marginVertical: PIXELS / 2,
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#7C68F7',
-    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    justifyContent: 'flex-start', 
+    alignItems: 'center',
+    backgroundColor: AUTH_INACTIVE_COLOR,
+    shadowColor: '#fff',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
+    borderWidth: 1,
     borderRadius: 24,
+    borderColor: AUTH_ACTIVE_COLOR,
   },
   imageContainer: {
-    flex: 2,
+    width: 120,
     height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: PIXELS / 4,
   },
   image: {
-    minWidth: 120,
-    minHeight: 120,
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
     margin: PIXELS,
   },
   detailsContainer: {
-    flex: 3,
-    padding: PIXELS,
+    flex: 1,
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    paddingBottom: PIXELS,    
   },
   title: {
-    color: '#E4EBF2',
-    fontSize: 24,
-    fontWeight: '800',
-    textTransform: 'capitalize',
+    marginBottom: PIXELS / 2, 
   },
   text: {
-    color: '#E4EBF2',
-    fontSize: 14,
-    fontWeight: '400',
-    textTransform: 'capitalize',
+    marginBottom: PIXELS / 6,
   },
+  textContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 6,
+  }
 });
 
 export default DrawListing;
