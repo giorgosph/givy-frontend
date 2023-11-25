@@ -26,7 +26,7 @@ const DrawListing = ({ draw }) => {
         <CustomText text={`Results On: ${draw.closingDate}`} extraStyles={styles.text} />
       </View>
       <View style={styles.textContainer}>
-        <CustomTitle text="Click to Join!" color={HEADING_FADE_COLOR} />
+        <CustomTitle text="Click to Join!" color={HEADING_FADE_COLOR} extraStyles={styles.join} />
       </View>
     </TouchableOpacity>
   );
@@ -59,12 +59,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: PIXELS / 4,
+    zIndex: 100,
   },
   image: {
     width: '100%',
     height: '100%',
     borderRadius: 8,
     margin: PIXELS,
+    zIndex: 101,
   },
   detailsContainer: {
     flex: 1,
@@ -83,6 +85,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: 6,
+    zIndex: 1000,
+  },
+  join: {
+    textShadowRadius: PIXELS,
+    textShadowColor: 'black',
+    // backgroundColor: 
+    zIndex: 1001,
   }
 });
 
