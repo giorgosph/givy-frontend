@@ -19,15 +19,26 @@ const SettingsScreen = ({ navigation }) => {
   return (
    <>
     <Header inSettings />
-    <MainContainer centered>
-      {!authCtx.isAuthenticated ? 
-        <UserSettings navTo={navTo} /> : <TopClientSettings navTo={navTo} logout={authCtx.logout} />
-      }
-      <SharedSettings navTo={navTo} />
-      {authCtx.isAuthenticated && <BottomClientSettings navTo={navTo} />}
+    <MainContainer centered >
+      <View style={styles.container}>
+        {!authCtx.isAuthenticated ? 
+          <UserSettings navTo={navTo} /> : <TopClientSettings navTo={navTo} logout={authCtx.logout} />
+        }
+        <SharedSettings navTo={navTo} />
+        {authCtx.isAuthenticated && <BottomClientSettings navTo={navTo} />}
+      </View>
     </MainContainer>
    </>
   )
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  }
+})
 
 export default SettingsScreen;

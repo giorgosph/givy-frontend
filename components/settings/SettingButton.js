@@ -2,6 +2,8 @@ import React from "react";
 import { TouchableHighlight, Text, StyleSheet, View } from "react-native";
 
 import ArrowIcon from "../icons/ArrowIcon";
+
+import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { SETTING_BUTTON_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/constants/styles/colors";
 
 const SettingButton = ({ title, onPress }) => {
@@ -21,7 +23,7 @@ const styles = StyleSheet.create({
   buttonWrap: {
     width: 288,
     height: 48,
-    margin: 8,
+    margin: PIXELS / 4,
     backgroundColor: SETTING_BUTTON_COLOR,
     borderRadius: 16,
   },
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     margin: 0,
-    paddingHorizontal: 24,
+    paddingHorizontal: PIXELS * 1.5,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

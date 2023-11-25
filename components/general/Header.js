@@ -12,7 +12,8 @@ const Header = ({ inSettings }) => {
   const authCtx = useContext(AuthContext);
   const navigation = useNavigation();
 
-  const handleSettingsPress = () => navigation.navigate('Settings');
+  const handleSettingsPress = () => inSettings ? navigation.goBack() : navigation.navigate('Settings');
+  
 
   return (
     <View style={styles.container}>
