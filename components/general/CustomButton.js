@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 import { TEXT_COLOR } from '../../utils/constants/styles/colors';
-import { PIXELS } from '../../utils/constants/styles/dimensions';
+import { BUTTON_HEIGHT, BUTTON_WIDTH, PIXELS } from '../../utils/constants/styles/dimensions';
 
 const CustomButton = ({ title, onPress, disabled, style={}, textStyle={} }) => {
   return (
@@ -18,12 +18,12 @@ const CustomButton = ({ title, onPress, disabled, style={}, textStyle={} }) => {
 
 const styles = StyleSheet.create({
   button: {
-    width: 180,
-    height: 48,
-    borderRadius: 24,
+    width: BUTTON_WIDTH,
+    height: BUTTON_HEIGHT,
+    borderRadius: PIXELS,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: PIXELS,
+    margin: PIXELS / 2,
     backgroundColor: '#6450e3',
   },
   text: {

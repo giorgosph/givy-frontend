@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
 
+import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
 const CustomTitle = ({ text, size, color, lowercase, extraStyles }) => {
@@ -20,6 +21,9 @@ const CustomTitle = ({ text, size, color, lowercase, extraStyles }) => {
       break;
     case 5: 
       titleStyle = styles.title5
+      break;
+    case 6: 
+      titleStyle = styles.title6
       break;
     default:
       titleStyle = styles.title2
@@ -65,7 +69,13 @@ const styles = StyleSheet.create({
   },
   title5: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '500',
+    color: HEADING_COLOR,
+    textTransform: 'capitalize',
+  },
+  title6: {
+    fontSize: 14,
+    fontWeight: '400',
     color: HEADING_COLOR,
     textTransform: 'capitalize',
   },

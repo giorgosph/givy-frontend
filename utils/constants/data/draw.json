@@ -2,6 +2,7 @@
   {
     "id": 1,
     "title": "test1",
+    "brief": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     "type": "basic",
     "imagePath": "https://sharafstore.com/web/image/product.product/25812/image_256&bih=563&biw=1280#imgrc=7B2O8XB2BKMXOM",
     "openingDate": "2023-01-01",
@@ -12,6 +13,7 @@
   {
     "id": 2,
     "title": "test2",
+    "brief": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     "type": "basic",
     "imagePath": "https://sharafstore.com/web/image/product.product/25812/image_256&bih=563&biw=1280#imgrc=7B2O8XB2BKMXOM",
     "openingDate": "2023-02-01",
@@ -22,6 +24,7 @@
   {
     "id": 3,
     "title": "test3",
+    "brief": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     "type": "basic",
     "imagePath": "https://sharafstore.com/web/image/product.product/25812/image_256&bih=563&biw=1280#imgrc=7B2O8XB2BKMXOM",
     "openingDate": "2023-03-01",

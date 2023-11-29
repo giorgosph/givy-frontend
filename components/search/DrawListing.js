@@ -12,18 +12,21 @@ import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR, HEADING_FADE_COLOR } from '../.
 const DrawListing = ({ draw }) => {
   const navigation = useNavigation();
 
-  const handleNav = () => navigation.navigate('DrawDetailsScreen', { draw });
+  const handleNav = draw => {
+    console.log("DRAW:\n", draw)
+    navigation.navigate('DrawDetails', { draw });
+  }
 
   return (
-    <TouchableOpacity style={styles.container} onPress={handleNav}>
+    <TouchableOpacity style={styles.container} onPress={() => handleNav(draw)}>
       <View style={styles.imageContainer}>
         <Image style={styles.image} source={{ uri: draw.imagePath }} resizeMode="cover" />
       </View>
       <View style={styles.detailsContainer}>
         <CustomTitle text={draw.title} size={3} />
-        <CustomText text={`brief`} size={3} extraStyles={styles.title} color={HEADING_FADE_COLOR} />
-        <CustomText text={`Available From: ${draw.openingDate}`} extraStyles={styles.text} />
-        <CustomText text={`Results On: ${draw.closingDate}`} extraStyles={styles.text} />
+        <CustomText text={draw.brief} size={5} extraStyles={styles.title} color={HEADING_FADE_COLOR} />
+        <CustomText text={draw.openingDate} extraStyles={styles.text} title={"Available From:"} titleExtraStyles={styles.textTitle} horizontal />
+        <CustomText text={draw.closingDate} extraStyles={styles.text} title={"Results On:"} titleExtraStyles={styles.textTitle} horizontal />
       </View>
       <View style={styles.textContainer}>
         <CustomTitle text="Click to Join!" color={HEADING_FADE_COLOR} extraStyles={styles.join} />
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
     height: '21%',
     maxHeight: 180,
     minHeight: 120,
-    padding: PIXELS / 2, 
+    padding: PIXELS * 2/6, 
     marginVertical: PIXELS / 2,
     display: 'flex',
     flexDirection: 'row',
@@ -71,13 +74,17 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     display: 'flex',
-    paddingBottom: PIXELS,    
+    paddingBottom: PIXELS * 1.5,    
   },
   title: {
-    marginBottom: PIXELS / 2, 
+    marginBottom: PIXELS / 4, 
+    paddingLeft: PIXELS / 2,
   },
   text: {
-    marginBottom: PIXELS / 6,
+    paddingTop: PIXELS / 6,
+  },
+  textTitle: {
+    paddingLeft: PIXELS / 2,
   },
   textContainer: {
     width: '100%',
@@ -88,9 +95,10 @@ const styles = StyleSheet.create({
     zIndex: 1000,
   },
   join: {
-    textShadowRadius: PIXELS,
+    textShadowRadius: 8,
     textShadowColor: 'black',
-    // backgroundColor: 
+    shadowColor: 'white',
+    shadowRadius: 16,
     zIndex: 1001,
   }
 });

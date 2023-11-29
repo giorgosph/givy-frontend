@@ -5,8 +5,15 @@ export const HEIGHT = Dimensions.get('window').height;
 
 export const PIXELS = 16;
 
-export const NAV_HEIGHT = HEIGHT * 1.25/20;
 export const HEADER_HEIGHT = HEIGHT * 1.25/20;
 export const MAIN_HEIGHT = HEIGHT * 17.5/20;
+export const NAV_HEIGHT = HEIGHT * 1.25/20;
+
+export const BUTTON_HEIGHT = PIXELS * 3;
+export const BUTTON_WIDTH = PIXELS * 10;
+
+export const IMAGE_CAROUSEL_WIDTH =  PIXELS * 18;
+export const IMAGE_CAROUSEL_HEIGHT =  PIXELS * 12;
+export const ITEM_LIST_HEIGHT = MAIN_HEIGHT - IMAGE_CAROUSEL_HEIGHT - BUTTON_HEIGHT;
 
 export const ICON_SIZE = PIXELS * 1.8;
