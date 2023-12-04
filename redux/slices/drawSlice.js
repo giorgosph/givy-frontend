@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   draws: null,
   date: null, // const date = new Date(draw.date); to get in components
+  items: null,
+  itemsDate: null
 };
 
 const drawSlice = createSlice({
@@ -16,6 +18,10 @@ const drawSlice = createSlice({
       state.date = action.payload.date;
       console.log(message);
     },
+    setItems: (state, action) => {
+      state.items = action.payload.items;
+      console.log("Items has been set");
+    },
     clearDraws: (state) => {
       state.draws = null;
       state.date = null;
@@ -23,6 +29,6 @@ const drawSlice = createSlice({
   },
 });
 
-export const { setDraws, clearDraws } = drawSlice.actions;
+export const { setDraws, setItems, clearDraws } = drawSlice.actions;
 
 export default drawSlice.reducer;

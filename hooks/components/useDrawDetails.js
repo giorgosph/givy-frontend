@@ -7,45 +7,55 @@ import useAxiosFetch from '../useAxiosFetch';
 import { AuthContext } from '../../context/store';
 
 import { auth } from '../../utils/APIs/headers';
-import { setUser } from '../../redux/slices/userSlice';
-import { OPT_IN_EP } from '../../utils/constants/url';
+import { setItems } from '../../redux/slices/drawSlice';
+import { DRAW_ITEMS_EP, OPT_IN_EP } from '../../utils/constants/url';
 
-import drawItem from "../../utils/constants/data/drawItem.json";
-
-const useDrawDetails = () => {
-  // get Items from redux where drawId=draw.id
-
+const useDrawDetails = (draw) => {
   const { fetchAPI, data, loading, error } = useAxiosFetch();
-  
-  // const user = useSelector(state => state.user.user);
-  // const dispatch = useDispatch();
+  const images = [draw.imagePath];
+  let items;
 
-  const navigation = useNavigation();
+  const drawItems = useSelector(state => state.draw.items);
+
+  if(drawItems) {
+    items = drawItems.filter(item => item.drawId === draw.id);
+    items && items.map(item => images.push(item.imagePath));
+  } 
+  
   const authCtx = useContext(AuthContext);
   const config = auth(authCtx.token);
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleOptIn = async (drawId) => {
     // ?? pop up ad
-    // send request to server
     await fetchAPI('post', OPT_IN_EP,  { drawId }, config);
   }
 
   useEffect(() => {
+    const fetchItems = async (drawId) => await fetchAPI('get', `${DRAW_ITEMS_EP}${drawId}`);
+
     if(!loading && !error) {
+      if(!data && !items) fetchItems(draw.id);
+
       if(data.success) {
-        alert("You have successfully been registered to the draw!\nGood Luck!!");
-        navigation.goBack();
-         // ?? add to redux/cookies already opted in
-        // dispatch(setUser({ draws: data.body.drawId, date: new Date().getTime() }));
-        
-        // clear loading, error, data, state 
+        if(data.body?.drawId){
+          alert("You have successfully been registered to the draw!\nGood Luck!!");
+          navigation.goBack();
+          // ?? add to redux/cookies already opted in
+          // dispatch(setUser({ draws: data.body.drawId, date: new Date().getTime() }));
+
+          // clear loading, error, data, state 
+        } else {
+          dispatch(setItems({ items: data.body }));
+        }
       } else if(data) alert(data.message);
     }
 
-    // do not abort request if user leave the component  and clear api state
+    // do not abort opt in request if user leave the component
   }, [data, loading, error]);
 
-  return { loading, error, drawItem, handleOptIn };
+  return { loading, error, items, images, handleOptIn };
 }
 
 export default useDrawDetails;

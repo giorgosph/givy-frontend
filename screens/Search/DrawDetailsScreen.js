@@ -12,19 +12,14 @@ import { ITEM_LIST_HEIGHT } from "../../utils/constants/styles/dimensions";
 import useDrawDetails from "../../hooks/components/useDrawDetails";
 
 const DrawDetailsScreen = ({ route }) => {
-  const { loading, error, drawItem, handleOptIn } = useDrawDetails();
-  // TODO -> if already opt in disable button and change text and opacity
+  const { draw } = route.params;
 
-  const { draw } = route.params; 
-  
-  const images = [draw?.imagePath];
-  const items = drawItem.filter(item => item.id === draw?.id);
-
-  items && items.map(item => images.push(item.imagePath));
+  const { loading, error, items, images, handleOptIn } = useDrawDetails(draw);
+  // TODO -> if already opted in disable button and change text and opacity
 
   return (
    <>
-      <CustomHeader title={draw?.title} />
+      <CustomHeader title={draw.title} />
       <MainContainer centered>
         <ImageCarousel images={images} loop />
         <ScrollView style={styles.container}>
@@ -36,7 +31,7 @@ const DrawDetailsScreen = ({ route }) => {
           title="Opt In" 
           disabled={loading} 
           style={{opacity: loading ? 0.4 : 1}}
-          onPress={()=>handleOptIn(draw?.id)} 
+          onPress={()=>handleOptIn(draw.id)} 
         />
       </MainContainer>
    </>

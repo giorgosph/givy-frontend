@@ -9,7 +9,7 @@ const ImageCarousel = ({ images, loop }) => {
   // if there are no images render a loading frame
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
-      <Image source={{ uri: item }} style={styles.image} />
+      <Image source={{ uri: item }} style={styles.image} resizeMode="cover" />
     </View>
   );
   
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   image: { 
     width: IMAGE_CAROUSEL_WIDTH,
     height: IMAGE_CAROUSEL_HEIGHT,
+    borderRadius: 4,
   }
 });
 export default ImageCarousel;

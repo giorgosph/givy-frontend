@@ -19,3 +19,4 @@ export const SHIPPING_DETAILS_EP = `${USERS_EP}details/shipping/`;
 export const DRAWS_EP = `${BASE_URL}draws/`;
 
 export const OPT_IN_EP = `${DRAWS_EP}register/`;
+export const DRAW_ITEMS_EP = `${DRAWS_EP}items/`;
