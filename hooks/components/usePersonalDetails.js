@@ -22,6 +22,7 @@ const usePersonalDetails = () => {
 
   useEffect(() => {
     const fecthData = async () => await fetchAPI('get', USER_DETAILS_EP,  null, config);
+    
     if(!loading && !error) {
       if(!user && !data) fecthData();
 
