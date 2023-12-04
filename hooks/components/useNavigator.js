@@ -20,7 +20,7 @@ const useNavigator = () => {
         //   // TODO: render adminDetails
         //   setTabsToRender(renderAdminTabs(Tab));
         // } else {
-          // TODO: render client details
+          // TODO -> fetch opted in draws !!!
           setTabsToRender(clientTabs());
         // }
       } else {

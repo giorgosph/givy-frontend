@@ -7,6 +7,7 @@ import useAxiosFetch from '../useAxiosFetch';
 import { AuthContext } from '../../context/store';
 
 import { auth } from '../../utils/APIs/headers';
+import { optIn } from '../../redux/slices/userSlice';
 import { setItems } from '../../redux/slices/drawSlice';
 import { DRAW_ITEMS_EP, OPT_IN_EP } from '../../utils/constants/url';
 
@@ -42,12 +43,12 @@ const useDrawDetails = (draw) => {
         if(data.body?.drawId){
           alert("You have successfully been registered to the draw!\nGood Luck!!");
           navigation.goBack();
-          // ?? add to redux/cookies already opted in
-          // dispatch(setUser({ draws: data.body.drawId, date: new Date().getTime() }));
+          dispatch(optIn({ drawId: data.body.drawId }));
 
           // clear loading, error, data, state 
         } else {
           dispatch(setItems({ items: data.body }));
+          // clear loading, error, data, state 
         }
       } else if(data) alert(data.message);
     }

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   user: null,
   date: null, // const date = new Date(user.date); to get in components
+  draws: [],
 };
 
 const userSlice = createSlice({
@@ -37,6 +38,12 @@ const userSlice = createSlice({
       state.date = action.payload.date;
       console.log(message);
     },
+    optIn: (state, action) => {
+      const message = `User has opted in for draw with id: ${action.payload.drawId}`;
+
+      state.draws.push(action.payload.drawId);
+      console.log(message);
+    },
     clearUser: (state) => {
       state.user = null;
       state.date = null;
@@ -44,6 +51,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, updateContactDetails, updateShippingDetails, clearUser } = userSlice.actions;
+export const { setUser, updateContactDetails, updateShippingDetails, optIn, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -11,8 +11,13 @@ const useDrawList = () => {
   
   const dispatch = useDispatch();
   const draw = useSelector(state => state.draw);
+  const user = useSelector(state => state.user);
+  let draws;
 
-  // Check if draws where fetched more than 1 day ago to refetch
+  // Keep only the draws that user has not opt in yet
+  if(draw.draws) draws = draw.draws.filter(draw => !user.draws.some(id => id === draw.id));
+
+  // Check if draws were fetched more than 1 day ago to refetch
   // TODO -> research for better algorithm
   const currentDate = new Date();
   const savedDate = new Date(draw.date);
@@ -35,7 +40,7 @@ const useDrawList = () => {
     // abort request if user leave the component and clear api state
   }, [data, loading, error]);
 
-  return { loading, error, draws: draw.draws };
+  return { loading, error, draws };
 }
 
 export default useDrawList;
