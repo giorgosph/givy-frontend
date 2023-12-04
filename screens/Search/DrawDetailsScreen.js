@@ -7,38 +7,38 @@ import CustomButton from "../../components/general/CustomButton";
 import MainContainer from "../../components/general/MainContainer";
 import ImageCarousel from "../../components/general/ImageCarousel";
 
-import drawItem from "../../utils/constants/data/drawItem.json"
-
 import { ITEM_LIST_HEIGHT } from "../../utils/constants/styles/dimensions";
 
+import useDrawDetails from "../../hooks/components/useDrawDetails";
+
 const DrawDetailsScreen = ({ route }) => {
+  const { loading, error, drawItem, handleOptIn } = useDrawDetails();
+  // TODO -> if already opt in disable button and change text and opacity
+
   const { draw } = route.params; 
   
-  // get Items from redux where drawId=draw.id
-  const items = drawItem.filter(item => item.id === draw?.id);
   const images = [draw?.imagePath];
+  const items = drawItem.filter(item => item.id === draw?.id);
 
   items && items.map(item => images.push(item.imagePath));
 
-  const handleOptIn = () => {
-    // ?? pop up ad
-    // send request to server
-    // navigate back
-    // ?? add to redux/cookies already opted in
-  }
-
   return (
    <>
-    <CustomHeader title={draw?.title} />
-    <MainContainer centered>
-      <ImageCarousel images={images} loop />
-      <ScrollView style={styles.container}>
-      {items ? items.map(item => 
-        <ItemListing item={item}/>
-      ) : <Text>No Items to display!</Text>}
-      </ScrollView>
-      <CustomButton title="Opt In" onPress={handleOptIn} />
-    </MainContainer>
+      <CustomHeader title={draw?.title} />
+      <MainContainer centered>
+        <ImageCarousel images={images} loop />
+        <ScrollView style={styles.container}>
+          {items ? items.map(item => 
+            <ItemListing item={item}/>
+          ) : <Text>No Items to display!</Text>}
+        </ScrollView>
+        <CustomButton 
+          title="Opt In" 
+          disabled={loading} 
+          style={{opacity: loading ? 0.4 : 1}}
+          onPress={()=>handleOptIn(draw?.id)} 
+        />
+      </MainContainer>
    </>
   )
 };

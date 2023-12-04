@@ -8,7 +8,7 @@ import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
 const CustomInput = ({ control, name, rules, title, defaultValue, type, numeric, email }) => {
   const [isFocused] = useState(new Animated.Value(defaultValue ? 1 : 0));
-  const isPass = type === 'password';
+  const isPass = type === 'password' || type === 'current-password';
 
   const handleFocus = () => {
     Animated.timing(isFocused, {
