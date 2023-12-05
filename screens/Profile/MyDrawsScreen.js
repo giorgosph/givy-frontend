@@ -1,25 +1,27 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { useSelector } from "react-redux";
 
 import CustomHeader from "../../components/general/CustomHeader";
 import CustomButton from "../../components/general/CustomButton";
 import MainContainer from "../../components/general/MainContainer";
+import { optedIn } from "../../utils/filters/drawFilters";
+import DrawListing from "../../components/search/DrawListing";
+
+import useMyDraws from "../../hooks/components/useMyDraws";
 
 const MyDraws = ({ navigation }) => {
-  // TODO -> Fetch user's pending draws
-  const draws = [];
+  const { draws, onPress } = useMyDraws();
 
   return (
     <>
       <CustomHeader title="My Draws" navigation={navigation} />
       <MainContainer centered>
-        {draws.length ? draws.map((draw) => {
-          // TODO -> DrawListing component
-        }) : (
+        {draws && draws.length > 0 ? draws.map(draw => <DrawListing key={draw.id} draw={draw} noFooter />) 
+        : (
           <View>
             <Text style={{color: 'white'}}>You are not registered to any draw yet.</Text>
-            {/* TODO -> onPress navigate to SearchTab */}
-            <CustomButton title="Find a new Draw!" />
+            <CustomButton title="Find a new Draw!" onPress={onPress} />
           </View>
         )}
       </MainContainer>

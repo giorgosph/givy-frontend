@@ -9,7 +9,7 @@ import CustomTitle from '../general/CustomTitle';
 import { PIXELS } from '../../utils/constants/styles/dimensions';
 import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR, HEADING_FADE_COLOR } from '../../utils/constants/styles/colors';
 
-const DrawListing = ({ draw }) => {
+const DrawListing = ({ draw, noFooter }) => {
   const navigation = useNavigation();
 
   const handleNav = draw => {
@@ -22,15 +22,17 @@ const DrawListing = ({ draw }) => {
       <View style={styles.imageContainer}>
         <Image style={styles.image} source={{ uri: draw.imagePath }} resizeMode="cover" />
       </View>
-      <View style={styles.detailsContainer}>
+      <View style={[styles.detailsContainer, noFooter && { paddingBottom: 0 }]}>
         <CustomTitle text={draw.title} size={3} />
         <CustomText text={draw.brief} size={5} extraStyles={styles.title} color={HEADING_FADE_COLOR} />
         <CustomText text={draw.openingDate} extraStyles={styles.text} title={"Available From:"} titleExtraStyles={styles.textTitle} horizontal />
         <CustomText text={draw.closingDate} extraStyles={styles.text} title={"Results On:"} titleExtraStyles={styles.textTitle} horizontal />
       </View>
-      <View style={styles.textContainer}>
-        <CustomTitle text="Click to Join!" color={HEADING_FADE_COLOR} extraStyles={styles.join} />
-      </View>
+      {!noFooter && 
+        <View style={styles.textContainer}>
+          <CustomTitle text="Click to Join!" color={HEADING_FADE_COLOR} extraStyles={styles.join} />
+        </View>
+      } 
     </TouchableOpacity>
   );
 };
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
     borderColor: AUTH_ACTIVE_COLOR,
   },
   imageContainer: {
-    width: 120,
+    width: '40%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -72,9 +74,10 @@ const styles = StyleSheet.create({
     zIndex: 101,
   },
   detailsContainer: {
-    flex: 1,
+    width: '60%',
     display: 'flex',
-    paddingBottom: PIXELS * 1.5,    
+    paddingBottom: PIXELS * 1.5, 
+    overflow: 'hidden',   
   },
   title: {
     marginBottom: PIXELS / 4, 

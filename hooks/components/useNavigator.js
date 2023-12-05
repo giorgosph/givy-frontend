@@ -26,13 +26,13 @@ const useNavigator = () => {
         //   setTabsToRender(renderAdminTabs(Tab));
         // } else {
         if(!loading && !error) {
+          setTabsToRender(clientTabs());
+
           // TODO -> check last date of fetched data before fetching again
           if(!data) await fetchAPI('get', USER_DRAWS_EP, null, config);
 
           if(data.success) dispatch(setUserDraws({ drawIds: data.body }));
           else if(data) alert(data.message); // TODO -> remove after checking that works
-
-          setTabsToRender(clientTabs());
         }
         // }
       } else setTabsToRender(defaultTabs());
