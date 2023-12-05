@@ -4,9 +4,7 @@ import jwt_decode from "jwt-decode";
 export const AuthContext = createContext({
   token: "",
   isAuthenticated: false,
-  isVenue: false,
   isAdmin: false,
-  roleStatus: false,
   authenticate: (token) => {},
   logout: (token) => {},
 });
@@ -15,44 +13,36 @@ function AuthContextProvider({ children }) {
   // const [token, setToken] = useState(false); 
   const [token, setToken] = useState("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJpYXQiOjE3MDE3MTMyOTJ9.0Gb8ulPHxy2rRaYnLhcSqrQP9LpL6JUOCDqXTmBDNTE");   
   
-  // const [isVenue, setVenue] = useState(false);
   // const [isAdmin, setAdmin] = useState(false);
-  // const [roleStatus, setRoleStatus] = useState(false);
 
   const decodeToken = (token) => {
     try {
-      const { role, roleStatus } = jwt_decode(token.split(" ")[1]);
-      console.log("TOKEN:\n" + token + "\nSTATUS:\n" + roleStatus);
-      return { role, roleStatus };
+      const { role } = jwt_decode(token.split(" ")[1]);
+      console.log("TOKEN:\n" + token + "\nROLE:\n" + role);
+      return { role };
     } catch (error) {
       console.error("Error decoding token:", error);
-      return null;
+      return false;
     }
   };
 
   function authenticate(token) {
     console.log("Authenticating and setting token");
-    // const { role, roleStatus } = decodeToken(token);
+    // const { role } = decodeToken(token);
     setToken(token);
-    // setVenue(role === "venue");
     // setAdmin(role === "admin");
-    // setRoleStatus(roleStatus);
   }
 
   function logout() {
     setToken(null);
-    // setVenue(false);
     // setAdmin(false);
-    // setRoleStatus(false);
   }
 
   const value = useMemo(() => {
     return {
       token: token,
       isAuthenticated: !!token,
-      // isVenue: isVenue,
       // isAdmin: isAdmin,
-      // roleStatus: roleStatus,
       authenticate: authenticate,
       logout: logout,
     };

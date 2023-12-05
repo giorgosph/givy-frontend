@@ -38,6 +38,12 @@ const userSlice = createSlice({
       state.date = action.payload.date;
       console.log(message);
     },
+    setUserDraws: (state, action) => {
+      const message = `User draws has been set with ids: ${JSON.stringify(action.payload.drawIds)}`;
+
+      action.payload.drawIds.map(({ drawId }) => state.draws.push(drawId));
+      console.log(message);
+    },
     optIn: (state, action) => {
       const message = `User has opted in for draw with id: ${action.payload.drawId}`;
 
@@ -51,6 +57,13 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, updateContactDetails, updateShippingDetails, optIn, clearUser } = userSlice.actions;
+export const { 
+  setUser, 
+  updateContactDetails, 
+  updateShippingDetails, 
+  setUserDraws, 
+  optIn, 
+  clearUser 
+} = userSlice.actions;
 
 export default userSlice.reducer;

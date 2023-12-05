@@ -14,7 +14,7 @@ const DrawsListScreen = () => {
    <>
     <Header />
     <MainContainer centered>
-      {draws ? draws.map((draw) => <DrawListing key={draw.id} draw={draw}/>) 
+      {draws && draws.length > 0 ? draws.map((draw) => <DrawListing key={draw.id} draw={draw}/>) 
       : (
         <View>
           <Text style={{color: 'white'}}>There are no upcoming Draws, check again later!</Text>
