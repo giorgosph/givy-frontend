@@ -5,22 +5,25 @@ import useAxiosFetch from '../useAxiosFetch';
 
 import { DRAWS_EP } from '../../utils/constants/url';
 import { setDraws } from '../../redux/slices/drawSlice';
-import { notOptedIn } from '../../utils/filters/drawFilters';
 import { refetchPerDays } from '../../utils/APIs/refetch';
+import { excludeByID, includeByID } from '../../utils/filters/drawFilters';
 
-const useDrawList = () => {
+const useDraw = () => {
   const { fetchAPI, data, loading, error } = useAxiosFetch();
   
   const dispatch = useDispatch();
   const draw = useSelector(state => state.draw);
   const user = useSelector(state => state.user);
 
-  // Keep only the draws that user has not opt in yet
-  const draws = notOptedIn(draw.draws, user.draws);
-
   // Check if draws were fetched more than 1 day ago to refetch
   // TODO -> research for better algorithm
   const refetch = refetchPerDays(draw.date);
+
+  const draws = excludeByID(draw.draws, user.draws); // not opted in
+  const userDraws = includeByID(draw.draws, user.draws); // opted in
+  const wins = includeByID(draw.draws, user.wins); // winning draws
+
+  const navToSearch = () => navigation.navigate("ClientSearchTab");
 
   useEffect(() => {
     const fecthData = async () => await fetchAPI('get', DRAWS_EP);
@@ -37,7 +40,7 @@ const useDrawList = () => {
     // abort request if user leave the component and clear api state
   }, [data, loading, error]);
 
-  return { loading, error, draws };
+  return { loading, error, draws, userDraws, wins, navToSearch };
 }
 
-export default useDrawList;
+export default useDraw;

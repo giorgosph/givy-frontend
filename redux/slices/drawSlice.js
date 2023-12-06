@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  draws: null,
+  draws: [],
   date: null, // const date = new Date(draw.date); to get in components
-  items: null,
+  items: [],
   itemsDate: null
 };
 
@@ -12,10 +12,18 @@ const drawSlice = createSlice({
   initialState,
   reducers: {
     setDraws: (state, action) => {
-      const message = `Draws has been set on ${action.payload.date}`;
+      const { draws, date } = action.payload;
+      const message = `Draws has been set on ${date}`;
 
-      state.draws = action.payload.draws;
-      state.date = action.payload.date;
+      if(state.draws) {
+        draws.forEach(draw => {
+          if(!state.draws.some(exDraw => exDraw.id === draw.id)) state.draws.push(draw);
+        });
+        state.date = date;
+      } else {
+        state.draws = draws;
+        state.date = date;
+      }      
       console.log(message);
     },
     setItems: (state, action) => {

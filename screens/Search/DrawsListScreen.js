@@ -5,10 +5,10 @@ import Header from "../../components/general/Header";
 import MainContainer from "../../components/general/MainContainer";
 import DrawListing from "../../components/search/DrawListing";
 
-import useDrawList from "../../hooks/components/useDrawList";
+import useDraws from "../../hooks/components/useDraws";
 
 const DrawsListScreen = () => {
-  const { loading, error, draws } = useDrawList();  
+  const { loading, error, draws } = useDraws();  
 
   return (
    <>

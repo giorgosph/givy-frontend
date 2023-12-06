@@ -4,6 +4,7 @@ const initialState = {
   user: null,
   date: null, // const date = new Date(user.date); to get in components
   draws: [],
+  wins: [],
 };
 
 const userSlice = createSlice({
@@ -39,9 +40,12 @@ const userSlice = createSlice({
       console.log(message);
     },
     setUserDraws: (state, action) => {
-      const message = `User draws has been set with ids: ${JSON.stringify(action.payload.drawIds)}`;
+      const { drawIds, wins } = action.payload;
+      const message = 
+      `User draws have been set with opt in ids: ${JSON.stringify(drawIds)} and wins: ${JSON.stringify(wins)}`;
 
-      action.payload.drawIds.map(({ drawId }) => state.draws.push(drawId));
+      drawIds.map(({ drawId }) => state.draws.push(drawId));
+      wins.map(({ id }) => state.wins.push(id));
       console.log(message);
     },
     optIn: (state, action) => {
