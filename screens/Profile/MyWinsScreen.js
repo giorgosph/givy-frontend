@@ -1,15 +1,18 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { useSelector } from "react-redux";
 
-import DrawListing from "../../components/search/DrawListing";
+import ItemListing from "../../components/search/ItemListing";
 import CustomButton from "../../components/general/CustomButton";
 import CustomHeader from "../../components/general/CustomHeader";
 import MainContainer from "../../components/general/MainContainer";
 
-import useDraws from "../../hooks/components/useDraws";
+import { includeByID } from "../../utils/filters/drawFilters";
 
 const MyWins = ({ navigation }) => {
-  const { wins: draws } = useDraws(); // use to fetch draws if not already set
+  const drawItems = useSelector(state => state.draw.items); // All items fetched
+  const userItems = useSelector(state => state.user.wins); 
+  const items = includeByID(drawItems, userItems); // Winning items
 
   const handlePress = async () => {
     await navigation.goBack();
@@ -20,10 +23,10 @@ const MyWins = ({ navigation }) => {
    <>
     <CustomHeader title="My Wins" navigation={navigation} />
     <MainContainer centered>
-      {draws && draws.length > 0 ? draws.map(draw => <DrawListing key={draw.id} draw={draw} noFooter />) 
+      {items && items.length ? items.map(item => <ItemListing key={item.id} item={item} />) 
       : (
         <View>
-          <Text style={{color: 'white'}}>No winning draws yet.</Text>
+          <Text style={{color: 'white'}}>No winning items yet.</Text>
           <CustomButton title={"Find a new Draw!"} onPress={handlePress} />
         </View>
       )}

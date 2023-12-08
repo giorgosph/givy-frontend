@@ -9,12 +9,14 @@ import ImageCarousel from "../../components/general/ImageCarousel";
 
 import { ITEM_LIST_HEIGHT } from "../../utils/constants/styles/dimensions";
 
-import useDrawDetails from "../../hooks/components/useDrawDetails";
+import useDrawItems from "../../hooks/components/useDrawItems";
 
 const DrawDetailsScreen = ({ route }) => {
-  const { draw } = route.params;
+  const { draw, opted } = route.params;
+  console.log(opted);
 
-  const { loading, error, items, images, handleOptIn } = useDrawDetails(draw);
+  const { state, items, images, callback } = useDrawItems(draw);
+  const { loading, error } = state.api;
   // TODO -> if already opted in disable button and change text and opacity
 
   return (
@@ -23,15 +25,15 @@ const DrawDetailsScreen = ({ route }) => {
       <MainContainer centered>
         <ImageCarousel images={images} loop />
         <ScrollView style={styles.container}>
-          {items ? items.map(item => 
-            <ItemListing item={item}/>
-          ) : <Text>No Items to display!</Text>}
+          {items && items.length > 0 ? items.map(item => 
+            <ItemListing key={item.id} item={item}/>
+          ) : <Text style={{color: 'white'}}>No Items to display!</Text>}
         </ScrollView>
         <CustomButton 
-          title="Opt In" 
-          disabled={loading} 
+          title={!opted ? "Opt In" : "Already Opted In"} 
+          disabled={loading || opted} 
           style={{opacity: loading ? 0.4 : 1}}
-          onPress={()=>handleOptIn(draw.id)} 
+          onPress={()=>callback.handleOptIn(draw.id)} 
         />
       </MainContainer>
    </>

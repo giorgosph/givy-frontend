@@ -11,24 +11,28 @@ const drawSlice = createSlice({
   name: 'draw',
   initialState,
   reducers: {
-    setDraws: (state, action) => {
+    addDraws: (state, action) => {
       const { draws, date } = action.payload;
-      const message = `Draws has been set on ${date}`;
 
-      if(state.draws) {
-        draws.forEach(draw => {
-          if(!state.draws.some(exDraw => exDraw.id === draw.id)) state.draws.push(draw);
-        });
-        state.date = date;
-      } else {
-        state.draws = draws;
-        state.date = date;
-      }      
-      console.log(message);
+      draws.forEach(draw => {
+        const drawExist = state.draws.some(exDraw => exDraw.id === draw.id); 
+
+        if(!drawExist) {
+          state.draws.push(draw);
+          console.log(`Draw ${draw.id} added`);
+        } else console.log(`Draw ${draw.id} already exists`);
+      });
+      if(date) state.date = date;
     },
-    setItems: (state, action) => {
-      state.items = action.payload.items;
-      console.log("Items has been set");
+    addItems: (state, action) => {
+      action.payload.items.forEach(item => {
+        const itemExist = state.items.some(exItem => exItem.id === item.id);
+
+        if(!itemExist) {
+          state.items.push(item);
+          console.log(`Item ${item.id} added`);
+        } else console.log(`Item ${item.id} already exists`);
+      });
     },
     clearDraws: (state) => {
       state.draws = null;
@@ -37,6 +41,6 @@ const drawSlice = createSlice({
   },
 });
 
-export const { setDraws, setItems, clearDraws } = drawSlice.actions;
+export const { addDraws, addItems, clearDraws } = drawSlice.actions;
 
 export default drawSlice.reducer;

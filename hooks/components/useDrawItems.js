@@ -8,55 +8,62 @@ import { AuthContext } from '../../context/store';
 
 import { auth } from '../../utils/APIs/headers';
 import { optIn } from '../../redux/slices/userSlice';
-import { setItems } from '../../redux/slices/drawSlice';
+import { addItems } from '../../redux/slices/drawSlice';
 import { DRAW_ITEMS_EP, OPT_IN_EP } from '../../utils/constants/url';
+import { includeByDrawID } from '../../utils/filters/drawFilters';
 
-const useDrawDetails = (draw) => {
-  const { fetchAPI, data, loading, error } = useAxiosFetch();
-  const images = [draw.imagePath];
-  let items;
+const useDrawItems = (draw) => {
+  const { fetchAPI, data, loading, error, status } = useAxiosFetch();
 
-  const drawItems = useSelector(state => state.draw.items);
-
-  if(drawItems) {
-    items = drawItems.filter(item => item.drawId === draw.id);
-    items && items.map(item => images.push(item.imagePath));
-  } 
-  
   const authCtx = useContext(AuthContext);
   const config = auth(authCtx.token);
   const navigation = useNavigation();
+  
   const dispatch = useDispatch();
+  const drawItems = useSelector(state => state.draw.items); // All items fetched
+  
+  const images = [draw.imagePath];
+  const items = includeByDrawID(drawItems, [draw.id]) // Items for current draw
+  items.map(item => images.push(item.imagePath));
+  
+  const fetchItems = async (drawId) => await fetchAPI('get', `${DRAW_ITEMS_EP}${drawId}`);
 
   const handleOptIn = async (drawId) => {
     // ?? pop up ad
     await fetchAPI('post', OPT_IN_EP,  { drawId }, config);
   }
 
+  
   useEffect(() => {
-    const fetchItems = async (drawId) => await fetchAPI('get', `${DRAW_ITEMS_EP}${drawId}`);
-
     if(!loading && !error) {
-      if(!data && !items) fetchItems(draw.id);
+      if(!status && items.length == 0) fetchItems(draw.id);
 
       if(data.success) {
-        if(data.body?.drawId){
+        if(data.body.drawId) {
           alert("You have successfully been registered to the draw!\nGood Luck!!");
           navigation.goBack();
           dispatch(optIn({ drawId: data.body.drawId }));
 
           // clear loading, error, data, state 
-        } else {
-          dispatch(setItems({ items: data.body }));
+        } else if(data.body) {
+          dispatch(addItems({ items: data.body }));
           // clear loading, error, data, state 
         }
-      } else if(data) alert(data.message);
+      }
     }
 
     // do not abort opt in request if user leave the component
   }, [data, loading, error]);
 
-  return { loading, error, items, images, handleOptIn };
+  return { 
+    state: {
+      api: loading, error
+    },
+    callback: {
+      handleOptIn 
+    },
+    items, images 
+  };
 }
 
-export default useDrawDetails;
+export default useDrawItems;

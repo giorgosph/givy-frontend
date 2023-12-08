@@ -9,26 +9,22 @@ import CustomTitle from '../general/CustomTitle';
 import { PIXELS } from '../../utils/constants/styles/dimensions';
 import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR, HEADING_FADE_COLOR } from '../../utils/constants/styles/colors';
 
-const DrawListing = ({ draw, noFooter }) => {
+const DrawListing = ({ draw, opted = false }) => {
   const navigation = useNavigation();
-
-  const handleNav = draw => {
-    console.log("DRAW:\n", draw)
-    navigation.navigate('DrawDetails', { draw });
-  }
+  const handleNav = draw => navigation.navigate('DrawDetails', { draw, opted });
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => handleNav(draw)}>
       <View style={styles.imageContainer}>
         <Image style={styles.image} source={{ uri: draw.imagePath }} resizeMode="cover" />
       </View>
-      <View style={[styles.detailsContainer, noFooter && { paddingBottom: 0 }]}>
+      <View style={[styles.detailsContainer, opted && { paddingBottom: 0 }]}>
         <CustomTitle text={draw.title} size={3} />
         <CustomText text={draw.brief} size={5} extraStyles={styles.title} color={HEADING_FADE_COLOR} />
         <CustomText text={draw.openingDate} extraStyles={styles.text} title={"Available From:"} titleExtraStyles={styles.textTitle} horizontal />
         <CustomText text={draw.closingDate} extraStyles={styles.text} title={"Results On:"} titleExtraStyles={styles.textTitle} horizontal />
       </View>
-      {!noFooter && 
+      {!opted && 
         <View style={styles.textContainer}>
           <CustomTitle text="Click to Join!" color={HEADING_FADE_COLOR} extraStyles={styles.join} />
         </View>

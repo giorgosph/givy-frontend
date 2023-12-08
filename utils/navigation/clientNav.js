@@ -3,9 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { SearchStack } from "./stacks/SearchStack";
 import { SettingsStack } from "./stacks/SettingsStack";
+import { ProfileStack } from "./stacks/ProfileStack";
 
 import HomeScreen from "../../screens/Home/HomeScreen";
-import { ProfileStack } from "./stacks/ProfileStack";
+import DrawDetailsScreen from "../../screens/Search/DrawDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ export function ClientProfileTab() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {ProfileStack()}
       {SettingsStack()}
+      <Stack.Screen name="DrawDetails" component={DrawDetailsScreen} />
     </Stack.Navigator>
   );
 }

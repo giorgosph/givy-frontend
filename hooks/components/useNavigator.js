@@ -5,11 +5,13 @@ import { useDispatch } from "react-redux";
 import { AuthContext } from "../../context/store";
 
 import useAxiosFetch from "../useAxiosFetch";
-import { auth } from "../../utils/APIs/headers";
+
+import { addItems } from "../../redux/slices/drawSlice";
 import { setUserDraws } from "../../redux/slices/userSlice";
-import { clientTabs, defaultTabs } from "../../utils/navigation/tabs";
+
+import { auth } from "../../utils/APIs/headers";
 import { USER_DRAWS_EP } from "../../utils/constants/url";
-import { setDraws } from "../../redux/slices/drawSlice";
+import { clientTabs, defaultTabs } from "../../utils/navigation/tabs";
 
 const useNavigator = () => {
   const [tabsToRender, setTabsToRender] = useState(defaultTabs());
@@ -35,7 +37,7 @@ const useNavigator = () => {
           if(data.success) {
             dispatch(setUserDraws({ drawIds: data.body.draws, wins: data.body.wins }));
             // do not provide date as we need to fetch draws later
-            dispatch(setDraws({ draws: data.body.wins, date: null })); 
+            dispatch(addItems({ items: data.body.wins, date: null })); 
           } 
         }
         // }

@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import useAxiosFetch from '../useAxiosFetch';
 
 import { DRAWS_EP } from '../../utils/constants/url';
-import { setDraws } from '../../redux/slices/drawSlice';
+import { addDraws } from '../../redux/slices/drawSlice';
 import { refetchPerDays } from '../../utils/APIs/refetch';
 import { excludeByID, includeByID } from '../../utils/filters/drawFilters';
 
-const useDraw = () => {
+const useDraws = () => {
   const { fetchAPI, data, loading, error } = useAxiosFetch();
   
   const dispatch = useDispatch();
@@ -19,10 +19,8 @@ const useDraw = () => {
   // TODO -> research for better algorithm
   const refetch = refetchPerDays(draw.date);
 
-  const toExclude = [...user.draws, ...user.wins];
-  const draws = excludeByID(draw.draws, toExclude); // upcoming draws (not opted in)
+  const draws = excludeByID(draw.draws, user.draws); // not opted in
   const userDraws = includeByID(draw.draws, user.draws); // opted in
-  const wins = includeByID(draw.draws, user.wins); // winning draws
 
   useEffect(() => {
     const fecthData = async () => await fetchAPI('get', DRAWS_EP);
@@ -31,7 +29,7 @@ const useDraw = () => {
       if(refetch) fecthData();
       
       if(data?.success) {
-        dispatch(setDraws({ draws: data.body, date: new Date().getTime() }));
+        dispatch(addDraws({ draws: data.body, date: new Date().getTime() }));
         // clear loading, error, data, state 
       }
     }
@@ -43,8 +41,8 @@ const useDraw = () => {
     state: {
       api: { loading, error }
     },
-    draws, userDraws, wins 
+    draws, userDraws
   };
 }
 
-export default useDraw;
+export default useDraws;

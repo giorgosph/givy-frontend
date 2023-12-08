@@ -20,7 +20,7 @@ const MyDraws = ({ navigation }) => {
     <>
       <CustomHeader title="My Draws" navigation={navigation} />
       <MainContainer centered>
-        {draws && draws.length > 0 ? draws.map(draw => <DrawListing key={draw.id} draw={draw} noFooter />) 
+        {draws && draws.length > 0 ? draws.map(draw => <DrawListing key={draw.id} draw={draw} opted />) 
         : (
           <View>
             <Text style={{color: 'white'}}>You are not registered to any draw yet.</Text>
