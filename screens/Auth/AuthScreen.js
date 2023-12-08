@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
 import { StyleSheet, View, ScrollView, Animated  } from 'react-native';
 
-import Header from '../../components/general/Header';
+import useAuth from '../../hooks/components/useAuth';
+
 import Login from '../../components/auth/Login';
 import Signup from '../../components/auth/Signup';
+import Header from '../../components/general/Header';
 import AuthNavbar from '../../components/auth/AuthNavbar';
 import MainContainer from '../../components/general/MainContainer';
 
@@ -11,6 +13,9 @@ import { WIDTH } from '../../utils/constants/styles/dimensions';
 import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR } from '../../utils/constants/styles/colors';
 
 const AuthScreen = () => { 
+  const { state, callback } = useAuth();
+  const { loading, error } = state.api;
+
   const animation = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef();
 
@@ -36,6 +41,8 @@ const AuthScreen = () => {
   
 
   return (
+    // TODO -> loading && loadingModal
+    // TODO -> !loading && error && errorModal
     <>
     <Header />
     <MainContainer>
@@ -55,10 +62,10 @@ const AuthScreen = () => {
         onScroll={Animated.event([{nativeEvent: {contentOffset: {x:animation}}}], {useNativeDriver: false})} 
         >
         <View style={styles.inputWrap}>
-          <Login />
+          <Login loading={loading} logIn={callback.logIn} />
         </View>
         <View style={styles.inputWrap}>
-          <Signup />
+          <Signup loading={loading} signUp={callback.signUp} />
         </View>
       </ScrollView>
     </MainContainer>

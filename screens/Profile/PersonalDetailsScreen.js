@@ -15,7 +15,11 @@ import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_FADE_COLOR } from "../../u
 import usePersonalDetails from "../../hooks/components/usePersonalDetails";
 
 const PersonalDetailsScreen = ({ navigation }) => {
-  const { loading, error, edit, user} = usePersonalDetails();
+  // const { loading, error, edit, user} = usePersonalDetails();
+  const { state, callback, user} = usePersonalDetails();
+
+  const { loading, error } = state.api;
+  const { contact, shipping, setContact, setShipping } = state.screen;
 
   const fullName = `${user?.firstName} ${user?.lastName}`;
 
@@ -24,8 +28,10 @@ const PersonalDetailsScreen = ({ navigation }) => {
   return (
    <>
       {/* TODO -> ? make a loading skeleton/animation to remove 'user?.' */}
-      {edit.contact ? <EditContactDetails user={user} setEditContact={edit.setContact} /> 
-      : edit.shipping ? <EditShippingDetails user={user} setEditShipping={edit.setShipping} />
+      {contact ? 
+        <EditContactDetails state={state} onSubmit={callback.contact} user={user} /> 
+      : shipping ? 
+        <EditShippingDetails state={state} onSubmit={callback.shipping} user={user} />
       : (
         <>
           <Header />
@@ -33,7 +39,7 @@ const PersonalDetailsScreen = ({ navigation }) => {
             <View style={styles.detailsContainer}>
               <CustomTitle text={fullName} extraStyles={styles.title} />
               <CustomTitle text={`@${user?.username}`} size={4} lowercase extraStyles={styles.subTitle} />
-              <UserDetails user={user} setEditContact={edit.setContact} setEditShipping={edit.setShipping} />
+              <UserDetails user={user} setEditContact={setContact} setEditShipping={setShipping} />
             </View>
             <View style={styles.buttonsContainer}>
               <CustomButton title={'My Draws'} style={styles.button1} textStyle={styles.buttonText1} onPress={()=>navTo('MyDraws')} />

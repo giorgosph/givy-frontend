@@ -19,8 +19,8 @@ const userSlice = createSlice({
       console.log(message);
     },
     updateContactDetails: (state, action) => {
-      const { email, mobile, username } = action.payload.user;
-      const message = `Contact details for ${username} has been updated on ${action.payload.date}`;
+      const { email, mobile } = action.payload;
+      const message = `Contact details has been updated on ${action.payload.date}`;
 
       if(email) state.user.email = email;
       if(mobile) state.user.mobile = mobile;

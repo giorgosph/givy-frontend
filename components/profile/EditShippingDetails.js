@@ -2,6 +2,8 @@ import React from "react";
 import { View, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+import { useForm } from "react-hook-form";
+
 import CustomInput from "../general/CustomInput";
 import CustomHeader from "../general/CustomHeader";
 import CustomButton from "../general/CustomButton";
@@ -10,16 +12,20 @@ import MainContainer from "../general/MainContainer";
 import { isAndroid } from "../../utils/constants/device"
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 
-import useEditShippingDetails from "../../hooks/components/useEditShippingDetails";
+const EditShippingDetails = (props) => {
+  const { user, state, onSubmit } = props;
+  const { loading, error } = state.api;
 
-const EditShippingDetails = ({ user, setEditShipping }) => {
-  const { loading, error, control, handleSubmit} = useEditShippingDetails(setEditShipping);
+  const { control, reset, handleSubmit } = useForm();
 
   return (
     // TODO -> loading && loadingModal
     // TODO -> !loading && error && errorModal
     <>
-      <CustomHeader title='Shipping Details' onPress={()=>setEditShipping(false)} />
+      <CustomHeader title='Shipping Details' onPress={()=>{
+        reset();
+        state.screen.setShipping(false);
+      }} />
       <MainContainer>
         <KeyboardAvoidingView behavior={isAndroid ? 'padding' : 'height'}>
           <KeyboardAwareScrollView enableOnAndroid={true} style={styles.container}>
@@ -35,7 +41,7 @@ const EditShippingDetails = ({ user, setEditShipping }) => {
               title='submit'
               disabled={loading} 
               style={{opacity: loading ? 0.4 : 1}}
-              onPress={handleSubmit()}
+              onPress={handleSubmit(onSubmit)}
             />
           </View>
         </KeyboardAvoidingView>

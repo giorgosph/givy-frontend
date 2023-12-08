@@ -1,12 +1,34 @@
 import { useContext, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosFetch from '../useAxiosFetch';
 import { AuthContext } from '../../context/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
+import isEqual from '../../utils/isEqual';
 import { auth } from '../../utils/APIs/headers';
-import { setUser } from '../../redux/slices/userSlice';
-import { USER_DETAILS_EP } from '../../utils/constants/url';
+import { CONTACT_DETAILS_EP, SHIPPING_DETAILS_EP } from '../../utils/constants/url';
+
+import { setUser, updateContactDetails, updateShippingDetails } from '../../redux/slices/userSlice';
+
+/* ---------------------------------------------------
+ * --------- Use when editing user's details ---------
+ * --------------------------------------------------- */
+
+const contactDetails = user => ({
+  email: user?.email,
+  mobile: user?.mobile
+});
+
+const shippingDetails = user => ({
+  country: user?.country,
+  city: user?.city,
+  address1: user?.address1,
+  address2: user?.address2,
+  postalCode: user?.postalCode,
+});
+
+/* --------------------------------------------------- */
 
 const usePersonalDetails = () => {
   const [editContact, setEditContact] = useState(false);
@@ -14,21 +36,50 @@ const usePersonalDetails = () => {
 
   const { fetchAPI, data, loading, error } = useAxiosFetch();
   
-  const user = useSelector(state => state.user.user);
   const dispatch = useDispatch();
-
+  const user = useSelector(state => state.user.user);
+ 
   const authCtx = useContext(AuthContext);
+  const navigation = useNavigation();
   const config = auth(authCtx.token);
 
-  useEffect(() => {
-    const fecthData = async () => await fetchAPI('get', USER_DETAILS_EP,  null, config);
-    
-    if(!loading && !error) {
-      if(!user && !data) fecthData();
+  const onSubmitShipping = async (formData) => {
+    if(!isEqual(shippingDetails(user), formData)) 
+      await fetchAPI('put', SHIPPING_DETAILS_EP,  formData, config);
+    else {
+      alert("Your details are already up to date!");
+      setEditShipping(false);
+    }
+  }
 
-      if(data?.success) {
-        dispatch(setUser({ user: data.body, date: new Date().getTime() }));
-        // clear loading, error, data, state 
+  const onSubmitContact = async (formData) => {
+    if(!isEqual(contactDetails(user), formData))  
+      await fetchAPI('put', CONTACT_DETAILS_EP,  formData, config);
+    else {
+      alert("Your details are already up to date!");
+      setEditContact(false);
+    }
+  }
+
+  // NOTE: No need to refetch data as user's details can only be changed by the user.
+
+  useEffect(() => {
+    if(!loading && !error) {
+      if(data.success) {
+        if(data.body?.shippingDetails) {
+          dispatch(updateShippingDetails({ user: data.body.shippingDetails, date: new Date().getTime()}));
+          alert("Details Updated Successfully!");
+          setEditShipping(false);
+        } else if(data.body?.contactDetails) {
+          const { email, mobile } = data.body.contactDetails;
+          
+          dispatch(updateContactDetails({ email, mobile, date: new Date().getTime() }));
+          alert("Details Changed!");
+          setEditContact(false);
+          // navigation.navigate("AccountConfirmarion");
+        } 
+
+        // clear loading, error, data, state ??(here)
       }
     }
 
@@ -36,11 +87,18 @@ const usePersonalDetails = () => {
   }, [data, loading, error]);
 
   return { 
-    loading, error, user,
-    edit: { 
-      contact: editContact, setContact: setEditContact,
-      shipping: editShipping, setShipping: setEditShipping
+    state: {
+      api: { loading, error },
+      screen: { 
+        contact: editContact, setContact: setEditContact,
+        shipping: editShipping, setShipping: setEditShipping
+      },
     },
+    callback: {
+      contact: onSubmitContact,
+      shipping: onSubmitShipping,
+    },
+    user: user,
   };
 }
 

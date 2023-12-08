@@ -2,23 +2,23 @@ import React from 'react';
 import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+import { useForm } from 'react-hook-form';
+
 import CustomInput from '../general/CustomInput';
 import CustomButton from '../general/CustomButton';
 import CustomDropdown from '../general/CustomDropdown';
 
 import { isAndroid } from '../../utils/constants/device';
 import { PIXELS } from '../../utils/constants/styles/dimensions';
-import { inputTypes as it } from '../../utils/constants/data/inputTypes';
+
 import genderData from '../../utils/constants/data/dropdown/genderData';
+import { inputTypes as it } from '../../utils/constants/data/inputTypes';
 
-import useSignup from '../../hooks/components/useSignup';
-
-const Signup = () => {
-  const { loading, error, control, handleSubmit } = useSignup();
+const Signup = (props) => {
+  const { loading, signUp } = props;
+  const { control, handleSubmit } = useForm();
 
   return (
-    // TODO -> loading && loadingModal
-    // TODO -> !loading && error && errorModal
     <KeyboardAvoidingView behavior={isAndroid ? 'padding' : 'height'}>
       <KeyboardAwareScrollView enableOnAndroid={true} style={styles.container}>
         {/* Add regex rules, add mobile + ext */}
@@ -40,7 +40,7 @@ const Signup = () => {
           title='submit'
           disabled={loading} 
           style={{opacity: loading ? 0.4 : 1}}
-          onPress={handleSubmit()}
+          onPress={handleSubmit(signUp)}
         />
       </View>
     </KeyboardAvoidingView>
