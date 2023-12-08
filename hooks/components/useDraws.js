@@ -19,17 +19,16 @@ const useDraw = () => {
   // TODO -> research for better algorithm
   const refetch = refetchPerDays(draw.date);
 
-  const draws = excludeByID(draw.draws, user.draws); // not opted in
+  const toExclude = [...user.draws, ...user.wins];
+  const draws = excludeByID(draw.draws, toExclude); // upcoming draws (not opted in)
   const userDraws = includeByID(draw.draws, user.draws); // opted in
   const wins = includeByID(draw.draws, user.wins); // winning draws
-
-  const navToSearch = () => navigation.navigate("ClientSearchTab");
 
   useEffect(() => {
     const fecthData = async () => await fetchAPI('get', DRAWS_EP);
 
     if(!loading && !error) {
-      if(refetch && !data) fecthData();
+      if(refetch) fecthData();
       
       if(data?.success) {
         dispatch(setDraws({ draws: data.body, date: new Date().getTime() }));
@@ -40,7 +39,12 @@ const useDraw = () => {
     // abort request if user leave the component and clear api state
   }, [data, loading, error]);
 
-  return { loading, error, draws, userDraws, wins, navToSearch };
+  return { 
+    state: {
+      api: { loading, error }
+    },
+    draws, userDraws, wins 
+  };
 }
 
 export default useDraw;

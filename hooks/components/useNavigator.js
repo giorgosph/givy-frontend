@@ -14,7 +14,7 @@ import { setDraws } from "../../redux/slices/drawSlice";
 const useNavigator = () => {
   const [tabsToRender, setTabsToRender] = useState(defaultTabs());
 
-  const { fetchAPI, data, loading, error } = useAxiosFetch();
+  const { fetchAPI, data, loading, error, status } = useAxiosFetch();
   const authCtx = useContext(AuthContext);
   const config = auth(authCtx.token);
   const dispatch = useDispatch()
@@ -30,13 +30,13 @@ const useNavigator = () => {
           setTabsToRender(clientTabs());
 
           // TODO -> check last date of fetched data before fetching again ??
-          if(!data) await fetchAPI('get', USER_DRAWS_EP, null, config);
+          if(!data && status != 204) await fetchAPI('get', USER_DRAWS_EP, null, config);
 
           if(data.success) {
             dispatch(setUserDraws({ drawIds: data.body.draws, wins: data.body.wins }));
             // do not provide date as we need to fetch draws later
             dispatch(setDraws({ draws: data.body.wins, date: null })); 
-          } else if(data) alert(data.message); // TODO -> remove after checking that works
+          } 
         }
         // }
       } else setTabsToRender(defaultTabs());

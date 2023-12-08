@@ -9,7 +9,12 @@ import MainContainer from "../../components/general/MainContainer";
 import useDraws from "../../hooks/components/useDraws";
 
 const MyDraws = ({ navigation }) => {
-  const { userDraws: draws, navToSearch } = useDraws();
+  const { userDraws: draws } = useDraws(); // use to fetch draws if not already set
+
+  const handlePress = async () => {
+    await navigation.goBack();
+    navigation.navigate("ClientSearchTab");
+  }
 
   return (
     <>
@@ -19,7 +24,7 @@ const MyDraws = ({ navigation }) => {
         : (
           <View>
             <Text style={{color: 'white'}}>You are not registered to any draw yet.</Text>
-            <CustomButton title="Find a new Draw!" onPress={navToSearch} />
+            <CustomButton title="Find a new Draw!" onPress={handlePress} />
           </View>
         )}
       </MainContainer>

@@ -9,7 +9,12 @@ import MainContainer from "../../components/general/MainContainer";
 import useDraws from "../../hooks/components/useDraws";
 
 const MyWins = ({ navigation }) => {
-  const { wins: draws, navToSearch } = useDraws();
+  const { wins: draws } = useDraws(); // use to fetch draws if not already set
+
+  const handlePress = async () => {
+    await navigation.goBack();
+    navigation.navigate("ClientSearchTab");
+  }
 
   return (
    <>
@@ -18,8 +23,8 @@ const MyWins = ({ navigation }) => {
       {draws && draws.length > 0 ? draws.map(draw => <DrawListing key={draw.id} draw={draw} noFooter />) 
       : (
         <View>
-          <Text>No winning draws yet.</Text>
-          <CustomButton title={"Find a new Draw!"} onPress={navToSearch} />
+          <Text style={{color: 'white'}}>No winning draws yet.</Text>
+          <CustomButton title={"Find a new Draw!"} onPress={handlePress} />
         </View>
       )}
     </MainContainer>

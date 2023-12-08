@@ -18,5 +18,5 @@ export const fetchAxios = async (type, endpoint, body=null, extraHeaders=[]) => 
   };
 
   const response = await axios(options);
-  return { data: response.data, status: response?.status || null }
+  return { data: response.data, status: response.status }
 }

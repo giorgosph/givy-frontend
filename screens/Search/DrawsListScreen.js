@@ -8,7 +8,7 @@ import DrawListing from "../../components/search/DrawListing";
 import useDraws from "../../hooks/components/useDraws";
 
 const DrawsListScreen = () => {
-  const { loading, error, draws } = useDraws();  
+  const { state, draws } = useDraws();  
 
   return (
    <>
