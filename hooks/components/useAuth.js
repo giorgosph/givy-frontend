@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
 
+import useModal from '../useModal';
 import { useDispatch } from 'react-redux';
 import useAxiosFetch from '../useAxiosFetch';
 import { useNavigation } from '@react-navigation/native';
@@ -16,7 +17,8 @@ const useAuth = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const authCtx = useContext(AuthContext);
-
+  
+  const { setVisible, renderModal } = useModal();
   const { fetchAPI, data, loading, error } = useAxiosFetch();
 
   const logIn = async (formData) => await fetchAPI('put', LOGIN_EP,  formData);
@@ -28,10 +30,11 @@ const useAuth = () => {
       if(data.success) {
         dispatch(setUser({ user: data.body.user, date: new Date().getTime() }));
 
-        // if the email is already confirmed
+        // User's email is already confirmed
         if(data.body.confirmed.email) { 
-          authCtx.authenticate(data.body.token); // log in
-          if(!data.body.confirmed.mobile) ; // modal to navigate to mobile confirmation // pending mobile confirmation
+          
+          if(!data.body.confirmed.mobile) setVisible(true); // pending mobile confirmation
+          else authCtx.authenticate(data.body.token); // Log in the user
         } else {
           authCtx.holdToken(data.body.token);
           navigation.navigate("AccountConfirmation", { email: true });
@@ -42,11 +45,22 @@ const useAuth = () => {
     } 
   }, [data, loading, error]);
 
+  /* --------------------------------------------------------------------------------- */
+
+  const modalInfo = {
+    title: "Phone Number Confirmation",
+    text: "We are asking to confirm your phone number in order to notify you when you have won or contact you for delivery instructions.",
+    buttonText: "Confirm",
+    buttonText2: "Not Now",
+    onPress: () => navigation.navigate("AccountConfirmation", { email: false }),
+    onPress2: () => authCtx.authenticate(data.body.token)
+  };
+
   return { 
     state: {
-      api: { loading, error }
+      api: { loading, error },
     },
-    callback: { logIn, signUp }
+    callback: { logIn, signUp, renderModal: ()=> renderModal(modalInfo) }
   };
 }
 

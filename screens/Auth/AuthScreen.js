@@ -44,6 +44,7 @@ const AuthScreen = () => {
     // TODO -> loading && loadingModal
     // TODO -> !loading && error && errorModal
     <>
+    {callback.renderModal()}
     <Header />
     <MainContainer>
       <View style={styles.navBarWrap}>

@@ -13,23 +13,23 @@ const CustomModal = ({
   extraStyle,
   extraTitleStyle,
   extraTextStyle,
-  buttonName,
-  buttonName2,
-  onPressButton1,
-  onPressButton2,
-  onClose,
+  buttonText,
+  buttonText2,
+  onPress,
+  onPress2,
+  onClose
 }) => {
 
   const handlePress1 = () => {
-    if (onPressButton1) {
-      onPressButton1();
+    if (onPress) {
+      onPress();
       onClose();
     } else onClose();
   };
 
   const handlePress2 = () => {
-    if (onPressButton2) {
-      onPressButton2();
+    if (onPress2) {
+      onPress2();
       onClose();
     } else onClose();
   };
@@ -41,11 +41,13 @@ const CustomModal = ({
         <View style={styles.modalHeader} />
         <CustomText text={text} size={1} extraStyles={extraTextStyle} color={'black'} />
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.button} onPress={handlePress2}>
-            <CustomText text={buttonName2 || 'Cancel'} size={2} color={'#4285F4'} />
-          </TouchableOpacity>
+          {onPress2 &&  
+            <TouchableOpacity style={styles.button} onPress={handlePress2}>
+              <CustomText text={buttonText2 || 'Cancel'} size={2} color={'#4285F4'} />
+            </TouchableOpacity>
+          }
           <TouchableOpacity style={[styles.button, styles.buttonBorder]} onPress={handlePress1}>
-            <CustomText text={buttonName || 'OK'} size={1} color={'#4285F4'} />
+            <CustomText text={buttonText || 'OK'} size={1} color={'#4285F4'} />
           </TouchableOpacity>
         </View>
       </View>
