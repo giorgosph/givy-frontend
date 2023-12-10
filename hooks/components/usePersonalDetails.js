@@ -53,6 +53,7 @@ const usePersonalDetails = () => {
   }
 
   const onSubmitContact = async (formData) => {
+    // TODO -> modal to confirm that user will be logged out until confirm new email
     if(!isEqual(contactDetails(user), formData))  
       await fetchAPI('put', CONTACT_DETAILS_EP,  formData, config);
     else {
@@ -65,18 +66,30 @@ const usePersonalDetails = () => {
 
   useEffect(() => {
     if(!loading && !error) {
+
       if(data.success) {
+
         if(data.body?.shippingDetails) {
           dispatch(updateShippingDetails({ user: data.body.shippingDetails, date: new Date().getTime()}));
-          alert("Details Updated Successfully!");
           setEditShipping(false);
+
+          alert("Details Updated Successfully!");
         } else if(data.body?.contactDetails) {
           const { email, mobile } = data.body.contactDetails;
           
           dispatch(updateContactDetails({ email, mobile, date: new Date().getTime() }));
           alert("Details Changed!");
           setEditContact(false);
-          // navigation.navigate("AccountConfirmarion");
+
+          if(email) {
+            authCtx.holdToken(authCtx.token, () => {
+              console.log("NAVVV");
+              navigation.navigate("AccountConfirmation", { email: true });
+            });
+            
+          }
+          mobile && 0; // TODO -> open modal to navigate to account confirmation 
+
         } 
 
         // clear loading, error, data, state ??(here)

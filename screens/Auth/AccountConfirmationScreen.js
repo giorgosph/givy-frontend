@@ -25,7 +25,7 @@ const AccountConfirmationScreen = ({ route }) => {
   return (
     <>
       <Header />
-      <MainContainer centered fullHeight={email}>
+      <MainContainer centered>
         <CustomTitle text={title} size={1} extraStyles={styles.title} />
         <TextInput value={code} onChangeText={text => setCode(text)} inputMode="numeric" style={styles.input} textAlign="center" />
         <CustomText text={text} extraStyles={styles.text}/>

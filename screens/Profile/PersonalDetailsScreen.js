@@ -15,7 +15,6 @@ import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_FADE_COLOR } from "../../u
 import usePersonalDetails from "../../hooks/components/usePersonalDetails";
 
 const PersonalDetailsScreen = ({ navigation }) => {
-  // const { loading, error, edit, user} = usePersonalDetails();
   const { state, callback, user} = usePersonalDetails();
 
   const { loading, error } = state.api;

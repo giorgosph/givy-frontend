@@ -16,7 +16,7 @@ const useConfirmation = () => {
 
   const navigation = useNavigation();
   const authCtx = useContext(AuthContext);
-  const config = auth(authCtx.tempToken || authCtx.token);
+  const config = auth(authCtx.tempToken);
 
   const { fetchAPI, data, loading, status, error } = useAxiosFetch();
 
@@ -39,7 +39,7 @@ const useConfirmation = () => {
         if(data.body?.type) {
           alert(`${data.body.type} sent successfully!`);
         } else {
-          authCtx.tempToken && authCtx.authenticate(authCtx.tempToken);
+          authCtx.authenticate(authCtx.tempToken);
           alert("Confirmed successfully!");
           // navigation.navigate("ClientHomeTab");
         }

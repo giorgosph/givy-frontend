@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import Header from "../../components/general/Header"
 import MainContainer from "../../components/general/MainContainer"
 
-import { PIXELS, WIDTH } from "../../utils/constants/styles/dimensions";
+import { AuthContext } from "../../context/store";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
+import { PIXELS, WIDTH } from "../../utils/constants/styles/dimensions";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
+
+  const authCtx = useContext(AuthContext);
+
+  useEffect(() => {
+    authCtx.tempToken && navigation.navigate("AccountConfirmation", { email: true });
+  }, []);
+
   return (
    <>
     <Header />
