@@ -1,5 +1,7 @@
 export const BACKGROUND_COLOR = '#0D0505';
 export const TEXT_COLOR = '#E0C5C5';
+export const BUTTON_COLOR = '#6450E3';
+
 export const HEADING_COLOR = '#F2E4E4';
 export const HEADING_BRIGHT_COLOR = '#FAEBEB'; 
 export const HEADING_FADE_COLOR = 'rgba(224, 197, 197, 0.8)';

@@ -9,10 +9,13 @@ export const USERS_EP = `${BASE_URL}users/`;
 
 export const LOGIN_EP = `${USERS_EP}login/`;
 export const SIGNUP_EP = `${USERS_EP}register/`;
+export const CONFIRM_EP = `${USERS_EP}confirm/`;
+
+export const EMAIL_CODE_EP = `${USERS_EP}email/code/`;
 
 export const USER_DETAILS_EP = `${USERS_EP}details/`;
 export const CONTACT_DETAILS_EP = `${USERS_EP}details/contact/`;
-export const SHIPPING_DETAILS_EP = `${USERS_EP}details/shipping/`;
+export const SHIPPING_DETAILS_EP = `${USERS_EP}details/shipping/`; 
 
 /* ----------------- Draws ----------------- */
 

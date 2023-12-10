@@ -13,6 +13,10 @@ import { auth } from "../../utils/APIs/headers";
 import { USER_DRAWS_EP } from "../../utils/constants/url";
 import { clientTabs, defaultTabs } from "../../utils/navigation/tabs";
 
+/* --------------------------------------------------------
+ * --------------- Use to set initial state ---------------
+ * -------------------------------------------------------- */
+
 const useNavigator = () => {
   const [tabsToRender, setTabsToRender] = useState(defaultTabs());
 

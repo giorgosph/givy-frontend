@@ -8,6 +8,10 @@ import { addDraws } from '../../redux/slices/drawSlice';
 import { refetchPerDays } from '../../utils/APIs/refetch';
 import { excludeByID, includeByID } from '../../utils/filters/drawFilters';
 
+/* ---------------------------------------------------------
+ * --------------- Use to fetch/handle Draws ---------------
+ * --------------------------------------------------------- */
+
 const useDraws = () => {
   const { fetchAPI, data, loading, error } = useAxiosFetch();
   

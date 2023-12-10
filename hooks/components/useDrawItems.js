@@ -12,6 +12,10 @@ import { addItems } from '../../redux/slices/drawSlice';
 import { DRAW_ITEMS_EP, OPT_IN_EP } from '../../utils/constants/url';
 import { includeByDrawID } from '../../utils/filters/drawFilters';
 
+/* ----------------------------------------------------------------
+ * ----------- Use to fetch Items or opt in for a Draw  -----------
+ * ---------------------------------------------------------------- */
+
 const useDrawItems = (draw) => {
   const { fetchAPI, data, loading, error, status } = useAxiosFetch();
 

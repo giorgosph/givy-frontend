@@ -11,9 +11,9 @@ import { CONTACT_DETAILS_EP, SHIPPING_DETAILS_EP } from '../../utils/constants/u
 
 import { setUser, updateContactDetails, updateShippingDetails } from '../../redux/slices/userSlice';
 
-/* ---------------------------------------------------
- * --------- Use when editing user's details ---------
- * --------------------------------------------------- */
+/* ---------------------------------------------------------------
+ * --------------- Use when editing user's details ---------------
+ * --------------------------------------------------------------- */
 
 const contactDetails = user => ({
   email: user?.email,

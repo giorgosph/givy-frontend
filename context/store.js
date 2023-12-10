@@ -3,14 +3,17 @@ import jwt_decode from "jwt-decode";
 
 export const AuthContext = createContext({
   token: "",
+  tempToken: "",
   isAuthenticated: false,
   isAdmin: false,
   authenticate: (token) => {},
   logout: (token) => {},
+  holdToken: (token) => {},
 });
 
 function AuthContextProvider({ children }) {
   const [token, setToken] = useState(false); 
+  const [tempToken, setTempToken] = useState(false); 
   // const [token, setToken] = useState("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJpYXQiOjE3MDE3MTMyOTJ9.0Gb8ulPHxy2rRaYnLhcSqrQP9LpL6JUOCDqXTmBDNTE");   
   
   // const [isAdmin, setAdmin] = useState(false);
@@ -26,25 +29,33 @@ function AuthContextProvider({ children }) {
     }
   };
 
+  function holdToken(token) {
+    setTempToken(token);
+    setToken(false);
+  }
+
   function authenticate(token) {
     console.log("Authenticating and setting token");
     // const { role } = decodeToken(token);
     setToken(token);
+    setTempToken(false);
     // setAdmin(role === "admin");
   }
 
   function logout() {
-    setToken(null);
+    setToken(false);
     // setAdmin(false);
   }
 
   const value = useMemo(() => {
     return {
-      token: token,
+      token,
+      tempToken,
       isAuthenticated: !!token,
       // isAdmin: isAdmin,
-      authenticate: authenticate,
-      logout: logout,
+      authenticate,
+      logout,
+      holdToken,
     };
   });
 

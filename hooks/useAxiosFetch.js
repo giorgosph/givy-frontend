@@ -31,6 +31,8 @@ const useAxiosFetch = () => {
     } catch (err) {
       console.log("Fetched failed:\n", err);
       setError(true);
+      setStatus(err.response?.status);
+      setData(err.response?.data);
     } finally {
       setLoading(false);
     }
