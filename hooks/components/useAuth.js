@@ -28,9 +28,10 @@ const useAuth = () => {
       if(data.success) {
         dispatch(setUser({ user: data.body.user, date: new Date().getTime() }));
 
-        if(data.body.confirmed.email) {
-          authCtx.authenticate(data.body.token);
-          if(!data.body.confirmed.mobile) ; // modal to navigate to mobile confirmation
+        // if the email is already confirmed
+        if(data.body.confirmed.email) { 
+          authCtx.authenticate(data.body.token); // log in
+          if(!data.body.confirmed.mobile) ; // modal to navigate to mobile confirmation // pending mobile confirmation
         } else {
           authCtx.holdToken(data.body.token);
           navigation.navigate("AccountConfirmation", { email: true });

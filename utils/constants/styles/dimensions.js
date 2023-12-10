@@ -8,7 +8,6 @@ export const PIXELS = 16;
 export const HEADER_HEIGHT = HEIGHT * 1.25/20;
 export const MAIN_HEIGHT = HEIGHT * 17.5/20;
 export const NAV_HEIGHT = HEIGHT * 1.25/20;
-export const MAIN_FULL_HEIGHT = MAIN_HEIGHT + NAV_HEIGHT;
 
 export const BUTTON_HEIGHT = PIXELS * 3;
 export const BUTTON_WIDTH = PIXELS * 10;

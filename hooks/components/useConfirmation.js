@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 
 import useAxiosFetch from '../useAxiosFetch';
 import { AuthContext } from '../../context/store';
-import { useNavigation } from '@react-navigation/native';
 
 import { auth } from '../../utils/APIs/headers';
 import { CONFIRM_EP, EMAIL_CODE_EP } from '../../utils/constants/url';
@@ -14,16 +13,12 @@ import { CONFIRM_EP, EMAIL_CODE_EP } from '../../utils/constants/url';
 const useConfirmation = () => {
   const [code, setCode] = useState();
 
-  const navigation = useNavigation();
   const authCtx = useContext(AuthContext);
   const config = auth(authCtx.tempToken);
 
   const { fetchAPI, data, loading, status, error } = useAxiosFetch();
 
-  const confirmAccount = async (email) => { 
-    console.log('Confirmation code:', code);
-    await fetchAPI('delete', CONFIRM_EP, { code, type: email ? 'email' : 'mobile' }, config) ;
-  };
+  const confirmAccount = async email => await fetchAPI('delete', CONFIRM_EP, { code, type: email ? 'email' : 'mobile' }, config);
 
   const resend = async (email) => {
     email ? 
@@ -41,7 +36,6 @@ const useConfirmation = () => {
         } else {
           authCtx.authenticate(authCtx.tempToken);
           alert("Confirmed successfully!");
-          // navigation.navigate("ClientHomeTab");
         }
       } 
       
