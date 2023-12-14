@@ -27,6 +27,7 @@ const PersonalDetailsScreen = ({ navigation }) => {
   return (
    <>
       {/* TODO -> ? make a loading skeleton/animation to remove 'user?.' */}
+      {callback.renderModal()}
       {contact ? 
         <EditContactDetails state={state} onSubmit={callback.contact} user={user} /> 
       : shipping ? 

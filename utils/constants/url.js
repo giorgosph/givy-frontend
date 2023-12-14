@@ -12,6 +12,7 @@ export const SIGNUP_EP = `${USERS_EP}register/`;
 export const CONFIRM_EP = `${USERS_EP}confirm/`;
 
 export const EMAIL_CODE_EP = `${USERS_EP}email/code/`;
+export const MOBILE_CODE_EP = `${USERS_EP}phone/code/`;
 
 export const USER_DETAILS_EP = `${USERS_EP}details/`;
 export const CONTACT_DETAILS_EP = `${USERS_EP}details/contact/`;

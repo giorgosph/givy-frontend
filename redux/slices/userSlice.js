@@ -18,12 +18,18 @@ const userSlice = createSlice({
       state.date = action.payload.date;
       console.log(message);
     },
-    updateContactDetails: (state, action) => {
-      const { email, mobile } = action.payload;
-      const message = `Contact details has been updated on ${action.payload.date}`;
+    updateEmail: (state, action) => {
+      const message = `Email address has been updated on ${action.payload.date}`;
 
-      if(email) state.user.email = email;
-      if(mobile) state.user.mobile = mobile;
+      state.user.email = action.payload.email;
+      state.date = action.payload.date;
+      console.log(message);
+    },
+    updateMobile: (state, action) => {
+      const message = `Mobile has been updated on ${action.payload.date}`;
+
+      state.user.mobile = action.payload.mobile;
+      // TODO -> if (mobile) set mobile confirmed = false;
       state.date = action.payload.date;
       console.log(message);
     },
@@ -63,7 +69,8 @@ const userSlice = createSlice({
 
 export const { 
   setUser, 
-  updateContactDetails, 
+  updateEmail, 
+  updateMobile,
   updateShippingDetails, 
   setUserDraws, 
   optIn, 

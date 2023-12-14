@@ -7,6 +7,7 @@ import { ProfileStack } from "./stacks/ProfileStack";
 
 import HomeScreen from "../../screens/Home/HomeScreen";
 import DrawDetailsScreen from "../../screens/Search/DrawDetailsScreen";
+import AccountConfirmationScreen from "../../screens/Auth/AccountConfirmationScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ export function ClientProfileTab() {
       {ProfileStack()}
       {SettingsStack()}
       <Stack.Screen name="DrawDetails" component={DrawDetailsScreen} />
+      <Stack.Screen name="AccountConfirmation" component={AccountConfirmationScreen} />
     </Stack.Navigator>
   );
 }

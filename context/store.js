@@ -32,6 +32,7 @@ function AuthContextProvider({ children }) {
   function holdToken(token) {
     setTempToken(token);
     setToken(false);
+    console.log("TOKEN has been holded:\n", token);
   }
 
   function authenticate(token) {
@@ -40,6 +41,7 @@ function AuthContextProvider({ children }) {
     setToken(token);
     setTempToken(false);
     // setAdmin(role === "admin");
+    console.log("TOKEN has been set:\n", token);
   }
 
   function logout() {

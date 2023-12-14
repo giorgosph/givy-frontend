@@ -6,10 +6,9 @@ import CustomModal from "../components/general/CustomModal";
  * ------------------- Use to render a Modal -------------------
  * ------------------------------------------------------------- */
 
-const useModal = () => {
-  const [visible, setVisible] = useState(false);
 
-  const renderModal = ({
+/* Data type for typescript 
+{
     title,
     text,
     extraStyle,
@@ -19,21 +18,29 @@ const useModal = () => {
     buttonText2,
     onPress,
     onPress2,
-  }) => (
-    <CustomModal 
-      visible={visible}
-      title={title}
-      text={text}
-      extraStyle={extraStyle}
-      extraTitleStyle={extraTitleStyle}
-      extraTextStyle={extraTextStyle}
-      buttonText={buttonText}
-      buttonText2={buttonText2}
-      onPress={onPress}
-      onPress2={onPress2}
-      onClose={() => setVisible(false)}
-    />
-  );
+  }
+*/
+
+const useModal = () => {
+  const [visible, setVisible] = useState(false); // Typescript -> false || above object type
+
+  const renderModal = () => {
+    if (visible) return (
+      <CustomModal 
+        visible={!!visible} // make it boolean, Typescript -> just pass visible as object and extract in component
+        title={visible.title}
+        text={visible.text}
+        extraStyle={visible.extraStyle}
+        extraTitleStyle={visible.extraTitleStyle}
+        extraTextStyle={visible.extraTextStyle}
+        buttonText={visible.buttonText}
+        buttonText2={visible.buttonText2}
+        onPress={visible.onPress}
+        onPress2={visible.onPress2}
+        onClose={() => setVisible(false)}
+      />
+    ) 
+  };
     
     return { visible, setVisible, renderModal }
 }

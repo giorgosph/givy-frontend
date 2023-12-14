@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/store';
 import { setUser } from '../../redux/slices/userSlice';
 import { LOGIN_EP, SIGNUP_EP } from '../../utils/constants/url';
+import { mobileInfo } from '../../utils/constants/data/modalInfo';
 
 /* --------------------------------------------------------------
  * ------------------- Use for Authentication -------------------
@@ -28,17 +29,17 @@ const useAuth = () => {
   useEffect(() => {
     if(!loading && !error) {
       if(data.success) {
+        // TODO -> if mobile provided && data.body.confirmed.mobile == false then set user to mobile not confirmed
+        authCtx.holdToken(data.token);
         dispatch(setUser({ user: data.body.user, date: new Date().getTime() }));
 
         // User's email is already confirmed
         if(data.body.confirmed.email) { 
-          
-          if(!data.body.confirmed.mobile) setVisible(true); // pending mobile confirmation
-          else authCtx.authenticate(data.body.token); // Log in the user
-        } else {
-          authCtx.holdToken(data.body.token);
-          navigation.navigate("AccountConfirmation", { email: true });
-        } 
+
+          if(!data.body.confirmed.mobile) setVisible(modalInfo); // pending mobile confirmation
+          else authCtx.authenticate(data.token); // Log in the user
+
+        } else navigation.navigate("AccountConfirmation", { email: true }); // pending email confirmation
 
       } else if(data.body?.type) alert(`${data.body.type} is already registered!`);
       else if(data) alert(data.message);
@@ -47,20 +48,13 @@ const useAuth = () => {
 
   /* --------------------------------------------------------------------------------- */
 
-  const modalInfo = {
-    title: "Phone Number Confirmation",
-    text: "We are asking to confirm your phone number in order to notify you when you have won or contact you for delivery instructions.",
-    buttonText: "Confirm",
-    buttonText2: "Not Now",
-    onPress: () => navigation.navigate("AccountConfirmation", { email: false }),
-    onPress2: () => authCtx.authenticate(data.body.token)
-  };
+  const modalInfo = mobileInfo(navigation, () => authCtx.authenticate(authCtx.tempToken));
 
   return { 
     state: {
       api: { loading, error },
     },
-    callback: { logIn, signUp, renderModal: ()=> renderModal(modalInfo) }
+    callback: { logIn, signUp, renderModal }
   };
 }
 
