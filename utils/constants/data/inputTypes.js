@@ -1,7 +1,8 @@
-/* 
-* Can be used when using CustomInput (or when taking input from user)
-* to set the type of the input element for SEO purposes (e.g. autofill).
-*/
+/* -------------------------------------------------------------------------- *
+*     Can be used when using CustomInput (or when taking input from user)
+*    to set the type of the input element for SEO purposes (e.g. autofill).
+*  -------------------------------------------------------------------------- */
+
 export const inputTypes = {
   additionalName: 'additional-name',
   addressLine1: 'address-line1',
@@ -22,4 +23,4 @@ export const inputTypes = {
   streetAddress: 'street-address',
   tel: 'tel',
   username: 'username',
-}
+};

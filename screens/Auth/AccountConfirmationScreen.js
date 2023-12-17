@@ -13,14 +13,14 @@ import { BACKGROUND_COLOR, BUTTON_COLOR } from "../../utils/constants/styles/col
 import useConfirmation from "../../hooks/components/useConfirmation";
 
 const AccountConfirmationScreen = ({ route }) => {
-  const { email = false } = route.params;
+  const { type } = route.params;
 
   const { state, callback } = useConfirmation();
 
   const { code, setCode } = state.confirmation; 
-  const { loading } = state.api; 
+  const { loading, sending } = state.api; 
 
-  const { buttonTitle, title, text } = callback.setText(email);
+  const { buttonTitle, title, text } = type.text;
 
   return (
     <>
@@ -30,18 +30,18 @@ const AccountConfirmationScreen = ({ route }) => {
         <TextInput value={code} onChangeText={text => setCode(text)} inputMode="numeric" style={styles.input} textAlign="center" />
         <CustomText text={text} extraStyles={styles.text}/>
         <CustomButton 
-          title={buttonTitle} 
-          onPress={() => callback.resend(email)} 
-          disabled={loading} 
-          style={styles.button2}
-          textStyle={styles.buttonText2}
-        />
-        <CustomButton 
           title="Submit" 
-          onPress={() => callback.confirmAccount(email)} 
-          disabled={loading} 
+          onPress={() => callback.confirmAccount(type.value)} 
+          disabled={loading || sending} 
           style={styles.button1}
           textStyle={styles.buttonText1}
+        />
+        <CustomButton 
+          title={buttonTitle} 
+          onPress={() => callback.resend(type.value)} 
+          disabled={loading || sending}  
+          style={styles.button2}
+          textStyle={styles.buttonText2}
         />
       </MainContainer>
     </>

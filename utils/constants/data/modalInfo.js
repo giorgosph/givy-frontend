@@ -1,3 +1,10 @@
+import { confirmationTypes as CT } from './confirmationTypes';
+
+/* -------------------------------------------------------- *
+*      Use when you want to display the Custom Modal.
+*    Create different functions depending on the scenario. 
+*  -------------------------------------------------------- */
+
 const mobileInfo = (navigation, proceed) => {
   const info =  {
     title: "Phone Number Confirmation",
@@ -5,7 +12,7 @@ const mobileInfo = (navigation, proceed) => {
     buttonText: "Confirm",
     buttonText2: "Not Now",
     onPress: () => {
-      navigation.navigate("AccountConfirmation", { email: false }); // navigation is required
+      navigation.navigate("AccountConfirmation", { type: CT.MOBILE }); // navigation is required
       if(proceed) proceed();
     },
     onPress2: proceed // optional

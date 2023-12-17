@@ -7,8 +7,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import { AuthContext } from '../../context/store';
 import { setUser } from '../../redux/slices/userSlice';
-import { LOGIN_EP, SIGNUP_EP } from '../../utils/constants/url';
+
+import { FP_EP, LOGIN_EP, SIGNUP_EP } from '../../utils/constants/url';
 import { mobileInfo } from '../../utils/constants/data/modalInfo';
+import { confirmationTypes as CT } from '../../utils/constants/data/confirmationTypes';
 
 /* --------------------------------------------------------------
  * ------------------- Use for Authentication -------------------
@@ -26,6 +28,15 @@ const useAuth = () => {
 
   const signUp = async (formData) => await fetchAPI('post', SIGNUP_EP,  formData);
 
+  const forgotPassword = async (formData) => {
+    const { code, password, confirmPassword } = formData;
+
+    if(!code) return alert("Invalid confirmation code");
+    if(!password || password !== confirmPassword) return alert("Passwords do not match!");
+
+    await fetchAPI('put', FP_EP, formData);
+  }
+
   useEffect(() => {
     if(!loading && !error) {
       if(data.success) {
@@ -33,13 +44,15 @@ const useAuth = () => {
         authCtx.holdToken(data.token);
         dispatch(setUser({ user: data.body.user, date: new Date().getTime() }));
 
+        if(data.body?.pass) alert("Password changed successfully!"); // coming from forgot password 
+
         // User's email is already confirmed
         if(data.body.confirmed.email) { 
 
           if(!data.body.confirmed.mobile) setVisible(modalInfo); // pending mobile confirmation
           else authCtx.authenticate(data.token); // Log in the user
 
-        } else navigation.navigate("AccountConfirmation", { email: true }); // pending email confirmation
+        } else navigation.navigate("AccountConfirmation", { type: CT.EMAIL }); // pending email confirmation
 
       } else if(data.body?.type) alert(`${data.body.type} is already registered!`);
       else if(data) alert(data.message);
@@ -54,7 +67,7 @@ const useAuth = () => {
     state: {
       api: { loading, error },
     },
-    callback: { logIn, signUp, renderModal }
+    callback: { logIn, signUp, forgotPassword, renderModal }
   };
 }
 

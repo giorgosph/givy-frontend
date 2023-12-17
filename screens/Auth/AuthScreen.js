@@ -12,7 +12,7 @@ import MainContainer from '../../components/general/MainContainer';
 import { WIDTH } from '../../utils/constants/styles/dimensions';
 import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR } from '../../utils/constants/styles/colors';
 
-const AuthScreen = () => { 
+const AuthScreen = ({ navigation }) => { 
   const { state, callback } = useAuth();
   const { loading, error } = state.api;
 
@@ -63,7 +63,7 @@ const AuthScreen = () => {
         onScroll={Animated.event([{nativeEvent: {contentOffset: {x:animation}}}], {useNativeDriver: false})} 
         >
         <View style={styles.inputWrap}>
-          <Login loading={loading} logIn={callback.logIn} />
+          <Login loading={loading} logIn={callback.logIn} navigation={navigation} />
         </View>
         <View style={styles.inputWrap}>
           <Signup loading={loading} signUp={callback.signUp} />

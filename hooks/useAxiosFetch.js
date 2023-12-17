@@ -19,10 +19,10 @@ const useAxiosFetch = () => {
   */
   const fetchAPI = async (type, endpoint, body=null, extraHeaders=[]) => {
     try {
-      setLoading(true);
       setData(false);
-      setStatus(false);
       setError(false);
+      setStatus(false);
+      setLoading(true);
 
       const { data, status } = await fetchAxios(type, endpoint, body, extraHeaders);
       console.log(`Fetched succeed with status ${status} and data:\n\t ${JSON.stringify(data)}`);

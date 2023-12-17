@@ -7,13 +7,14 @@ import MainContainer from "../../components/general/MainContainer"
 import { AuthContext } from "../../context/store";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 import { PIXELS, WIDTH } from "../../utils/constants/styles/dimensions";
+import { confirmationTypes as CT } from "../../utils/constants/data/confirmationTypes";
 
 const HomeScreen = ({ navigation }) => {
 
   const authCtx = useContext(AuthContext);
 
   useEffect(() => {
-    authCtx.tempToken && navigation.navigate("AccountConfirmation", { email: true });
+    authCtx.tempToken && navigation.navigate("AccountConfirmation", { type: CT.EMAIL });
   }, []);
 
   return (

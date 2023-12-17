@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-import { BUTTON_COLOR, TEXT_COLOR } from '../../utils/constants/styles/colors';
+import { BACKGROUND_COLOR, BUTTON_COLOR } from '../../utils/constants/styles/colors';
 import { BUTTON_HEIGHT, BUTTON_WIDTH, PIXELS } from '../../utils/constants/styles/dimensions';
 
 const CustomButton = ({ title, onPress, disabled, style={}, textStyle={} }) => {
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: TEXT_COLOR,
+    color: BACKGROUND_COLOR,
     textTransform: 'capitalize',
     
   },

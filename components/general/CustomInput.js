@@ -6,9 +6,9 @@ import { Controller } from "react-hook-form";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
-const CustomInput = ({ control, name, rules, title, defaultValue, type, numeric, email }) => {
+const CustomInput = ({ control, name, rules, title, defaultValue, type, inputMode }) => {
   const [isFocused] = useState(new Animated.Value(defaultValue ? 1 : 0));
-  const isPass = type === 'password' || type === 'current-password';
+  const isPass = type === 'password' || type === 'current-password' || type === 'new-password';
 
   const handleFocus = () => {
     Animated.timing(isFocused, {
@@ -69,7 +69,7 @@ const CustomInput = ({ control, name, rules, title, defaultValue, type, numeric,
                 onBlur={()=>handleBlur(hasValue)}
                 placeholder={title || name}
                 defaultValue={defaultValue || ''}
-                inputMode={numeric ? 'numeric' : email ? 'email' : 'text'}
+                inputMode={inputMode || 'text'}
                 autoComplete={ type || 'none'}
                 secureTextEntry={isPass}
                 autoCapitalize="none"
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     marginVertical: PIXELS * 3/4,
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   inputContainer: {
     width: '90%',

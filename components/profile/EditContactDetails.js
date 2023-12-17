@@ -9,6 +9,7 @@ import CustomButton from "../general/CustomButton";
 import MainContainer from "../general/MainContainer";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { inputTypes } from "../../utils/constants/data/inputTypes";
 
 const EditContactDetails = (props) => {
   const { user, state, onSubmit } = props;
@@ -27,9 +28,9 @@ const EditContactDetails = (props) => {
       <MainContainer>
         <View style={styles.container}>
           {/* Add regex rules */}
-          <CustomInput control={control} name="email" defaultValue={user?.email} />
+          <CustomInput control={control} name="email" defaultValue={user?.email} type={inputTypes.email} inputMode='email' />
           {/* replace mobile with number input */}
-          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user?.mobile} /> 
+          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user?.mobile} inputMode='numeric' /> 
         </View>
         <View style={styles.buttonContainer}>
           <CustomButton 
