@@ -8,8 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/store';
 import { setUser } from '../../redux/slices/userSlice';
 
-import { FP_EP, LOGIN_EP, SIGNUP_EP } from '../../utils/constants/url';
+import { auth } from '../../utils/APIs/headers';
 import { mobileInfo } from '../../utils/constants/data/modalInfo';
+import { FP_EP, LOGIN_EP, RP_EP, SIGNUP_EP } from '../../utils/constants/url';
 import { confirmationTypes as CT } from '../../utils/constants/data/confirmationTypes';
 
 /* --------------------------------------------------------------
@@ -24,9 +25,18 @@ const useAuth = () => {
   const { setVisible, renderModal } = useModal();
   const { fetchAPI, data, loading, error } = useAxiosFetch();
 
+  const config = auth(authCtx.token);
+
   const logIn = async (formData) => await fetchAPI('put', LOGIN_EP,  formData);
 
   const signUp = async (formData) => await fetchAPI('post', SIGNUP_EP,  formData);
+
+  const resetPassword = async (formData) => {
+    const { password, confirmPassword } = formData;
+
+    if(password !== confirmPassword) return alert("Passwords do not match!");
+    await fetchAPI('put', RP_EP, formData, config);
+  }
 
   const forgotPassword = async (formData) => {
     const { code, password, confirmPassword } = formData;
@@ -40,20 +50,25 @@ const useAuth = () => {
   useEffect(() => {
     if(!loading && !error) {
       if(data.success) {
+        const token = data?.token;
+        const user = data.body?.user;
+        const emailConfirmed = data.body.confirmed?.email;
+        const mobileConfirmed = data.body.confirmed?.mobile;
+        
+        // Coming from forgot/reset password
+        data.body?.pass && alert("Password changed successfully!");  
+
         // TODO -> if mobile provided && data.body.confirmed.mobile == false then set user to mobile not confirmed
-        authCtx.holdToken(data.token);
-        dispatch(setUser({ user: data.body.user, date: new Date().getTime() }));
+        token && authCtx.holdToken(token);
+        user && dispatch(setUser({ user, date: new Date().getTime() }));
 
-        if(data.body?.pass) alert("Password changed successfully!"); // coming from forgot password 
-
-        // User's email is already confirmed
-        if(data.body.confirmed.email) { 
-
-          if(!data.body.confirmed.mobile) setVisible(modalInfo); // pending mobile confirmation
-          else authCtx.authenticate(data.token); // Log in the user
-
-        } else navigation.navigate("AccountConfirmation", { type: CT.EMAIL }); // pending email confirmation
-
+        // User's email is confirmed
+        if(emailConfirmed) { 
+          mobileConfirmed ? authCtx.authenticate(token) : setVisible(modalInfo); 
+          
+        } else if(emailConfirmed == false) navigation.navigate("AccountConfirmation", { type: CT.EMAIL });
+        else navigation.goBack(); // Coming from reset password
+        
       } else if(data.body?.type) alert(`${data.body.type} is already registered!`);
       else if(data) alert(data.message);
     } 
@@ -67,7 +82,13 @@ const useAuth = () => {
     state: {
       api: { loading, error },
     },
-    callback: { logIn, signUp, forgotPassword, renderModal }
+    callback: { 
+      logIn, 
+      signUp, 
+      resetPassword,
+      forgotPassword, 
+      renderModal 
+    }
   };
 }
 

@@ -27,19 +27,20 @@ const ForgotPasswordScreen = () => {
   const sendEmail = formData => sendNotification(EMAIL_FP_EP, { email: formData.email });
 
   return (
-   <>
-    <CustomHeader title="Forgot Password" />
-    <MainContainer centered>
-        <CustomTitle text={title} />
-        <CustomInput control={control} name="email" rules={{ required: "Required field" }} type={IT.email} inputMode="email" />
-        <CustomButton title={buttonTitle} onPress={handleSubmit(sendEmail)} disabled={loading || sending} />
-        {sent && 
-          <>
-            <CustomInput control={control} name="code" title="Confirmation Code" type={IT.oneTimeCode} inputMode="numeric" />
-            <SetPassword disabled={loading || sending} control={control} handleSubmit={handleSubmit(callback.forgotPassword)} />
-          </>
-        }
-    </MainContainer>
+    <>
+      {callback.renderModal()}
+      <CustomHeader title="Forgot Password" />
+      <MainContainer centered>
+          <CustomTitle text={title} />
+          <CustomInput control={control} name="email" rules={{ required: "Required field" }} type={IT.email} inputMode="email" />
+          <CustomButton title={buttonTitle} onPress={handleSubmit(sendEmail)} disabled={loading || sending} />
+          {sent && 
+            <>
+              <CustomInput control={control} name="code" title="confirmation code" type={IT.oneTimeCode} inputMode="numeric" />
+              <SetPassword disabled={loading || sending} control={control} handleSubmit={handleSubmit(callback.forgotPassword)} />
+            </>
+          }
+      </MainContainer>
    </>
   )
 };

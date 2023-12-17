@@ -11,6 +11,8 @@ export const USERS_EP = `${BASE_URL}users/`;
 export const LOGIN_EP = `${USERS_EP}login/`;
 export const SIGNUP_EP = `${USERS_EP}register/`;
 export const CONFIRM_EP = `${USERS_EP}confirm/`;
+
+export const RP_EP = `${USERS_EP}reset-password/`;
 export const FP_EP = `${USERS_EP}forgot-password/`;
 
 /* ------- Notifications ------- */
