@@ -6,7 +6,7 @@ import { Controller } from "react-hook-form";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
-const CustomInput = ({ control, name, rules, title, defaultValue, type, inputMode }) => {
+const CustomInput = ({ control, name, rules, title, defaultValue, type, inputMode, clearErrors }) => {
   const [isFocused] = useState(new Animated.Value(defaultValue ? 1 : 0));
   const isPass = type === 'password' || type === 'current-password' || type === 'new-password';
 
@@ -51,6 +51,12 @@ const CustomInput = ({ control, name, rules, title, defaultValue, type, inputMod
           outputRange: ['#fff', '#000'],
         });
 
+        const handleErrors = () => {
+          if (!clearErrors) 
+            return <Text style={styles.errorText}>{fieldState.error.message || "Invalid Input"}</Text>
+          clearErrors();
+        };
+
         return (
           <View style={styles.container}>
             <View style={styles.inputContainer}>
@@ -60,24 +66,23 @@ const CustomInput = ({ control, name, rules, title, defaultValue, type, inputMod
               {rules?.required && 
                 <View style={styles.asteriskConatiner}><Text style={styles.asterisk}>*</Text></View>}
               <TextInput
+                // TODO -> add optional textAlign center and extra input styles 
                 // TODO -> improve logic of inputMode etc. (make inputMode options constant and pass as an argument
                 // or do it based on type prop) 
                 style={styles.input}
-                value={!isPass ? value.toLowerCase() : String(value) }
+                value={!isPass ? value.toLowerCase() : value }
                 onChangeText={onChange}
                 onFocus={handleFocus}
                 onBlur={()=>handleBlur(hasValue)}
                 placeholder={title || name}
                 defaultValue={defaultValue || ''}
                 inputMode={inputMode || 'text'}
-                autoComplete={ type || 'none'}
+                autoComplete={ type || null}
                 secureTextEntry={isPass}
                 autoCapitalize="none"
               />
             </View>
-            {fieldState.error && 
-              <Text style={styles.errorText}>{fieldState.error.message || "Invalid Input"}</Text>
-            }
+            {fieldState.error && handleErrors()}
           </View>
         );
       }}

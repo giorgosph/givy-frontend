@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     marginVertical: PIXELS * 3/4,
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   inputContainer: {
     width: '90%',

@@ -11,6 +11,8 @@ import MainContainer from "../general/MainContainer";
 
 import { isAndroid } from "../../utils/constants/device"
 import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { inputTypes as IT } from "../../utils/constants/data/inputTypes";
+import { allInputsRegex, lettersRegex } from "../../utils/formValidations";
 
 const EditShippingDetails = (props) => {
   const { user, state, onSubmit } = props;
@@ -29,12 +31,11 @@ const EditShippingDetails = (props) => {
       <MainContainer>
         <KeyboardAvoidingView behavior={isAndroid ? 'padding' : 'height'}>
           <KeyboardAwareScrollView enableOnAndroid={true} style={styles.container}>
-            {/* Add regex rules */}
-            <CustomInput control={control} name="country" defaultValue={user?.country} />
-            <CustomInput control={control} name="city" defaultValue={user?.city} />
-            <CustomInput control={control} name="address1" title={'address 1'} defaultValue={user?.address1} />
-            <CustomInput control={control} name="address2" title={'address 2'} defaultValue={user?.address2} />
-            <CustomInput control={control} name="postalCode" title={"postal code"} defaultValue={user?.postalCode} />
+            <CustomInput control={control} name="country" defaultValue={user?.country} rules={lettersRegex} type={IT.country} />
+            <CustomInput control={control} name="city" defaultValue={user?.city} rules={lettersRegex} />
+            <CustomInput control={control} name="address1" title={'address 1'} defaultValue={user?.address1} rules={allInputsRegex} type={IT.addressLine1} />
+            <CustomInput control={control} name="address2" title={'address 2'} defaultValue={user?.address2} rules={allInputsRegex} type={IT.addressLine2} />
+            <CustomInput control={control} name="postalCode" title={"postal code"} defaultValue={user?.postalCode} rules={allInputsRegex} type={IT.postalCode} />
           </KeyboardAwareScrollView>
           <View style={styles.buttonContainer}>
             <CustomButton 

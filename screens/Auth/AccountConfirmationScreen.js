@@ -1,37 +1,46 @@
 import React from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet } from "react-native";
 
 import Header from "../../components/general/Header";
 import CustomText from "../../components/general/CustomText";
 import CustomTitle from "../../components/general/CustomTitle";
+import CustomInput from "../../components/general/CustomInput";
 import CustomButton from "../../components/general/CustomButton";
 import MainContainer from "../../components/general/MainContainer";
 
-import { PIXELS } from "../../utils/constants/styles/dimensions";
-import { BACKGROUND_COLOR, BUTTON_COLOR } from "../../utils/constants/styles/colors";
-
+import { useForm } from "react-hook-form";
 import useConfirmation from "../../hooks/components/useConfirmation";
+
+import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { inputTypes } from "../../utils/constants/data/inputTypes";
+import { confirmationCodeValidation } from "../../utils/formValidations";
+import { BACKGROUND_COLOR, BUTTON_COLOR } from "../../utils/constants/styles/colors";
 
 const AccountConfirmationScreen = ({ route }) => {
   const { type } = route.params;
 
-  const { state, callback } = useConfirmation();
+  const { control, handleSubmit, clearErrors } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-  const { code, setCode } = state.confirmation; 
+  const { state, callback } = useConfirmation();
   const { loading, sending } = state.api; 
 
   const { buttonTitle, title, text } = type.text;
+
+  const formError = () => {
+    alert("Invalid Confirmation Code");
+    clearErrors();
+  };
 
   return (
     <>
       <Header />
       <MainContainer centered>
         <CustomTitle text={title} size={1} extraStyles={styles.title} />
-        <TextInput value={code} onChangeText={text => setCode(text)} inputMode="numeric" style={styles.input} textAlign="center" />
+        <CustomInput control={control} name="code" title="confirmation code" rules={confirmationCodeValidation} type={inputTypes.oneTimeCode} inputMode="numeric" clearErrors={formError} />
         <CustomText text={text} extraStyles={styles.text}/>
         <CustomButton 
           title="Submit" 
-          onPress={() => callback.confirmAccount(type.value)} 
+          onPress={handleSubmit((formData) => callback.confirmAccount(type.value, formData))} 
           disabled={loading || sending} 
           style={styles.button1}
           textStyle={styles.buttonText1}
@@ -52,14 +61,14 @@ const styles = StyleSheet.create({
   title: {
     marginVertical: PIXELS * 2,
   },
-  input: {
-    width: 180,
-    height: 50,
-    marginVertical: PIXELS / 2,
-    fontSize: 26,
-    borderRadius: 6,
-    backgroundColor: 'white',
-  },
+  // input: {
+  //   width: 180,
+  //   height: 50,
+  //   marginVertical: PIXELS / 2,
+  //   fontSize: 26,
+  //   borderRadius: 6,
+  //   backgroundColor: 'white',
+  // },
   text: {
     textAlign: 'center',
     marginBottom: PIXELS * 2,

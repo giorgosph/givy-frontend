@@ -11,6 +11,8 @@ const useAxiosFetch = () => {
   const [status, setStatus] = useState(false);
   const [error, setError] = useState(false);
 
+  // TODO -> Create Loading Modal and Error Modal
+
   /** 
   * @param type get, put, post, delete
   * @param endpoint the endpoint to connect

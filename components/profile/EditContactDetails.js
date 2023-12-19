@@ -9,7 +9,8 @@ import CustomButton from "../general/CustomButton";
 import MainContainer from "../general/MainContainer";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
-import { inputTypes } from "../../utils/constants/data/inputTypes";
+import { inputTypes as IT } from "../../utils/constants/data/inputTypes";
+import { emailRegex, numbersRegex, required, spacesRegex } from "../../utils/formValidations";
 
 const EditContactDetails = (props) => {
   const { user, state, onSubmit } = props;
@@ -17,20 +18,21 @@ const EditContactDetails = (props) => {
 
   const { control, reset, handleSubmit } = useForm();
 
+  const onPress = () => {
+    reset(); 
+    state.screen.setContact(false);
+  };
+
   return (
     // TODO -> loading && loadingModal
     // TODO -> !loading && error && errorModal
     <>
-      <CustomHeader title='Contact Details' onPress={()=>{
-        reset(); 
-        state.screen.setContact(false);
-      }}/>
+      <CustomHeader title='Contact Details' onPress={onPress}/>
       <MainContainer>
         <View style={styles.container}>
-          {/* Add regex rules */}
-          <CustomInput control={control} name="email" defaultValue={user?.email} type={inputTypes.email} inputMode='email' />
-          {/* replace mobile with number input */}
-          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user?.mobile} inputMode='numeric' /> 
+          <CustomInput control={control} name="email" defaultValue={user?.email} rules={{ ...required, ...emailRegex }} type={IT.email} inputMode='email' />
+          {/*  TODO -> fix using 2 regex with custom validate object */}
+          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user?.mobile} rules={{ ...numbersRegex, ...spacesRegex }} type={IT.tel} inputMode='numeric' /> 
         </View>
         <View style={styles.buttonContainer}>
           <CustomButton 

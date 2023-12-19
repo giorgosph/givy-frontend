@@ -8,17 +8,22 @@ import { AuthContext } from "../../context/store";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 import { PIXELS, WIDTH } from "../../utils/constants/styles/dimensions";
 import { confirmationTypes as CT } from "../../utils/constants/data/confirmationTypes";
+import useModal from "../../hooks/useModal";
+import { mobileInfo } from "../../utils/constants/data/modalInfo";
 
 const HomeScreen = ({ navigation }) => {
-
+  const { setVisible, renderModal } = useModal();
   const authCtx = useContext(AuthContext);
 
   useEffect(() => {
     authCtx.tempToken && navigation.navigate("AccountConfirmation", { type: CT.EMAIL });
+    // TODO -> check if mobile is confirmed
+    // authCtx.token && setVisible(mobileInfo(navigation, () => 0)); 
   }, []);
 
   return (
    <>
+    {renderModal()}
     <Header />
     <MainContainer>
       <View style={styles.contentLeftWrap} >

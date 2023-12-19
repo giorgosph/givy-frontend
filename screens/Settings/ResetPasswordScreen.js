@@ -17,7 +17,7 @@ const ResetPasswordScreen = () => {
     <>
       <CustomHeader title="Reset Password" />
       <MainContainer centered>
-        <SetPassword disabled={loading} control={control} handleSubmit={handleSubmit(callback.resetPassword)} required />
+        <SetPassword disabled={loading} control={control} handleSubmit={handleSubmit(callback.resetPassword)} />
       </MainContainer>
     </>
   )

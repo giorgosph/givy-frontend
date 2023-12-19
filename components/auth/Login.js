@@ -9,17 +9,23 @@ import CustomButton from '../general/CustomButton';
 import { PIXELS } from '../../utils/constants/styles/dimensions';
 import { TEXT_COLOR } from '../../utils/constants/styles/colors';
 import { inputTypes as IT } from '../../utils/constants/data/inputTypes';
+import { passwordValidation, usernameValidationLogIn } from '../../utils/formValidations';
 
 const Login = (props) => {
   const { loading, logIn, navigation } = props;
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, clearErrors } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+
+  // TODO -> Prevent alert twice when both controls are errornously submitted
+  const formError = () => {
+    alert('Wrong Credentials');
+    clearErrors();
+  };
 
   return (
     <> 
       <ScrollView style={styles.container} contentContainerStyle={{alignItems: 'flex-start'}}>
-        {/* Add regex rules */}
-        <CustomInput control={control} name="username" rules={{ required: "Required field" }} type={IT.username} />
-        <CustomInput control={control} name="password" rules={{ required: "Required field" }} type={IT.currentPassword} />
+        <CustomInput control={control} name="username" rules={usernameValidationLogIn} type={IT.username} clearErrors={formError} />
+        <CustomInput control={control} name="password" rules={passwordValidation} type={IT.currentPassword} clearErrors={formError} />
       </ScrollView>
       <View style={styles.buttonContainer}>
         <CustomButton 
@@ -57,7 +63,6 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: PIXELS / 4,
     backgroundColor: 'transparent',
-    // backgroundColor: 'red',
   },
   secondaryButtonText: {
     fontSize: 12,

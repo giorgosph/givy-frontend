@@ -1,20 +1,19 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 import useAxiosFetch from '../useAxiosFetch';
+import useNotification from '../useNotification';
+
 import { AuthContext } from '../../context/store';
 import { useNavigation } from '@react-navigation/native';
 
 import { auth } from '../../utils/APIs/headers';
 import { CONFIRM_EP, EMAIL_CODE_EP, MOBILE_CODE_EP } from '../../utils/constants/url';
-import useNotification from '../useNotification';
 
 /* ----------------------------------------------------------------
  * --------------- Use for email/phone confirmation ---------------
  * ---------------------------------------------------------------- */
 
 const useConfirmation = () => {
-  const [code, setCode] = useState();
-
   const navigation = useNavigation();
 
   const authCtx = useContext(AuthContext);
@@ -23,7 +22,14 @@ const useConfirmation = () => {
   const { loading: sending, sendNotification } = useNotification();
   const { fetchAPI, data, loading, status, error } = useAxiosFetch();
 
-  const confirmAccount = async type => await fetchAPI('delete', CONFIRM_EP, { code, type }, config);
+  const confirmAccount = async (type, formData) => {
+    const { code } = formData;
+    
+    console.log("Account Confirmation Code:", code);
+    await fetchAPI('delete', CONFIRM_EP, { code, type }, config);
+  }
+
+  const resend = type => sendNotification(type == 'email' ? EMAIL_CODE_EP : MOBILE_CODE_EP)
 
   useEffect(() => {
     if(!loading && !error) {
@@ -51,11 +57,10 @@ const useConfirmation = () => {
   return { 
     state: {
       api: { loading, sending, error },
-      confirmation: { code, setCode },
     },
     callback: { 
+      resend,
       confirmAccount, 
-      resend: (type) => sendNotification(type == 'email' ? EMAIL_CODE_EP : MOBILE_CODE_EP),
     }
   };
 }

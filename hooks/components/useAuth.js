@@ -29,7 +29,12 @@ const useAuth = () => {
 
   const logIn = async (formData) => await fetchAPI('put', LOGIN_EP,  formData);
 
-  const signUp = async (formData) => await fetchAPI('post', SIGNUP_EP,  formData);
+  const signUp = async (formData) => {
+    const { password, confirmPassword } = formData;
+
+    if(password !== confirmPassword) return alert("Passwords do not match!");
+    await fetchAPI('post', SIGNUP_EP,  formData);
+  }
 
   const resetPassword = async (formData) => {
     const { password, confirmPassword } = formData;

@@ -13,18 +13,24 @@ import useNotification from "../../hooks/useNotification";
 
 import { EMAIL_FP_EP } from "../../utils/constants/url";
 import { inputTypes as IT } from "../../utils/constants/data/inputTypes";
+import { confirmationCodeValidation, emailRegex, required } from "../../utils/formValidations";
 
 const title = "Please enter your email address"
 
 const ForgotPasswordScreen = () => {
   const { state, callback } = useAuth();
-  const { control, handleSubmit } = useForm();
-  const { loading: sending, sent, sendNotification } = useNotification();
-
   const { loading } = state.api;
+
+  const { loading: sending, sent, sendNotification } = useNotification();
+  const { control, handleSubmit, clearErrors } = useForm({ mode: 'onBlur', reValidateMode: 'onSubmit' });
 
   const buttonTitle = sent ? "Resend Email" : "Send Email";
   const sendEmail = formData => sendNotification(EMAIL_FP_EP, { email: formData.email });
+
+  const formError = () => {
+    alert("Invalid Confirmation Code");
+    clearErrors();
+  };
 
   return (
     <>
@@ -32,11 +38,11 @@ const ForgotPasswordScreen = () => {
       <CustomHeader title="Forgot Password" />
       <MainContainer centered>
           <CustomTitle text={title} />
-          <CustomInput control={control} name="email" rules={{ required: "Required field" }} type={IT.email} inputMode="email" />
+          <CustomInput control={control} name="email" rules={{ ...required, ...emailRegex }} type={IT.email} inputMode="email" />
           <CustomButton title={buttonTitle} onPress={handleSubmit(sendEmail)} disabled={loading || sending} />
           {sent && 
             <>
-              <CustomInput control={control} name="code" title="confirmation code" type={IT.oneTimeCode} inputMode="numeric" />
+              <CustomInput control={control} name="code" title="confirmation code" rules={confirmationCodeValidation} type={IT.oneTimeCode} inputMode="numeric" clearErrors={formError} />
               <SetPassword disabled={loading || sending} control={control} handleSubmit={handleSubmit(callback.forgotPassword)} />
             </>
           }
