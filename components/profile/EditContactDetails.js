@@ -32,7 +32,7 @@ const EditContactDetails = (props) => {
         <View style={styles.container}>
           <CustomInput control={control} name="email" defaultValue={user?.email} rules={{ ...required, ...emailRegex }} type={IT.email} inputMode='email' />
           {/*  TODO -> fix using 2 regex with custom validate object */}
-          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user?.mobile} rules={{ ...numbersRegex, ...spacesRegex }} type={IT.tel} inputMode='numeric' /> 
+          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user?.mobile} rules={numbersRegex} type={IT.tel} inputMode='numeric' /> 
         </View>
         <View style={styles.buttonContainer}>
           <CustomButton 

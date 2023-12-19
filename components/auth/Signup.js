@@ -25,7 +25,7 @@ const Signup = (props) => {
         <CustomInput control={control} name="lastName" title="last name" rules={{ ...required, ...lettersRegex }} type={IT.familyName} />
         <CustomInput control={control} name="username" rules={usernameValidation} type={IT.username} />
         <CustomInput control={control} name="email" rules={{ ...required, ...emailRegex }} type={IT.email} inputMode='email' />
-        <CustomInput control={control} name="mobile" title="phone number" rules={{ ...numbersRegex, ...spacesRegex }} type={IT.tel} inputMode='numeric' /> 
+        <CustomInput control={control} name="mobile" title="phone number" rules={numbersRegex} type={IT.tel} inputMode='numeric' /> 
         <CustomInput control={control} name="password" rules={passwordValidation} type={IT.newPassword} />
         <CustomInput control={control} name="confirmPassword" title="confirm password" rules={required} type={IT.newPassword} />
         <CustomDropdown control={control} name="gender" rules={{ ...required }} data={genderData} />
