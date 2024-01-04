@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-import DrawListing from "../../components/search/DrawListing";
+import DrawListing from "../../components/draw/DrawListing";
 import CustomHeader from "../../components/general/CustomHeader";
 import CustomButton from "../../components/general/CustomButton";
 import MainContainer from "../../components/general/MainContainer";

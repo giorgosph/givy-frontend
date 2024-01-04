@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, ScrollView, StyleSheet } from "react-native";
 
-import ItemListing from "../../components/search/ItemListing";
+import ItemListing from "../../components/draw/ItemListing";
 import CustomHeader from "../../components/general/CustomHeader";
 import CustomButton from "../../components/general/CustomButton";
 import MainContainer from "../../components/general/MainContainer";
