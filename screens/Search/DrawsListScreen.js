@@ -1,17 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 import Header from "../../components/general/Header";
 import DrawListing from "../../components/draw/DrawListing";
 import MainContainer from "../../components/general/MainContainer";
 
-import SortIcon from "../../components/icons/SortIcon";
-import FilterIcon from "../../components/icons/FilterIcon";
-
+import { HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 import { MAIN_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
-import { HEADING_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
-import useDraws from "../../hooks/components/useDraws";
 import useDrawsFilters from "../../hooks/components/useDrawsFilters";
 
 const DrawsListScreen = () => {
@@ -28,14 +24,12 @@ const DrawsListScreen = () => {
         {FilterButtons()}
         <View style={styles.separator} />
 
-        <View style={styles.drawsContainer}>
+        <ScrollView style={styles.drawsContainer} contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
           {draws && draws.length > 0 ? draws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)
           : (
-            <View>
               <Text style={{color: 'white'}}>There are no upcoming Draws, check again later!</Text>
-            </View>
           )}
-        </View>
+        </ScrollView>
       </MainContainer>
    </>
   )
@@ -55,8 +49,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: MAIN_HEIGHT - PIXELS * 4,
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   separator: {
     width: '90%',

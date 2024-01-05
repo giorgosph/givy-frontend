@@ -2,71 +2,54 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 
 import ArrowIcon from "../icons/ArrowIcon";
-import { Controller } from "react-hook-form";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
-const FilterDropdown = ({ control, name, title, data }) => {
+const FilterDropdown = ({ onClick, name, title, data, selectedItem }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedItem, setSelectedItem] = useState('none');
 
+  const direction = isExpanded ? 'D' : 'F';
   const toggleExpansion = () => setIsExpanded(!isExpanded);
 
-  const handleSelect = (value, onChange) => {
-    onChange(value);
-    setSelectedItem(value);
-  };
-
   return (
-    <Controller
-      control={control}
-      name={name}
-      defaultValue=""
-      render={({ field: { onChange } }) => {
-        const direction = isExpanded ? 'D' : 'F';
+    <>
+      <TouchableWithoutFeedback onPress={toggleExpansion}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{title || name}</Text>
+          <ArrowIcon size={22} color='white' direction={direction} />
+        </View>
+      </TouchableWithoutFeedback>
 
-        return (
-          <>
-            <TouchableWithoutFeedback onPress={toggleExpansion}>
-              <View style={styles.titleContainer}>
-                <Text style={styles.title}>{title || name}</Text>
-                <ArrowIcon size={22} color='white' direction={direction} />
-              </View>
-            </TouchableWithoutFeedback>
+      {isExpanded && 
+        <>
+          <TouchableOpacity key={'none'} onPress={() => onClick('none')}>
+            <View style={styles.optionContainer}>
+              <Text style={styles.optionText}>Any</Text>
+              <View 
+                style={[
+                  styles.indicator, 
+                  { backgroundColor: selectedItem == 'none' ? 'white' : 'transparent' }
+                ]} 
+              />
+            </View>
+          </TouchableOpacity>
 
-            {isExpanded && 
-              <>
-                <TouchableOpacity key={'none'} onPress={() => handleSelect('none', onChange)}>
-                  <View style={styles.optionContainer}>
-                    <Text style={styles.optionText}>Any</Text>
-                    <View 
-                      style={[
-                        styles.indicator, 
-                        { backgroundColor: selectedItem == 'none' ? 'white' : 'transparent' }
-                      ]} 
-                    />
-                  </View>
-                </TouchableOpacity>
+          {Object.keys(data).map((item) => {
+            const bColor = item == selectedItem ? 'white' : 'transparent';
 
-                {data.map((item) => {
-                  const bColor = item.value == selectedItem ? 'white' : 'transparent';
-
-                  return (
-                    <TouchableOpacity key={item.value} onPress={() => handleSelect(item.value, onChange)}>
-                      <View style={styles.optionContainer}>
-                        <Text style={styles.optionText}>{item.label}</Text>
-                        <View style={[styles.indicator, { backgroundColor: bColor }]} />
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
-              </>
-            }
-          </>
-        );
-      }}
-    />
+            return (
+              <TouchableOpacity key={item} onPress={() => onClick(item)}>
+                <View style={styles.optionContainer}>
+                  <Text style={styles.optionText}>{`${item} (${data[item]})`}</Text>
+                  <View style={[styles.indicator, { backgroundColor: bColor }]} />
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </>
+      }
+    </>
   );
 };
 

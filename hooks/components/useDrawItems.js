@@ -6,11 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 import useAxiosFetch from '../useAxiosFetch';
 import { AuthContext } from '../../context/store';
 
-import { auth } from '../../utils/APIs/headers';
 import { optIn } from '../../redux/slices/userSlice';
 import { addItems } from '../../redux/slices/drawSlice';
-import { DRAW_ITEMS_EP, OPT_IN_EP } from '../../utils/constants/url';
+
+import { auth } from '../../utils/APIs/headers';
 import { includeByDrawID } from '../../utils/filters/drawFilters';
+import { DRAW_ITEMS_EP, OPT_IN_EP } from '../../utils/constants/url';
 
 /* ----------------------------------------------------------------
  * ----------- Use to fetch Items or opt in for a Draw  -----------

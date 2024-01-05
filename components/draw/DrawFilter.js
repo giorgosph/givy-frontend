@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-
-import { useForm } from "react-hook-form";
 
 import CustomTitle from "../general/CustomTitle";
 import CustomButton from "../general/CustomButton";
@@ -9,21 +7,38 @@ import FilterDropdown from "../general/FilterDropdown";
 
 import { HEADER_HEIGHT, MAIN_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
 
-const DrawFilter = ({ locations, categories, enable, submit }) => {
-  // Example data for locations and categories
-  locations = [
-    { value: 'L1', label: 'Location 1' },
-    { value: 'L2', label: 'Location 2' },
-    { value: 'L3', label: 'Location 3' },
-    { value: 'L4', label: 'Location 4' },
-     ];
-  categories = [
-    { value: 'C1', label: 'Category 1' },
-    { value: 'C2', label: 'Category 2' },
-    { value: 'C3', label: 'Category 3' },
-  ];
+const DrawFilter = ({ enable, onSubmit, draws }) => {
+  const [locations, setLocations] = useState({});
+  const [selectedLocation, setSelectedLocation] = useState('none');
+  
+  const [categories, setCategories] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState('none');
 
-  const { control } = useForm();
+  const [filteredDraws, setFilteredDraws] = useState([]);
+
+  useEffect(() => {
+    const updatedLocations = {};
+    const updatedCategories = {};
+    const filtered = [];
+
+    draws && draws.length > 0 && draws.forEach(draw => {
+      const location = draw.location;
+      const category = draw.category;
+
+      const matchLocation = selectedLocation === 'none' || selectedLocation === location;
+      const matchCategory = selectedCategory === 'none' || selectedCategory === category;
+
+      if(matchLocation && matchCategory){
+        filtered.push(draw);
+        updatedLocations[location] = (updatedLocations[location] || 0) + 1;
+        updatedCategories[category] = (updatedCategories[category] || 0) + 1;
+      } 
+    });
+
+    setFilteredDraws(filtered);
+    setLocations(updatedLocations);
+    setCategories(updatedCategories);
+  }, [selectedCategory, selectedLocation, draws]);
 
   return (
     enable && (    
@@ -31,12 +46,12 @@ const DrawFilter = ({ locations, categories, enable, submit }) => {
         <View style={styles.container}>
           <CustomTitle text="Filters" size={1} extraStyles={styles.title} />
           <ScrollView>
-            <FilterDropdown control={control} name="location" data={locations}/>
-            <FilterDropdown control={control} name="category" data={categories}/>
+            <FilterDropdown onClick={setSelectedLocation} name="location" data={locations} selectedItem={selectedLocation} />
+            <FilterDropdown onClick={setSelectedCategory} name="category" data={categories} selectedItem={selectedCategory} />
           </ScrollView>
         </View>
         <View style={styles.buttonContainer}>
-          <CustomButton onPress={submit} title="Submit" />
+          <CustomButton onPress={() => onSubmit(filteredDraws)} title="Submit" />
         </View>
       </>
     )

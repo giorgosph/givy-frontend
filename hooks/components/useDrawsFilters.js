@@ -1,72 +1,71 @@
 import { useEffect, useState } from 'react';
 
-import DrawFilter from '../../components/draw/DrawFilter';
 import DrawSort from '../../components/draw/DrawSort';
+import DrawFilter from '../../components/draw/DrawFilter';
+import FilterIcons from '../../components/draw/FilterIcons';
 
 import useDraws from './useDraws';
-import FilterIcons from '../../components/draw/FilterIcons';
+import isEqual from '../../utils/isEqual';
+
 
 /* --------------------------------------------------------
  * --------------- Use to filter/sort Draws ---------------
  * -------------------------------------------------------- */
 
 const useDrawsFilters = () => {  
-  const [sortData, setSortData] = useState('default');
   const [isSortOpen, setIsSortOpen] = useState(false);
-  
-  const [filterData, setFilterData] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  
+
+  const [sortData, setSortData] = useState('default');
+  const [filteredDraws, setFilteredDraws] = useState(false);
+
   const { state, draws } = useDraws();
-  const [filteredDraws, setFilteredDraws] = useState(draws);
 
   const toggleSort = () => setIsSortOpen(!isSortOpen);
 
   const toggleFilter = () => setIsFilterOpen(!isFilterOpen);
 
-  const onSubmitFilter = (formData) => {
+  const onSubmitFilter = (data) => {
     setIsFilterOpen(false);
-    setFilterData(formData);
+    setFilteredDraws(data); 
   }; 
 
   const onSubmitSort = (formData) => {
     setIsSortOpen(false);
     setSortData(formData);
-  }; 
-
+  };
+  
   useEffect(() => {
-    switch (sortData) {
-      case 'default':
-        filteredDraws.sort((a, b) => new Date(a.openingDay) - new Date(b.openingDay));
-        break;
-      case 'openingDay':
-        filteredDraws.sort((a, b) => new Date(a.openingDay) - new Date(b.openingDay));
-        break;
-      case 'raffleDay':
-        filteredDraws.sort((a, b) => new Date(a.closingDay) - new Date(b.closingDay));
-        break;
-      case 'raffleValue':
-        // TODO -> edit to sort based on items total price
-        filteredDraws.sort((a, b) => new Date(a.openingDay) - new Date(b.openingDay));
-        break;
+    if(filteredDraws && filteredDraws.length > 0) {
+      let sortedDraws = [...filteredDraws];
+          
+      switch (sortData) {
+        case 'default':
+        case 'openingDay':
+          sortedDraws.sort((a, b) => new Date(a.openingDate) - new Date(b.openingDate));
+          break;
+        case 'closingDay':
+          sortedDraws.sort((a, b) => new Date(a.closingDate) - new Date(b.closingDate));
+          break;
+        case 'raffleValue':
+          // TODO: Add logic to sort based on item total price
+          break;
+        default:
+          break;
+      }
+    
+      if(!isEqual(sortedDraws, filteredDraws)) setFilteredDraws(sortedDraws);
     }
-
-    if(filterData) {
-
-      setFilteredDraws(draws.filter(draw => {
-        const matchLocation = selectedLocation === 'none' || draw.location === filterData.location;
-        const matchCategory = selectedCategory === 'none' || draw.category === filterData.category;
-        
-        return matchLocation && matchCategory;
-      }));  
-
-    }
-  }, [sortData, filterData]);
+  }, [sortData, filteredDraws]);
+  
+  useEffect(() => {
+    if(draws && draws.length > 0) setFilteredDraws(draws);
+  }, [draws]);
 
   return { 
     state,
     component: { 
-      Filter: () => <DrawFilter enable={isFilterOpen} submit={onSubmitFilter}/>,
+      Filter: () => <DrawFilter enable={isFilterOpen} onSubmit={onSubmitFilter} draws={draws} />,
       Sort: () => <DrawSort enable={isSortOpen} handleSort={onSubmitSort} selectedItem={sortData}/>,
       FilterButtons: () => 
         <FilterIcons 

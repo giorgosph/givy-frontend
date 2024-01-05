@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosFetch from '../useAxiosFetch';
@@ -13,6 +13,9 @@ import { excludeByID, includeByID } from '../../utils/filters/drawFilters';
  * --------------------------------------------------------- */
 
 const useDraws = () => {
+  const [draws, setDraws] = useState(false);
+  const [userDraws, setUserDraws] = useState(false);
+
   const { fetchAPI, data, loading, error } = useAxiosFetch();
   
   const dispatch = useDispatch();
@@ -23,8 +26,10 @@ const useDraws = () => {
   // TODO -> research for better algorithm
   const refetch = refetchPerDays(draw.date);
 
-  const draws = excludeByID(draw.draws, user.draws); // not opted in
-  const userDraws = includeByID(draw.draws, user.draws); // opted in
+  useEffect(() => {
+      setDraws(excludeByID(draw.draws, user.draws)); // not opted in
+      setUserDraws(includeByID(draw.draws, user.draws)); // opted in
+  }, [draw.draws, user.draws]);
 
   useEffect(() => {
     const fecthData = async () => await fetchAPI('get', DRAWS_EP);
