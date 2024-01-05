@@ -10,10 +10,10 @@ import ImageCarousel from "../../components/general/ImageCarousel";
 import { ITEM_LIST_HEIGHT } from "../../utils/constants/styles/dimensions";
 
 import useDrawItems from "../../hooks/components/useDrawItems";
+import CustomCountdown from "../../components/general/CustomCountdown";
 
 const DrawDetailsScreen = ({ route }) => {
   const { draw, opted } = route.params;
-  console.log(opted);
 
   const { state, items, images, callback } = useDrawItems(draw);
   const { loading, error } = state.api;
@@ -24,6 +24,7 @@ const DrawDetailsScreen = ({ route }) => {
       <CustomHeader title={draw.title} />
       <MainContainer centered>
         <ImageCarousel images={images} loop />
+        <CustomCountdown closingDate={draw.closingDate} />
         <ScrollView style={styles.container}>
           {items && items.length > 0 ? items.map(item => 
             <ItemListing key={item.id} item={item}/>
