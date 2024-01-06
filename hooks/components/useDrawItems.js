@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import useAxiosFetch from '../useAxiosFetch';
 import { AuthContext } from '../../context/store';
+import useTimeRemaining from '../useTimeRemaining';
 
 import { optIn } from '../../redux/slices/userSlice';
 import { addItems } from '../../redux/slices/drawSlice';
@@ -20,17 +21,27 @@ import { DRAW_ITEMS_EP, OPT_IN_EP } from '../../utils/constants/url';
 const useDrawItems = (draw) => {
   const { fetchAPI, data, loading, error, status } = useAxiosFetch();
 
+  // Initialization
   const authCtx = useContext(AuthContext);
   const config = auth(authCtx.token);
   const navigation = useNavigation();
+
+  const { timeRemaining } = useTimeRemaining(draw.closingDate);
   
+  // Get Items and User Draws
   const dispatch = useDispatch();
   const drawItems = useSelector(state => state.draw.items); // All items fetched
+  const userDraws = useSelector(state => state.user.draw);
   
+  // Get images for current draw
   const images = [draw.imagePath];
   const items = includeByDrawID(drawItems, [draw.id]) // Items for current draw
   items.map(item => images.push(item.imagePath));
+
+  const opted = !!userDraws && userDraws.includes(draw.id); // Checks if user has opted in to current draw 
   
+  /* --------------- Callbacks --------------- */
+
   const fetchItems = async (drawId) => await fetchAPI('get', `${DRAW_ITEMS_EP}${drawId}`);
 
   const handleOptIn = async (drawId) => {
@@ -38,6 +49,7 @@ const useDrawItems = (draw) => {
     await fetchAPI('post', OPT_IN_EP,  { drawId }, config);
   }
 
+  /* ----------------------------------------- */
   
   useEffect(() => {
     if(!loading && !error) {
@@ -60,6 +72,14 @@ const useDrawItems = (draw) => {
     // do not abort opt in request if user leave the component
   }, [data, loading, error]);
 
+  useEffect(() => {
+    if(timeRemaining.expired) {
+      // TODO -> run animation until it receives a web socket to display the winner
+      // then navigate to search or goBack (?)
+      console.log("Animation starting...");
+    }
+  }, [timeRemaining.expired])
+
   return { 
     state: {
       api: loading, error
@@ -67,7 +87,7 @@ const useDrawItems = (draw) => {
     callback: {
       handleOptIn 
     },
-    items, images 
+    items, images, opted, timeRemaining
   };
 }
 

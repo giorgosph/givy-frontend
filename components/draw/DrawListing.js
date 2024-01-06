@@ -11,7 +11,7 @@ import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR, HEADING_FADE_COLOR } from '../.
 
 const DrawListing = ({ draw, opted = false }) => {
   const navigation = useNavigation();
-  const handleNav = draw => navigation.navigate('DrawDetails', { draw, opted });
+  const handleNav = draw => navigation.navigate('DrawDetails', { draw });
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => handleNav(draw)}>

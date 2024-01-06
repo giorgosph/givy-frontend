@@ -10,6 +10,8 @@ import { MAIN_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
 
 import useDrawsFilters from "../../hooks/components/useDrawsFilters";
 
+import cDraws from "../../utils/constants/data/draw.json"
+
 const DrawsListScreen = () => {
   const { state, filteredDraws: draws, component } = useDrawsFilters();
 
@@ -25,10 +27,13 @@ const DrawsListScreen = () => {
         <View style={styles.separator} />
 
         <ScrollView style={styles.drawsContainer} contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
-          {draws && draws.length > 0 ? draws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)
+          {/* {draws && draws.length > 0 ? draws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)
           : (
               <Text style={{color: 'white'}}>There are no upcoming Draws, check again later!</Text>
-          )}
+          )} */}
+
+          {/* Remove after testing time related lagorithms */}
+          {cDraws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)}
         </ScrollView>
       </MainContainer>
    </>
