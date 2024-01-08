@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
+import { AuthContext } from '../../context/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
+import useWebSocket from '../useWebSocket';
 import useAxiosFetch from '../useAxiosFetch';
-import { AuthContext } from '../../context/store';
 import useTimeRemaining from '../useTimeRemaining';
 
 import { optIn } from '../../redux/slices/userSlice';
@@ -13,6 +14,7 @@ import { addItems } from '../../redux/slices/drawSlice';
 import { auth } from '../../utils/APIs/headers';
 import { includeByDrawID } from '../../utils/filters/drawFilters';
 import { DRAW_ITEMS_EP, OPT_IN_EP } from '../../utils/constants/url';
+import useModal from '../useModal';
 
 /* ----------------------------------------------------------------
  * ----------- Use to fetch Items or opt in for a Draw  -----------
@@ -26,6 +28,8 @@ const useDrawItems = (draw) => {
   const config = auth(authCtx.token);
   const navigation = useNavigation();
 
+  const { wsData } = useWebSocket();
+  const { visible, setVisible, renderWinnerModal } = useModal();
   const { timeRemaining } = useTimeRemaining(draw.closingDate);
   
   // Get Items and User Draws
@@ -42,18 +46,18 @@ const useDrawItems = (draw) => {
   
   /* --------------- Callbacks --------------- */
 
-  const fetchItems = async (drawId) => await fetchAPI('get', `${DRAW_ITEMS_EP}${drawId}`);
+  const fetchItems = async () => await fetchAPI('get', `${DRAW_ITEMS_EP}${draw.id}`);
 
-  const handleOptIn = async (drawId) => {
+  const handleOptIn = async () => {
     // ?? pop up ad
-    await fetchAPI('post', OPT_IN_EP,  { drawId }, config);
+    await fetchAPI('post', OPT_IN_EP,  { drawId: draw.id }, config);
   }
 
   /* ----------------------------------------- */
   
   useEffect(() => {
     if(!loading && !error) {
-      if(!status && items.length == 0) fetchItems(draw.id);
+      if(!status && items.length == 0) fetchItems();
 
       if(data.success) {
         if(data.body.drawId) {
@@ -74,18 +78,31 @@ const useDrawItems = (draw) => {
 
   useEffect(() => {
     if(timeRemaining.expired) {
-      // TODO -> run animation until it receives a web socket to display the winner
-      // then navigate to search or goBack (?)
+      // TODO -> run animation
       console.log("Animation starting...");
     }
-  }, [timeRemaining.expired])
+  }, [timeRemaining.expired]);
+
+  useEffect(() => {
+    console.log("wsData:\n", wsData);
+    if(wsData?.type == "runningDraws") {
+      if(wsData.body.drawId == draw.id) {
+        // Stop animation
+        // Display the winners
+        setVisible({items, winners: wsData.body.winners});
+        // Navigate user to searchTab or back
+      }
+    }
+  }, [wsData])
 
   return { 
     state: {
-      api: loading, error
+      api: { loading, error },
+      modal: { visible, setVisible },
     },
     callback: {
-      handleOptIn 
+      handleOptIn,
+      renderWinnerModal, 
     },
     items, images, opted, timeRemaining
   };

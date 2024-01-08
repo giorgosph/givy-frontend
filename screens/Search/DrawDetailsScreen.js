@@ -26,6 +26,7 @@ const DrawDetailsScreen = ({ route }) => {
 
   return (
    <>
+      {callback.renderWinnerModal()}
       <CustomHeader title={draw.title} />
       <MainContainer centered>
         <ImageCarousel images={images} loop />
@@ -33,13 +34,13 @@ const DrawDetailsScreen = ({ route }) => {
         <CustomCountdown timeRemaining={timeRemaining} />
 
         <ScrollView style={styles.container}>
-          {/* {items && items.length > 0 ? 
+          {items && items.length > 0 ? 
             items.map(item => <ItemListing key={item.id} item={item}/>) 
             : <Text style={{color: 'white'}}>No Items to display!</Text>
-          } */}
+          }
 
           {/* Remove after testing time related lagorithms */}
-          {drawItems.map(item => <ItemListing key={item.id} item={item}/>)}
+          {/* {drawItems.map(item => <ItemListing key={item.id} item={item}/>)} */}
         </ScrollView>
 
         {timeRemaining.closingSoon && <Text style={{color: 'red'}}>Closing soon</Text>}

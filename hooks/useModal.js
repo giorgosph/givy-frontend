@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import WinnerModal from "../components/draw/WinnerModal";
 import CustomModal from "../components/general/CustomModal";
 
 /* -------------------------------------------------------------
@@ -25,9 +26,9 @@ const useModal = () => {
   const [visible, setVisible] = useState(false); // Typescript -> false || above object type
 
   const renderModal = () => {
-    if (visible) return (
+    if (!!visible) return (
       <CustomModal 
-        visible={!!visible} // make it boolean, Typescript -> just pass visible as object and extract in component
+        visible={!!visible}
         title={visible.title}
         text={visible.text}
         extraStyle={visible.extraStyle}
@@ -41,8 +42,12 @@ const useModal = () => {
       />
     ) 
   };
-    
-    return { visible, setVisible, renderModal }
+  
+  const renderWinnerModal = () => {
+    if(!!visible) return <WinnerModal visible={visible} onClose={() => setVisible(false)} />
+  };
+
+  return { visible, setVisible, renderModal, renderWinnerModal }
 }
 
 export default useModal;

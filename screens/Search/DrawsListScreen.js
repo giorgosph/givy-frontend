@@ -27,13 +27,13 @@ const DrawsListScreen = () => {
         <View style={styles.separator} />
 
         <ScrollView style={styles.drawsContainer} contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
-          {/* {draws && draws.length > 0 ? draws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)
+          {draws && draws.length > 0 ? draws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)
           : (
               <Text style={{color: 'white'}}>There are no upcoming Draws, check again later!</Text>
-          )} */}
+          )}
 
           {/* Remove after testing time related lagorithms */}
-          {cDraws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)}
+          {/* {cDraws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)} */}
         </ScrollView>
       </MainContainer>
    </>
