@@ -9,6 +9,7 @@ import MainContainer from "../../components/general/MainContainer";
 import EditContactDetails from "../../components/profile/EditContactDetails";
 import EditShippingDetails from "../../components/profile/EditShippingDetails";
 
+import { removeUsernamePrefix } from "../../utils/dataFormater";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
@@ -38,7 +39,7 @@ const PersonalDetailsScreen = ({ navigation }) => {
           <MainContainer >
             <View style={styles.detailsContainer}>
               <CustomTitle text={fullName} extraStyles={styles.title} />
-              <CustomTitle text={`@${user?.username}`} size={4} lowercase extraStyles={styles.subTitle} />
+              <CustomTitle text={`@${removeUsernamePrefix(user?.username)}`} size={4} lowercase extraStyles={styles.subTitle} />
               <UserDetails user={user} setEditContact={setContact} setEditShipping={setShipping} />
             </View>
             <View style={styles.buttonsContainer}>

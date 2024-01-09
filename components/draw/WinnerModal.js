@@ -1,11 +1,12 @@
 import React from 'react';
-import { Modal, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Modal, View, StyleSheet } from 'react-native';
 
 import CustomText from '../general/CustomText';
 import CustomTitle from '../general/CustomTitle';
-
-import { HEIGHT, MAIN_HEIGHT, PIXELS } from '../../utils/constants/styles/dimensions';
 import CustomButton from '../general/CustomButton';
+
+import { removeUsernamePrefix } from '../../utils/dataFormater';
+import { HEIGHT, MAIN_HEIGHT, PIXELS } from '../../utils/constants/styles/dimensions';
 
 const WinnerModal = ({ visible, onClose }) => {
 
@@ -19,7 +20,7 @@ const WinnerModal = ({ visible, onClose }) => {
           {visible.items.map(item => (
             <View key={item.id} style={styles.textWinnersContainer}>
               <CustomTitle text={`${item.title}:`} size={6} color={'black'} />
-              <CustomText text={visible.winners[item.id]} size={1} color={'black'} />
+              <CustomText text={removeUsernamePrefix(visible.winners[item.id])} size={1} color={'black'} />
             </View>
           ))}
         </View>

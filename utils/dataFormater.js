@@ -1,0 +1,1 @@
+export const removeUsernamePrefix = (username) => username.substring(5);
