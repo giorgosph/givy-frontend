@@ -6,6 +6,7 @@ import useAxiosFetch from '../useAxiosFetch';
 import { DRAWS_EP } from '../../utils/constants/url';
 import { addDraws } from '../../redux/slices/drawSlice';
 import { refetchPerDays } from '../../utils/APIs/refetch';
+import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { excludeByID, includeByID } from '../../utils/filters/drawFilters';
 
 /* ---------------------------------------------------------
@@ -16,15 +17,17 @@ const useDraws = () => {
   const [draws, setDraws] = useState(false);
   const [userDraws, setUserDraws] = useState(false);
 
-  const { fetchAPI, data, loading, error } = useAxiosFetch();
+  const { fetchAPI, data, status } = useAxiosFetch();
   
   const dispatch = useDispatch();
   const draw = useSelector(state => state.draw);
   const user = useSelector(state => state.user);
-
-  // Check if draws were fetched more than 1 day ago to refetch
+  
   // TODO -> research for better algorithm
+  // Check if draws were fetched more than 1 day ago to refetch
   const refetch = refetchPerDays(draw.date);
+
+  const fecthData = async () => await fetchAPI('get', DRAWS_EP);
 
   useEffect(() => {
       setDraws(excludeByID(draw.draws, user.draws)); // not opted in
@@ -32,23 +35,20 @@ const useDraws = () => {
   }, [draw.draws, user.draws]);
 
   useEffect(() => {
-    const fecthData = async () => await fetchAPI('get', DRAWS_EP);
 
-    if(!loading && !error) {
-      if(refetch) fecthData();
-      
+    if(status === apiStatus.IDLE && refetch) fecthData(); // TODO -> investigate best solution
+    else if(status === apiStatus.SUCCESS) {
       if(data?.success) {
         dispatch(addDraws({ draws: data.body, date: new Date().getTime() }));
-        // clear loading, error, data, state 
       }
-    }
+    } else if(status === apiStatus.ERROR) alert("Server Error!\nKindly Contact Support Team");
 
     // abort request if user leave the component and clear api state
-  }, [data, loading, error]);
+  }, [status]);
 
   return { 
     state: {
-      api: { loading, error }
+      reqStatus: status
     },
     draws, userDraws
   };

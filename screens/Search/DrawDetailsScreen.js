@@ -6,11 +6,12 @@ import CustomHeader from "../../components/general/CustomHeader";
 import CustomButton from "../../components/general/CustomButton";
 import MainContainer from "../../components/general/MainContainer";
 import ImageCarousel from "../../components/general/ImageCarousel";
+import CustomCountdown from "../../components/general/CustomCountdown";
 
+import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { ITEM_LIST_HEIGHT } from "../../utils/constants/styles/dimensions";
 
 import useDrawItems from "../../hooks/components/useDrawItems";
-import CustomCountdown from "../../components/general/CustomCountdown";
 
 import drawItems from "../../utils/constants/data/drawItem.json";
 
@@ -19,10 +20,8 @@ const DrawDetailsScreen = ({ route }) => {
 
   const { state, items, images, opted, timeRemaining, callback } = useDrawItems(draw);
 
-  const { loading, error } = state.api;
-
-  const disableButton = loading || opted || timeRemaining.expired;
   const buttonTitle = timeRemaining.expired ? "Closed" : opted ? "Already Opted In" : "Opt In"
+  const disableButton = state.reqStatus === apiStatus.LOADING || opted || timeRemaining.expired;
 
   return (
    <>

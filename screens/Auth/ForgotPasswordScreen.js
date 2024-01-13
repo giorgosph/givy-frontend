@@ -14,14 +14,15 @@ import useNotification from "../../hooks/useNotification";
 import { EMAIL_FP_EP } from "../../utils/constants/url";
 import { inputTypes as IT } from "../../utils/constants/data/inputTypes";
 import { confirmationCodeValidation, emailRegex, required } from "../../utils/formValidations";
+import { apiStatus } from "../../utils/constants/data/apiStatus";
 
 const title = "Please enter your email address"
 
 const ForgotPasswordScreen = () => {
   const { state, callback } = useAuth();
-  const { loading } = state.api;
+  const { state: notificationState, sent, sendNotification } = useNotification();
+  const loading = state.reqStatus === apiStatus.LOADING || notificationState.reqStatus === apiStatus.LOADING;
 
-  const { loading: sending, sent, sendNotification } = useNotification();
   const { control, handleSubmit, clearErrors } = useForm({ mode: 'onBlur', reValidateMode: 'onSubmit' });
 
   const buttonTitle = sent ? "Resend Email" : "Send Email";
@@ -39,11 +40,11 @@ const ForgotPasswordScreen = () => {
       <MainContainer centered>
           <CustomTitle text={title} />
           <CustomInput control={control} name="email" rules={{ ...required, ...emailRegex }} type={IT.email} inputMode="email" />
-          <CustomButton title={buttonTitle} onPress={handleSubmit(sendEmail)} disabled={loading || sending} />
+          <CustomButton title={buttonTitle} onPress={handleSubmit(sendEmail)} disabled={loading} />
           {sent && 
             <>
               <CustomInput control={control} name="code" title="confirmation code" rules={confirmationCodeValidation} type={IT.oneTimeCode} inputMode="numeric" clearErrors={formError} />
-              <SetPassword disabled={loading || sending} control={control} handleSubmit={handleSubmit(callback.forgotPassword)} />
+              <SetPassword disabled={loading} control={control} handleSubmit={handleSubmit(callback.forgotPassword)} />
             </>
           }
       </MainContainer>

@@ -9,6 +9,7 @@ import { AuthContext } from '../../context/store';
 import { setUser } from '../../redux/slices/userSlice';
 
 import { auth } from '../../utils/APIs/headers';
+import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { mobileInfo } from '../../utils/constants/data/modalInfo';
 import { FP_EP, LOGIN_EP, RP_EP, SIGNUP_EP } from '../../utils/constants/url';
 import { confirmationTypes as CT } from '../../utils/constants/data/confirmationTypes';
@@ -23,7 +24,7 @@ const useAuth = () => {
   const authCtx = useContext(AuthContext);
   
   const { setVisible, renderModal } = useModal();
-  const { fetchAPI, data, loading, error } = useAxiosFetch();
+  const { fetchAPI, data, status, statusCode } = useAxiosFetch();
 
   const config = auth(authCtx.token);
 
@@ -53,7 +54,8 @@ const useAuth = () => {
   }
 
   useEffect(() => {
-    if(!loading && !error) {
+    if(status === apiStatus.SUCCESS) {
+      // TODO -> change data.success with statusCode checks
       if(data.success) {
         const token = data?.token;
         const user = data.body?.user;
@@ -65,7 +67,7 @@ const useAuth = () => {
 
         // TODO -> if mobile provided && data.body.confirmed.mobile == false then set user to mobile not confirmed
         token && authCtx.holdToken(token);
-        user && dispatch(setUser({ user, date: new Date().getTime() }));
+        user && dispatch(setUser({ user }));
 
         // User's email is confirmed
         if(emailConfirmed) { 
@@ -75,9 +77,12 @@ const useAuth = () => {
         else navigation.goBack(); // Coming from reset password
         
       } else if(data.body?.type) alert(`${data.body.type} is already registered!`);
-      else if(data) alert(data.message);
-    } 
-  }, [data, loading, error]);
+
+    } else if(status === apiStatus.ERROR) {
+      if(statusCode === 401) alert("Wrong Credentials");
+      else alert("Server Error!\nKindly Contact Support Team");
+    }
+  }, [status]);
 
   /* --------------------------------------------------------------------------------- */
 
@@ -85,7 +90,7 @@ const useAuth = () => {
 
   return { 
     state: {
-      api: { loading, error },
+      reqStatus: status,
     },
     callback: { 
       logIn, 

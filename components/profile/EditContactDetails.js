@@ -10,28 +10,24 @@ import MainContainer from "../general/MainContainer";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { inputTypes as IT } from "../../utils/constants/data/inputTypes";
-import { emailRegex, numbersRegex, required, spacesRegex } from "../../utils/formValidations";
+import { emailRegex, numbersRegex, required } from "../../utils/formValidations";
 
 const EditContactDetails = (props) => {
-  const { user, state, onSubmit } = props;
-  const { loading, error } = state.api;
+  const { user, loading, setContact, onSubmit } = props;
 
   const { control, reset, handleSubmit } = useForm();
 
   const onPress = () => {
     reset(); 
-    state.screen.setContact(false);
+    setContact(false);
   };
 
   return (
-    // TODO -> loading && loadingModal
-    // TODO -> !loading && error && errorModal
     <>
       <CustomHeader title='Contact Details' onPress={onPress}/>
       <MainContainer>
         <View style={styles.container}>
           <CustomInput control={control} name="email" defaultValue={user?.email} rules={{ ...required, ...emailRegex }} type={IT.email} inputMode='email' />
-          {/*  TODO -> fix using 2 regex with custom validate object */}
           <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user?.mobile} rules={numbersRegex} type={IT.tel} inputMode='numeric' /> 
         </View>
         <View style={styles.buttonContainer}>

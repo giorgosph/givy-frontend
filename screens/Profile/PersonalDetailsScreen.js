@@ -10,6 +10,7 @@ import EditContactDetails from "../../components/profile/EditContactDetails";
 import EditShippingDetails from "../../components/profile/EditShippingDetails";
 
 import { removeUsernamePrefix } from "../../utils/dataFormater";
+import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
@@ -17,8 +18,8 @@ import usePersonalDetails from "../../hooks/components/usePersonalDetails";
 
 const PersonalDetailsScreen = ({ navigation }) => {
   const { state, callback, user} = usePersonalDetails();
+  const loading = state.reqStatus === apiStatus.LOADING;
 
-  const { loading, error } = state.api;
   const { contact, shipping, setContact, setShipping } = state.screen;
 
   const fullName = `${user?.firstName} ${user?.lastName}`;
@@ -27,12 +28,11 @@ const PersonalDetailsScreen = ({ navigation }) => {
 
   return (
    <>
-      {/* TODO -> ? make a loading skeleton/animation to remove 'user?.' */}
       {callback.renderModal()}
       {contact ? 
-        <EditContactDetails state={state} onSubmit={callback.contact} user={user} /> 
+        <EditContactDetails loading={loading} setContact={setContact} onSubmit={callback.contact}  user={user} /> 
       : shipping ? 
-        <EditShippingDetails state={state} onSubmit={callback.shipping} user={user} />
+        <EditShippingDetails loading={loading} setShipping={setShipping} onSubmit={callback.shipping} user={user} />
       : (
         <>
           <Header />

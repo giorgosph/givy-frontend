@@ -14,18 +14,18 @@ import { passwordValidation, usernameValidationLogIn } from '../../utils/formVal
 const Login = (props) => {
   const { loading, logIn, navigation } = props;
   const { control, handleSubmit, clearErrors } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
-
+  
   // TODO -> Prevent alert twice when both controls are errornously submitted
   const formError = () => {
-    alert('Wrong Credentials');
-    clearErrors();
+    alert('Wrong Credentials $');
+    clearErrors(); // !! Throws warning
   };
 
   return (
     <> 
       <ScrollView style={styles.container} contentContainerStyle={{alignItems: 'flex-start'}}>
         <CustomInput control={control} name="username" rules={usernameValidationLogIn} type={IT.username} clearErrors={formError} />
-        <CustomInput control={control} name="password" rules={passwordValidation} type={IT.currentPassword} clearErrors={formError} />
+        <CustomInput control={control} name="password"  type={IT.currentPassword}  />
       </ScrollView>
       <View style={styles.buttonContainer}>
         <CustomButton 

@@ -7,11 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 
 import isEqual from '../../utils/isEqual';
 import { auth } from '../../utils/APIs/headers';
+import { apiStatus } from '../../utils/constants/data/apiStatus';
+import { contactWarning, mobileInfo } from '../../utils/constants/data/modalInfo';
 import { CONTACT_DETAILS_EP, SHIPPING_DETAILS_EP } from '../../utils/constants/url';
 
 import { updateEmail, updateMobile, updateShippingDetails } from '../../redux/slices/userSlice';
+
 import useModal from '../useModal';
-import { contactWarning, mobileInfo } from '../../utils/constants/data/modalInfo';
 
 /* ---------------------------------------------------------------
  * --------------- Use when editing user's details ---------------
@@ -39,7 +41,7 @@ const usePersonalDetails = () => {
   const [editShipping, setEditShipping] = useState(false);
 
   const { setVisible, renderModal } = useModal();
-  const { fetchAPI, data, loading, error, status } = useAxiosFetch();
+  const { fetchAPI, data, status, statusCode } = useAxiosFetch();
   
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
@@ -50,9 +52,9 @@ const usePersonalDetails = () => {
   const navigation = useNavigation();
 
   const onSubmitShipping = async (formData) => {
-    if(!isEqual(shippingDetails(user), formData)) 
+    if(!isEqual(shippingDetails(user), formData)) {
       await fetchAPI('put', SHIPPING_DETAILS_EP,  formData, config);
-    else {
+    } else {
       alert("Your details are already up to date!");
       setEditShipping(false);
     }
@@ -73,47 +75,45 @@ const usePersonalDetails = () => {
   // NOTE: No need to refetch data as user's details can only be changed by the user.
 
   useEffect(() => {
-    if(!loading && !error) {
+    if(status === apiStatus.SUCCESS) {
 
-      if(data.success) {
+      if(data.body?.shippingDetails) {
+        dispatch(updateShippingDetails({ user: data.body.shippingDetails}));
+        setEditShipping(false);
 
-        if(data.body?.shippingDetails) {
-          dispatch(updateShippingDetails({ user: data.body.shippingDetails, date: new Date().getTime()}));
-          setEditShipping(false);
-
-          alert("Details Updated Successfully!");
-        } else if(data.body?.contactDetails) {
-          const { email, mobile } = data.body.contactDetails;
-          
-          // Mobile has been updated
-          if(mobile != false) {
-            dispatch(updateMobile({ mobile, date: new Date().getTime() }));
-            if(email == false && mobile) {
-              modalInfo = mobileInfo(navigation, () => setEditContact(false));
-              setVisible(modalInfo); 
-            }
-            // TODO -> open modal to navigate to account confirmation or close edit contact
+        alert("Details Updated Successfully!");
+      } else if(data.body?.contactDetails) {
+        const { email, mobile } = data.body.contactDetails;
+        
+        // Mobile has been updated
+        if(mobile != false) {
+          dispatch(updateMobile({ mobile }));
+          if(email == false && mobile) {
+            modalInfo = mobileInfo(navigation, () => setEditContact(false));
+            setVisible(modalInfo); 
           }
+          // TODO -> open modal to navigate to account confirmation or close edit contact
+        }
 
-          // Email has been updated
-          if(email != false) {
-            dispatch(updateEmail({ email, date: new Date().getTime() }));
-            authCtx.holdToken(authCtx.token);
-            alert("Email Changed!");
-          }
+        // Email has been updated
+        if(email != false) {
+          dispatch(updateEmail({ email }));
+          authCtx.holdToken(authCtx.token);
+          alert("Email Changed!");
+        }
+      } 
 
-        } 
-
-        // clear loading, error, data, state ??(here)
-      } else if (status == 422) alert("Invalid email address provided!");
-    }
+    } else if(status === apiStatus.ERROR) {
+      if(statusCode == 422) alert("Invalid email address provided!");
+      else alert("Server Error!\nKindly Contact Support Team");
+    } 
 
     // abort request if user leave the component  and clear api state
-  }, [data, loading, error]);
+  }, [status]);
 
   return { 
     state: {
-      api: { loading, error },
+      reqStatus: status,
       screen: { 
         contact: editContact, setContact: setEditContact,
         shipping: editShipping, setShipping: setEditShipping

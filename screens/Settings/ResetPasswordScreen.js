@@ -6,12 +6,13 @@ import useAuth from "../../hooks/components/useAuth";
 import SetPassword from "../../components/auth/SetPassword";
 import CustomHeader from "../../components/general/CustomHeader";
 import MainContainer from "../../components/general/MainContainer";
+import { apiStatus } from "../../utils/constants/data/apiStatus";
 
 const ResetPasswordScreen = () => {
   const { state, callback } = useAuth();
-  const { control, handleSubmit } = useForm();
+  const loading = state.reqStatus === apiStatus.LOADING;
 
-  const { loading } = state.api;
+  const { control, handleSubmit } = useForm();
 
   return (
     <>

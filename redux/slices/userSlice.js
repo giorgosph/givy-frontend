@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   user: null,
-  date: null, // const date = new Date(user.date); to get in components
+  date: null,
   draws: [],
   wins: [],
 };
@@ -12,57 +12,53 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      const message = `User ${action.payload.user.username} has been set on ${action.payload.date}`;
-
       state.user = action.payload.user;
-      state.date = action.payload.date;
-      console.log(message);
+      console.log(`User ${action.payload.user.username} has been set`);
     },
     updateEmail: (state, action) => {
-      const message = `Email address has been updated on ${action.payload.date}`;
-
       state.user.email = action.payload.email;
-      state.date = action.payload.date;
-      console.log(message);
+      console.log(`Email address has been updated`);
     },
     updateMobile: (state, action) => {
-      const message = `Mobile has been updated on ${action.payload.date}`;
-
       state.user.mobile = action.payload.mobile;
       // TODO -> if (mobile) set mobile confirmed = false;
-      state.date = action.payload.date;
-      console.log(message);
+      console.log(`Mobile has been updated`);
     },
     updateShippingDetails: (state, action) => {
       const { country, city, address1, address2, postalCode, username } = action.payload.user;
-      const message = `Contact details for ${username} has been updated on ${action.payload.date}`;
 
       state.user.country = country;
       state.user.city = city;
       state.user.address1 = address1;
       state.user.address2 = address2;
       state.user.postalCode = postalCode;
-      state.date = action.payload.date;
-      console.log(message);
+
+      console.log(`Contact details for ${username} has been updated`);
     },
     setUserDraws: (state, action) => {
       const { drawIds, wins } = action.payload;
       const message = 
-      `User draws have been set with opt in ids: ${JSON.stringify(drawIds)} and wins: ${JSON.stringify(wins)}`;
+      `User Draws have been set with opt in IDs: ${JSON.stringify(drawIds)} and wins: ${JSON.stringify(wins)}`;
 
       drawIds.map(({ drawId }) => state.draws.push(drawId));
       wins.map(({ id }) => state.wins.push(id));
+      state.date = action.payload.date;
       console.log(message);
     },
     optIn: (state, action) => {
-      const message = `User has opted in for draw with id: ${action.payload.drawId}`;
-
       state.draws.push(action.payload.drawId);
-      console.log(message);
+      console.log(`User has opted in for draw with ID: ${action.payload.drawId}`);
+    },
+    setWinner: (state, action) => {
+      state.wins.push(action.payload.drawId);
+      console.log(`User has won draw with ID: ${action.payload.drawId}`);
     },
     clearUser: (state) => {
       state.user = null;
       state.date = null;
+      state.draws = [];
+      state.wins = [];
+      console.log(`User has been cleared`);
     },
   },
 });

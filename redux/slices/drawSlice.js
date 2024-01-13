@@ -2,9 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   draws: [],
-  date: null, // const date = new Date(draw.date); to get in components
-  items: [],
-  itemsDate: null
+  date: null,
+  items: []
 };
 
 const drawSlice = createSlice({
@@ -25,6 +24,7 @@ const drawSlice = createSlice({
       if(date) state.date = date;
     },
     addItems: (state, action) => {
+
       action.payload.items.forEach(item => {
         const itemExist = state.items.some(exItem => exItem.id === item.id);
 
@@ -33,10 +33,13 @@ const drawSlice = createSlice({
           console.log(`Item ${item.id} added`);
         } else console.log(`Item ${item.id} already exists`);
       });
+
     },
     clearDraws: (state) => {
-      state.draws = null;
       state.date = null;
+      state.draws = [];
+      state.items = [];
+      console.log(`Draws state has been cleared`);
     },
   },
 });

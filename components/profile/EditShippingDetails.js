@@ -15,19 +15,18 @@ import { inputTypes as IT } from "../../utils/constants/data/inputTypes";
 import { allInputsRegex, lettersRegex } from "../../utils/formValidations";
 
 const EditShippingDetails = (props) => {
-  const { user, state, onSubmit } = props;
-  const { loading, error } = state.api;
+  const { user, loading, setShipping, onSubmit } = props;
 
   const { control, reset, handleSubmit } = useForm();
 
+  const onPress = () => {
+    reset();
+    setShipping(false);
+  };
+
   return (
-    // TODO -> loading && loadingModal
-    // TODO -> !loading && error && errorModal
     <>
-      <CustomHeader title='Shipping Details' onPress={()=>{
-        reset();
-        state.screen.setShipping(false);
-      }} />
+      <CustomHeader title='Shipping Details' onPress={onPress} />
       <MainContainer>
         <KeyboardAvoidingView behavior={isAndroid ? 'padding' : 'height'}>
           <KeyboardAwareScrollView enableOnAndroid={true} style={styles.container}>

@@ -4,6 +4,7 @@ import useAxiosFetch from './useAxiosFetch';
 import { AuthContext } from '../context/store';
 
 import { auth } from '../utils/APIs/headers';
+import { apiStatus } from '../utils/constants/data/apiStatus';
 
 /* ------------------------------------------------------------------
  * -------- Use for sending notifications (email, sms, etc.) --------
@@ -15,7 +16,7 @@ const useNotification = () => {
   const authCtx = useContext(AuthContext);
   const config = auth(authCtx.tempToken || authCtx.token);
 
-  const { fetchAPI, data, loading, status, error } = useAxiosFetch();
+  const { fetchAPI, data, status, statusCode } = useAxiosFetch();
 
   const sendNotification = async (endpoint, body = null) => {
     setSent(false);
@@ -23,19 +24,23 @@ const useNotification = () => {
   }
 
   useEffect(() => {
-    if(!loading && !error) {
+    if(status === apiStatus.SUCCESS) {
+      setSent(true);
+      alert(`${data.body.type} sent successfully!`);
+    } else if(status === apiStatus.ERROR) {
+      if(statusCode == 401) alert(`${data.body.type} cannot be sent!`);
+      else alert("Server Error!\nKindly Contact Support Team");
+    }
+  }, [status]);
 
-      if(data.success) {
-        setSent(true);
-        alert(`${data.body.type} sent successfully!`);
-      }
-      
-    } else if(status == 401) alert(`${data.body.type} cannot be sent!`);
-    else if(status == 500) alert(data.message);
-
-  }, [data, loading, error]);
-
-  return { loading, error, sent, sendNotification };
+  // TODO -> add callback object and move sent to state object
+  
+  return { 
+    state: {
+      reqStatus: status, 
+    },
+    sent, sendNotification 
+  };
 }
 
 export default useNotification;

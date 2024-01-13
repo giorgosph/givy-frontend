@@ -10,11 +10,12 @@ import AuthNavbar from '../../components/auth/AuthNavbar';
 import MainContainer from '../../components/general/MainContainer';
 
 import { WIDTH } from '../../utils/constants/styles/dimensions';
+import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR } from '../../utils/constants/styles/colors';
 
 const AuthScreen = ({ navigation }) => { 
   const { state, callback } = useAuth();
-  const { loading, error } = state.api;
+  const loading = state.reqStatus === apiStatus.LOADING;
 
   const animation = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef();
@@ -41,8 +42,6 @@ const AuthScreen = ({ navigation }) => {
   
 
   return (
-    // TODO -> loading && loadingModal
-    // TODO -> !loading && error && errorModal
     <>
     {callback.renderModal()}
     <Header />

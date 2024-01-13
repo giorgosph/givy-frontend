@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/store';
 import { useNavigation } from '@react-navigation/native';
 
 import { auth } from '../../utils/APIs/headers';
+import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { CONFIRM_EP, EMAIL_CODE_EP, MOBILE_CODE_EP } from '../../utils/constants/url';
 
 /* ----------------------------------------------------------------
@@ -19,8 +20,8 @@ const useConfirmation = () => {
   const authCtx = useContext(AuthContext);
   const config = auth(authCtx.tempToken || authCtx.token);
 
-  const { loading: sending, sendNotification } = useNotification();
-  const { fetchAPI, data, loading, status, error } = useAxiosFetch();
+  const { fetchAPI, data, status, statusCode } = useAxiosFetch();
+  const { state: notificationState, sendNotification } = useNotification();
 
   const confirmAccount = async (type, formData) => {
     const { code } = formData;
@@ -32,32 +33,31 @@ const useConfirmation = () => {
   const resend = type => sendNotification(type == 'email' ? EMAIL_CODE_EP : MOBILE_CODE_EP)
 
   useEffect(() => {
-    if(!loading && !error) {
+    if(status === apiStatus.SUCCESS) {
 
-      if(data.success) {
-        const isEmail = data.body?.confirm == 'email'; // email has been confirmed
-        const isMobile = data.body?.confirm == 'mobile'; // mobile has been confirmed
+      const isEmail = data.body?.confirm == 'email'; // email has been confirmed
+      const isMobile = data.body?.confirm == 'mobile'; // mobile has been confirmed
 
-        if(isEmail) {
-          authCtx.authenticate(authCtx.tempToken);
-          alert("Email Address Confirmed Successfully!");
-        } else if(isMobile) {
-          // TODO -> Edit userSlice, set phone confirmed to true
-          navigation.goBack();
-          alert("Phone Number Confirmed Successfully!");
-        }
-
-      } 
+      if(isEmail) {
+        authCtx.authenticate(authCtx.tempToken);
+        alert("Email Address Confirmed Successfully!");
+      } else if(isMobile) {
+        // TODO -> Edit userSlice, set phone confirmed to true
+        navigation.goBack();
+        alert("Phone Number Confirmed Successfully!");
+      }
       
-    } else if(status == 401) alert("Wrong code provided!");
-    else if(status == 500) alert(data.message);
-
-  }, [data, loading, error]);
+    } else if(status === apiStatus.ERROR) {
+      if(statusCode == 401) alert("Wrong code provided!");
+      else alert("Server Error!\nKindly Contact Support Team");
+    }
+  }, [status]);
 
   return { 
     state: {
-      api: { loading, sending, error },
+      reqStatus: status,
     },
+    notificationState,
     callback: { 
       resend,
       confirmAccount, 

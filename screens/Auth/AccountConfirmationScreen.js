@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import useConfirmation from "../../hooks/components/useConfirmation";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { inputTypes } from "../../utils/constants/data/inputTypes";
 import { confirmationCodeValidation } from "../../utils/formValidations";
 import { BACKGROUND_COLOR, BUTTON_COLOR } from "../../utils/constants/styles/colors";
@@ -21,8 +22,8 @@ const AccountConfirmationScreen = ({ route }) => {
 
   const { control, handleSubmit, clearErrors } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-  const { state, callback } = useConfirmation();
-  const { loading, sending } = state.api; 
+  const { state, notificationState, callback } = useConfirmation();
+  const loading = state.reqStatus === apiStatus.LOADING || notificationState.reqStatus === apiStatus.LOADING;
 
   const { buttonTitle, title, text } = type.text;
 
@@ -41,14 +42,14 @@ const AccountConfirmationScreen = ({ route }) => {
         <CustomButton 
           title="Submit" 
           onPress={handleSubmit((formData) => callback.confirmAccount(type.value, formData))} 
-          disabled={loading || sending} 
+          disabled={loading} 
           style={styles.button1}
           textStyle={styles.buttonText1}
         />
         <CustomButton 
           title={buttonTitle} 
           onPress={() => callback.resend(type.value)} 
-          disabled={loading || sending}  
+          disabled={loading}  
           style={styles.button2}
           textStyle={styles.buttonText2}
         />

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from '../../context/store';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,8 +12,10 @@ import { optIn } from '../../redux/slices/userSlice';
 import { addItems } from '../../redux/slices/drawSlice';
 
 import { auth } from '../../utils/APIs/headers';
+import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { includeByDrawID } from '../../utils/filters/drawFilters';
 import { DRAW_ITEMS_EP, OPT_IN_EP } from '../../utils/constants/url';
+
 import useModal from '../useModal';
 
 /* ----------------------------------------------------------------
@@ -21,7 +23,9 @@ import useModal from '../useModal';
  * ---------------------------------------------------------------- */
 
 const useDrawItems = (draw) => {
-  const { fetchAPI, data, loading, error, status } = useAxiosFetch();
+  const [itemsFetched, setItemsFetched] = useState(false);
+
+  const { fetchAPI, data, status, statusCode } = useAxiosFetch();
 
   // Initialization
   const authCtx = useContext(AuthContext);
@@ -56,25 +60,21 @@ const useDrawItems = (draw) => {
   /* ----------------------------------------- */
   
   useEffect(() => {
-    if(!loading && !error) {
-      if(!status && items.length == 0) fetchItems();
+    if(status === apiStatus.IDLE && !itemsFetched) fetchItems();
+    else if(status === apiStatus.SUCCESS) {
 
-      if(data.success) {
-        if(data.body.drawId) {
-          alert("You have successfully been registered to the draw!\nGood Luck!!");
-          navigation.goBack();
-          dispatch(optIn({ drawId: data.body.drawId }));
-
-          // clear loading, error, data, state 
-        } else if(data.body) {
-          dispatch(addItems({ items: data.body }));
-          // clear loading, error, data, state 
-        }
+      if(data.body.drawId) {
+        alert("You have successfully been registered to the draw!\nGood Luck!!");
+        navigation.goBack();
+        dispatch(optIn({ drawId: data.body.drawId }));
+      } else if(data.body) {
+        setItemsFetched(true);
+        dispatch(addItems({ items: data.body }));
       }
-    }
+      
+    } else if(status === apiStatus.ERROR) alert("Server Error!\nKindly Contact Support Team");
 
-    // do not abort opt in request if user leave the component
-  }, [data, loading, error]);
+  }, [data, status]);
 
   useEffect(() => {
     if(timeRemaining.expired) {
@@ -90,6 +90,7 @@ const useDrawItems = (draw) => {
         // Stop animation
         // Display the winners
         setVisible({items, winners: wsData.body.winners});
+        // If this user is the winner set it to redux state (userSlice.setWinner)
         // Navigate user to searchTab or back
       }
     }
@@ -97,7 +98,7 @@ const useDrawItems = (draw) => {
 
   return { 
     state: {
-      api: { loading, error },
+      reqStatus: status,
       modal: { visible, setVisible },
     },
     callback: {
