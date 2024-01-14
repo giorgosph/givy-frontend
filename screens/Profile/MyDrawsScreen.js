@@ -6,10 +6,14 @@ import CustomHeader from "../../components/general/CustomHeader";
 import CustomButton from "../../components/general/CustomButton";
 import MainContainer from "../../components/general/MainContainer";
 
+import { apiStatus } from "../../utils/constants/data/apiStatus";
+
 import useDraws from "../../hooks/components/useDraws";
+import SkeletonDraw from "../../components/skeletons/SkeletonDraw";
 
 const MyDraws = ({ navigation }) => {
-  const { userDraws: draws } = useDraws(); // use to fetch draws if not already set
+  const { state, userDraws: draws } = useDraws(); // use to fetch draws if not already set
+  const loading = state.reqStatus === apiStatus.LOADING;
 
   const handlePress = async () => {
     await navigation.goBack();
@@ -20,13 +24,16 @@ const MyDraws = ({ navigation }) => {
     <>
       <CustomHeader title="My Draws" navigation={navigation} />
       <MainContainer centered>
-        {draws && draws.length > 0 ? draws.map(draw => <DrawListing key={draw.id} draw={draw} opted />) 
-        : (
-          <View>
-            <Text style={{color: 'white'}}>You are not registered to any draw yet.</Text>
-            <CustomButton title="Find a new Draw!" onPress={handlePress} />
-          </View>
+        {loading ? <SkeletonDraw /> : (
+          draws && draws.length > 0 ? draws.map(draw => <DrawListing key={draw.id} draw={draw} opted />) 
+          : (
+            <View>
+              <Text style={{color: 'white'}}>You are not registered to any draw yet.</Text>
+              <CustomButton title="Find a new Draw!" onPress={handlePress} />
+            </View>
+          )
         )}
+
       </MainContainer>
     </>
   )
