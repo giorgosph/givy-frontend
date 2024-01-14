@@ -6,7 +6,6 @@ import Carousel from 'react-native-snap-carousel';
 import { IMAGE_CAROUSEL_HEIGHT, IMAGE_CAROUSEL_WIDTH, PIXELS, WIDTH } from '../../utils/constants/styles/dimensions';
 
 const ImageCarousel = ({ images, loop }) => {
-  // if there are no images render a loading frame
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <Image source={{ uri: item }} style={styles.image} resizeMode="cover" />

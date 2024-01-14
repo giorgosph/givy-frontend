@@ -36,7 +36,7 @@ const DrawListing = ({ draw, opted = false }) => {
 const styles = StyleSheet.create({
   container: {
     width: '80%',
-    height: '21%',
+    height: '25%',
     maxHeight: 180,
     minHeight: 120,
     padding: PIXELS * 2/6, 

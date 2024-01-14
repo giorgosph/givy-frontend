@@ -7,6 +7,7 @@ import CustomButton from "../../components/general/CustomButton";
 import MainContainer from "../../components/general/MainContainer";
 import ImageCarousel from "../../components/general/ImageCarousel";
 import CustomCountdown from "../../components/general/CustomCountdown";
+import SkeletonDrawDetails from "../../components/skeletons/SkeletonDrawDetails";
 
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { ITEM_LIST_HEIGHT } from "../../utils/constants/styles/dimensions";
@@ -19,28 +20,33 @@ const DrawDetailsScreen = ({ route }) => {
   const { draw } = route.params;
 
   const { state, items, images, opted, timeRemaining, callback } = useDrawItems(draw);
+  const loading = state.reqStatus === apiStatus.LOADING;
 
   const buttonTitle = timeRemaining.expired ? "Closed" : opted ? "Already Opted In" : "Opt In"
-  const disableButton = state.reqStatus === apiStatus.LOADING || opted || timeRemaining.expired;
+  const disableButton = loading || opted || timeRemaining.expired;
 
   return (
    <>
       {callback.renderWinnerModal()}
       <CustomHeader title={draw.title} />
       <MainContainer centered>
-        <ImageCarousel images={images} loop />
+        {loading ? <SkeletonDrawDetails /> : (
+        <>
+          <ImageCarousel images={images} loop />
 
-        <CustomCountdown timeRemaining={timeRemaining} />
+          <CustomCountdown timeRemaining={timeRemaining} />
 
-        <ScrollView style={styles.container}>
-          {items && items.length > 0 ? 
-            items.map(item => <ItemListing key={item.id} item={item}/>) 
-            : <Text style={{color: 'white'}}>No Items to display!</Text>
-          }
+          <ScrollView style={styles.container}>
+            {items && items.length > 0 ? 
+              items.map(item => <ItemListing key={item.id} item={item}/>) 
+              : <Text style={{color: 'white'}}>No Items to display!</Text>
+            }
 
-          {/* Remove after testing time related lagorithms */}
-          {/* {drawItems.map(item => <ItemListing key={item.id} item={item}/>)} */}
-        </ScrollView>
+            {/* Remove after testing time related lagorithms */}
+            {/* {drawItems.map(item => <ItemListing key={item.id} item={item}/>)} */}
+          </ScrollView>
+        </>
+        )}
 
         {timeRemaining.closingSoon && <Text style={{color: 'red'}}>Closing soon</Text>}
         <CustomButton 
