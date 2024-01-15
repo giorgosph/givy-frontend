@@ -7,7 +7,7 @@ import { BUTTON_HEIGHT, BUTTON_WIDTH, PIXELS } from '../../utils/constants/style
 const CustomButton = ({ title, onPress, disabled, style={}, textStyle={} }) => {
   return (
     <TouchableOpacity
-      style={[styles.button, { ...style }]}
+      style={[styles.button, {opacity: disabled ? 0.4 : 1}, { ...style }]}
       disabled={disabled} 
       onPress={onPress}
     >

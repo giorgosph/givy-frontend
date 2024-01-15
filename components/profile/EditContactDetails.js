@@ -31,12 +31,7 @@ const EditContactDetails = (props) => {
           <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user?.mobile} rules={numbersRegex} type={IT.tel} inputMode='numeric' /> 
         </View>
         <View style={styles.buttonContainer}>
-          <CustomButton 
-            title='submit'
-            disabled={loading} 
-            style={{opacity: loading ? 0.4 : 1}}
-            onPress={handleSubmit(onSubmit)}
-          />
+          <CustomButton title='submit' disabled={loading} onPress={handleSubmit(onSubmit)} />
         </View>
       </MainContainer>
     </>

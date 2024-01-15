@@ -25,6 +25,8 @@ const DrawDetailsScreen = ({ route }) => {
   const buttonTitle = timeRemaining.expired ? "Closed" : opted ? "Already Opted In" : "Opt In"
   const disableButton = loading || opted || timeRemaining.expired;
 
+  const onPress = ()=>callback.handleOptIn(draw.id)
+
   return (
    <>
       {callback.renderWinnerModal()}
@@ -49,12 +51,7 @@ const DrawDetailsScreen = ({ route }) => {
         )}
 
         {timeRemaining.closingSoon && <Text style={{color: 'red'}}>Closing soon</Text>}
-        <CustomButton 
-          title={buttonTitle} 
-          disabled={disableButton} 
-          style={{opacity: disableButton ? 0.4 : 1}}
-          onPress={()=>callback.handleOptIn(draw.id)} 
-        />
+        <CustomButton title={buttonTitle} disabled={disableButton} onPress={onPress} />
       </MainContainer>
    </>
   )

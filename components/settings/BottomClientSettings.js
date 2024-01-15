@@ -6,8 +6,7 @@ import SettingButton from "./SettingButton";
 const BottomClientSettings = ({ navTo }) => {
   return (
     <View>
-      <SettingButton title="Leave Us a Feedback" onPress={navTo("Leave Feedback")} />
-      <SettingButton title="Unsubscribe" onPress={navTo("Unsubscribe")} />
+      <SettingButton title="Leave Us a Feedback" onPress={navTo("Feedback")} />
     </View>
   )
 };

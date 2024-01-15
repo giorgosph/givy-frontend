@@ -28,16 +28,11 @@ const Login = (props) => {
         <CustomInput control={control} name="password"  type={IT.currentPassword}  />
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <CustomButton 
-          title='submit'
-          disabled={loading} 
-          style={{opacity: loading ? 0.4 : 1}}
-          onPress={handleSubmit(logIn)}
-        />
+        <CustomButton title='submit' disabled={loading} onPress={handleSubmit(logIn)} />
         <CustomButton 
           title='forgot password?'
           disabled={loading} 
-          style={{...styles.secondaryButton, opacity: loading ? 0.4 : 1}}
+          style={styles.secondaryButton}
           textStyle={styles.secondaryButtonText}
           onPress={() => navigation.navigate("ForgotPassword")}
         />

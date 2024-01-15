@@ -36,12 +36,7 @@ const Signup = (props) => {
         <CustomInput control={control} name="postalCode" title="postal code" rules={allInputsRegex} type={IT.postalCode} />
       </KeyboardAwareScrollView>
       <View style={styles.buttonContainer}>
-        <CustomButton 
-          title='submit'
-          disabled={loading} 
-          style={{opacity: loading ? 0.4 : 1}}
-          onPress={handleSubmit(signUp)}
-        />
+        <CustomButton title='submit' disabled={loading} onPress={handleSubmit(signUp)} />
       </View>
     </KeyboardAvoidingView>
   );
