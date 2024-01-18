@@ -41,7 +41,7 @@ export const allInputsRegex = {
     value: !(/[\'\";<>`&|\\/%\.\x00]/),
     message: 'Some characters are not allowed'
   }
-}
+};
 
 export const spacesRegex = {
   pattern: {

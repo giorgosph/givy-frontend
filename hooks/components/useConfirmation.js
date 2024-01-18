@@ -21,7 +21,7 @@ const useConfirmation = () => {
   const config = auth(authCtx.tempToken || authCtx.token);
 
   const { fetchAPI, data, status, statusCode } = useAxiosFetch();
-  const { state: notificationState, sendNotification } = useNotification();
+  const { state: notificationState, callback } = useNotification();
 
   const confirmAccount = async (type, formData) => {
     const { code } = formData;
@@ -30,7 +30,7 @@ const useConfirmation = () => {
     await fetchAPI('delete', CONFIRM_EP, { code, type }, config);
   }
 
-  const resend = type => sendNotification(type == 'email' ? EMAIL_CODE_EP : MOBILE_CODE_EP)
+  const resend = type => callback.sendNotification(type == 'email' ? EMAIL_CODE_EP : MOBILE_CODE_EP);
 
   useEffect(() => {
     if(status === apiStatus.SUCCESS) {

@@ -55,7 +55,7 @@ const useAxiosFetch = () => {
     };
   }, []);
 
-  return { fetchAPI, data, status, statusCode };
+  return { fetchAPI, resetAxiosState, data, status, statusCode };
 };
 
 export default useAxiosFetch;

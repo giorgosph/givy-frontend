@@ -20,13 +20,13 @@ const title = "Please enter your email address"
 
 const ForgotPasswordScreen = () => {
   const { state, callback } = useAuth();
-  const { state: notificationState, sent, sendNotification } = useNotification();
+  const { state: notificationState, sent, callback: notificationCallback } = useNotification();
   const loading = state.reqStatus === apiStatus.LOADING || notificationState.reqStatus === apiStatus.LOADING;
 
   const { control, handleSubmit, clearErrors } = useForm({ mode: 'onBlur', reValidateMode: 'onSubmit' });
 
   const buttonTitle = sent ? "Resend Email" : "Send Email";
-  const sendEmail = formData => sendNotification(EMAIL_FP_EP, { email: formData.email });
+  const sendEmail = formData => notificationCallback.sendNotification(EMAIL_FP_EP, { email: formData.email });
 
   const formError = () => {
     alert("Invalid Confirmation Code");

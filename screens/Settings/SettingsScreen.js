@@ -22,8 +22,8 @@ const SettingsScreen = ({ navigation }) => {
 
   const logout = () => {
     authCtx.logout();
-    dispatch(clearUser);
-    dispatch(clearDraws);
+    dispatch(clearUser());
+    dispatch(clearDraws());
   };
 
   return (

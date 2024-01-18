@@ -22,7 +22,7 @@ import { clientTabs, defaultTabs } from "../../utils/navigation/tabs";
 const useNavigator = () => {
   const [tabsToRender, setTabsToRender] = useState(defaultTabs());
 
-  const { fetchAPI, data, status, statusCode } = useAxiosFetch();
+  const { fetchAPI, resetAxiosState, data, status } = useAxiosFetch();
   const authCtx = useContext(AuthContext);
   const config = auth(authCtx.token);
   const dispatch = useDispatch()
@@ -44,6 +44,7 @@ const useNavigator = () => {
       } else if(status === apiStatus.SUCCESS) {
         dispatch(addItems({ items: data.body.wins })); 
         dispatch(setUserDraws({ drawIds: data.body.draws, wins: data.body.wins, date: new Date().getTime() }));
+        resetAxiosState();
       } else if(status === apiStatus.ERROR) alert("Server Error!\nKindly Contact Support Team");
 
     } else setTabsToRender(defaultTabs());

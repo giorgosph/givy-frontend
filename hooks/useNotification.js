@@ -5,6 +5,7 @@ import { AuthContext } from '../context/store';
 
 import { auth } from '../utils/APIs/headers';
 import { apiStatus } from '../utils/constants/data/apiStatus';
+import { CONTACT_US_EP } from '../utils/constants/url';
 
 /* ------------------------------------------------------------------
  * -------- Use for sending notifications (email, sms, etc.) --------
@@ -23,6 +24,10 @@ const useNotification = () => {
     await fetchAPI('put', endpoint, body, !body && config);
   }
 
+  const contactUs = async (formData) => {
+    await fetchAPI('post', CONTACT_US_EP, formData, config);
+  }
+
   useEffect(() => {
     if(status === apiStatus.SUCCESS) {
       setSent(true);
@@ -39,7 +44,10 @@ const useNotification = () => {
     state: {
       reqStatus: status, 
     },
-    sent, sendNotification 
+    callback: {
+      sendNotification, contactUs
+    },
+    sent
   };
 }
 

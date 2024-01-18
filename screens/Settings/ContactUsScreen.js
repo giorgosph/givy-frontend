@@ -9,13 +9,18 @@ import CustomHeader from '../../components/general/CustomHeader';
 import MainContainer from '../../components/general/MainContainer';
 
 import { allInputsRegex, maxLength, required } from '../../utils/formValidations';
+import useNotification from '../../hooks/useNotification';
+import { apiStatus } from '../../utils/constants/data/apiStatus';
 
 const ContactUsScreen = () => {
   const { control, formState, handleSubmit, reset  } = useForm();
   const { isDirty, isValid } = formState;
 
+  const { sent, state, callback } = useNotification();
+  const disable = state.reqStatus === apiStatus.LOADING || !isDirty || !isValid || sent;
+
   const onSubmit = (data) => {
-    console.log(data);
+    callback.contactUs(data);
     reset();
   };
 
@@ -39,7 +44,7 @@ const ContactUsScreen = () => {
         />
         {/* <Text style={styles.characterLimit}>{`${field.value?.length || 0}/50`}</Text> */}
 
-        <CustomButton title="Send Email" onPress={handleSubmit(onSubmit)} disabled={!isDirty || !isValid} />
+        <CustomButton title="Send Email" onPress={handleSubmit(onSubmit)} disabled={disable} />
       </MainContainer>
     </>
   );
