@@ -20,10 +20,13 @@ export const FP_EP = `${USERS_EP}forgot-password/`;
 const EMAIL_EP = `${USERS_EP}email/`;
 const MOBILE_EP = `${USERS_EP}phone/`;
 
+export const MOBILE_CODE_EP = `${MOBILE_EP}code/`;
+
 export const EMAIL_FP_EP = `${EMAIL_EP}pass/`;
 export const EMAIL_CODE_EP = `${EMAIL_EP}code/`;
-export const MOBILE_CODE_EP = `${MOBILE_EP}code/`; 
-export const CONTACT_US_EP = `${EMAIL_EP}contact/`; 
+export const CONTACT_US_EP = `${EMAIL_EP}contact/`;
+
+export const FEEDBACK_EP = `${USERS_EP}feedback/`;
 
 /* ------- Details ------- */
 export const USER_DETAILS_EP = `${USERS_EP}details/`;

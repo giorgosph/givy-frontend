@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 
 import { useForm } from 'react-hook-form';
-import { FontAwesome } from '@expo/vector-icons'
 ;
+import StarRating from '../../components/settings/StarRating';
 import CustomInput from '../../components/general/CustomInput';
 import CustomButton from '../../components/general/CustomButton';
 import CustomHeader from '../../components/general/CustomHeader';
@@ -11,12 +11,19 @@ import MainContainer from '../../components/general/MainContainer';
 
 import { allInputsRegex } from '../../utils/formValidations';
 import { PIXELS } from '../../utils/constants/styles/dimensions';
+import { apiStatus } from '../../utils/constants/data/apiStatus';
+
+import useNotification from '../../hooks/useNotification';
 
 const FeedbackScreen = () => {
-  const { control, handleSubmit, setValue, getValues } = useForm();
+  const { control, handleSubmit, setValue, reset } = useForm();
+  
+  const { sent, state, callback } = useNotification();
+  const loading = state.reqStatus == apiStatus.LOADING || sent
 
   const onSubmit = (data) => {
-    console.log('Feedback Data:', data);
+    callback.feedback(data);
+    reset();
   };
 
   return (
@@ -25,28 +32,13 @@ const FeedbackScreen = () => {
       <MainContainer centered>
         <Text style={styles.heading}>Leave a Feedback 😊</Text>
 
-        {/* Star Rating */}
-        {/* TODO -> make different component make it better (currently not updating on correct render) */}
-        <View style={styles.ratingContainer}>
-          {[1, 2, 3, 4, 5].map((star) => (
-            <TouchableOpacity
-              key={star}
-              onPress={() => setValue('rating', star)}
-              activeOpacity={0.7}
-            >
-              <FontAwesome
-                name={star <= getValues('rating') ? 'star' : 'star-o'}
-                size={30}
-                color={star <= getValues('rating') ? 'gold' : 'gray'}
-              />
-            </TouchableOpacity>
-          ))}
-        </View>
+        <StarRating control={control} setValue={setValue} />
 
         {/* TODO -> extra styles */}
         {/* TODO -> test why regex validations is not working */}
         <CustomInput control={control} name="comments" rules={allInputsRegex} />
-        <CustomButton title="Submit" onPress={handleSubmit(onSubmit)} />
+        <CustomButton title="Submit" onPress={handleSubmit(onSubmit)} disabled={loading} />
+        <Text style={{color: 'white'}}>New Feedback will replace your old one!</Text>
       </MainContainer>
     </>
   );

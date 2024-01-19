@@ -13,7 +13,7 @@ import useNotification from '../../hooks/useNotification';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 
 const ContactUsScreen = () => {
-  const { control, formState, handleSubmit, reset  } = useForm();
+  const { control, formState, handleSubmit, reset } = useForm();
   const { isDirty, isValid } = formState;
 
   const { sent, state, callback } = useNotification();

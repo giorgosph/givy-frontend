@@ -14,7 +14,7 @@ export const AuthContext = createContext({
 function AuthContextProvider({ children }) {
   // const [token, setToken] = useState(false); 
   const [tempToken, setTempToken] = useState(false); 
-  const [token, setToken] = useState("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJpYXQiOjE3MDE3MTMyOTJ9.0Gb8ulPHxy2rRaYnLhcSqrQP9LpL6JUOCDqXTmBDNTE");   
+  const [token, setToken] = useState("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjAwMDAkam9obiIsImVtYWlsIjoiam9obkBleGFtcGxlLmNvbSIsImlhdCI6MTcwNTY2MDM2Mn0.zNfRxS6bjYSopamR5UOeJLMaebk_kl5w5DnTJbE3dN8");   
   
   // const [isAdmin, setAdmin] = useState(false);
 

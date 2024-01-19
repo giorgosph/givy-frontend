@@ -5,7 +5,7 @@ import { AuthContext } from '../context/store';
 
 import { auth } from '../utils/APIs/headers';
 import { apiStatus } from '../utils/constants/data/apiStatus';
-import { CONTACT_US_EP } from '../utils/constants/url';
+import { CONTACT_US_EP, FEEDBACK_EP } from '../utils/constants/url';
 
 /* ------------------------------------------------------------------
  * -------- Use for sending notifications (email, sms, etc.) --------
@@ -24,9 +24,9 @@ const useNotification = () => {
     await fetchAPI('put', endpoint, body, !body && config);
   }
 
-  const contactUs = async (formData) => {
-    await fetchAPI('post', CONTACT_US_EP, formData, config);
-  }
+  const contactUs = async (formData) => await fetchAPI('post', CONTACT_US_EP, formData, config);
+
+  const feedback = async (formData) => await fetchAPI('post', FEEDBACK_EP, formData, config);
 
   useEffect(() => {
     if(status === apiStatus.SUCCESS) {
@@ -34,6 +34,7 @@ const useNotification = () => {
       alert(`${data.body.type} sent successfully!`);
     } else if(status === apiStatus.ERROR) {
       if(statusCode == 401) alert(`${data.body.type} cannot be sent!`);
+      else if(statusCode == 409) alert("You are not allowed to submit a feedback more than once a day.");
       else alert("Server Error!\nKindly Contact Support Team");
     }
   }, [status]);
@@ -45,7 +46,7 @@ const useNotification = () => {
       reqStatus: status, 
     },
     callback: {
-      sendNotification, contactUs
+      sendNotification, contactUs, feedback
     },
     sent
   };
