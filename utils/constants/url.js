@@ -42,3 +42,8 @@ export const DRAWS_EP = `${BASE_URL}draws/`;
 export const OPT_IN_EP = `${DRAWS_EP}register/`;
 export const USER_DRAWS_EP = `${DRAWS_EP}user/`;
 export const DRAW_ITEMS_EP = `${DRAWS_EP}items/`;
+
+/* --------------------------- Admin --------------------------- */
+/* ------------------------------------------------------------- */
+
+export const DEVNOT_EP = `${BASE_URL}admin/fe/err`;

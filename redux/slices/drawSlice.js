@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import log from '../../utils/logger';
 
 const initialState = {
   draws: [],
@@ -18,9 +19,10 @@ const drawSlice = createSlice({
 
         if(!drawExist) {
           state.draws.push(draw);
-          console.log(`Draw ${draw.id} added`);
-        } else console.log(`Draw ${draw.id} already exists`);
+          log('i', `Redux-Draws | Draw ${draw.id} added` );
+        } else log('i', `Redux-Draws | Draw ${draw.id} already exists`);
       });
+
       if(date) state.date = date;
     },
     addItems: (state, action) => {
@@ -30,8 +32,8 @@ const drawSlice = createSlice({
 
         if(!itemExist) {
           state.items.push(item);
-          console.log(`Item ${item.id} added`);
-        } else console.log(`Item ${item.id} already exists`);
+          log('i', `Redux-Draws | Item ${item.id} added`);
+        } else log('i', `Redux-Draws | Item ${item.id} already exists`);
       });
 
     },
@@ -39,7 +41,7 @@ const drawSlice = createSlice({
       state.date = null;
       state.draws = [];
       state.items = [];
-      console.log(`Draws state has been cleared`);
+      log('i', `Redux-Draws | State has been cleared`);
     },
   },
 });

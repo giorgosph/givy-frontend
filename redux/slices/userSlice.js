@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import log from '../../utils/logger';
 
 const initialState = {
   user: null,
@@ -13,16 +14,16 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload.user;
-      console.log(`User ${action.payload.user.username} has been set`);
+      log('i', `Redux-User | User ${action.payload.user.username} has been set`);
     },
     updateEmail: (state, action) => {
       state.user.email = action.payload.email;
-      console.log(`Email address has been updated`);
+      log('i', `Redux-User | Email address has been updated`);
     },
     updateMobile: (state, action) => {
       state.user.mobile = action.payload.mobile;
       // TODO -> if (mobile) set mobile confirmed = false;
-      console.log(`Mobile has been updated`);
+      log('i', `Redux-User | Mobile has been updated`);
     },
     updateShippingDetails: (state, action) => {
       const { country, city, address1, address2, postalCode, username } = action.payload.user;
@@ -33,32 +34,31 @@ const userSlice = createSlice({
       state.user.address2 = address2;
       state.user.postalCode = postalCode;
 
-      console.log(`Contact details for ${username} has been updated`);
+      log('i', `Redux-User | Contact details for ${username} has been updated`);
     },
     setUserDraws: (state, action) => {
       const { drawIds, wins } = action.payload;
-      const message = 
-      `User Draws have been set with opt in IDs: ${JSON.stringify(drawIds)} and wins: ${JSON.stringify(wins)}`;
 
       drawIds.map(({ drawId }) => state.draws.push(drawId));
       wins.map(({ id }) => state.wins.push(id));
       state.date = action.payload.date;
-      console.log(message);
+
+      log('d', `Redux-User | User Draws: ${JSON.stringify(drawIds)}, Wins: ${JSON.stringify(wins)}`)
     },
     optIn: (state, action) => {
       state.draws.push(action.payload.drawId);
-      console.log(`User has opted in for draw with ID: ${action.payload.drawId}`);
+      log('d', `Redux-User | Opted in for draw ${action.payload.drawId}`);
     },
     setWinner: (state, action) => {
-      state.wins.push(action.payload.drawId);
-      console.log(`User has won draw with ID: ${action.payload.drawId}`);
+      state.wins.push(action.payload.itemId);
+      log('d', `Redux-User | Won item ${action.payload.itemId}`);
     },
     clearUser: (state) => {
       state.user = null;
       state.date = null;
       state.draws = [];
       state.wins = [];
-      console.log(`User has been cleared`);
+      log('i', `Redux-User | State has been cleared`);
     },
   },
 });

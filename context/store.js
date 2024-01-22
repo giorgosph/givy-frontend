@@ -1,5 +1,6 @@
 import { createContext, useState, useMemo } from "react";
 import jwt_decode from "jwt-decode";
+import log from "../utils/logger";
 
 export const AuthContext = createContext({
   token: "",
@@ -21,10 +22,11 @@ function AuthContextProvider({ children }) {
   const decodeToken = (token) => {
     try {
       const { role } = jwt_decode(token.split(" ")[1]);
-      console.log("TOKEN:\n" + token + "\nROLE:\n" + role);
+      log('i', `Token decoded. User role: ${role}`);
+
       return { role };
-    } catch (error) {
-      console.error("Error decoding token:", error);
+    } catch (err) {
+      log('dv', `Error decoding token:\n ${err}`);
       return false;
     }
   };
@@ -32,16 +34,16 @@ function AuthContextProvider({ children }) {
   function holdToken(token) {
     setTempToken(token);
     setToken(false);
-    console.log("TOKEN has been holded:\n", token);
+    log('d', `Token has been held:\n ${token}`);
   }
 
   function authenticate(token) {
-    console.log("Authenticating and setting token");
+    log('i', `Authenticating and setting token`);
     // const { role } = decodeToken(token);
     setToken(token);
     setTempToken(false);
     // setAdmin(role === "admin");
-    console.log("TOKEN has been set:\n", token);
+    log('i', `Token has been set`);
   }
 
   function logout() {

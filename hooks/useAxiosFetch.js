@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import log from "../utils/logger";
 import { fetchAxios } from "../utils/APIs/axios";
 import { apiStatus } from "../utils/constants/data/apiStatus";
 
@@ -33,13 +34,13 @@ const useAxiosFetch = () => {
       setStatus(apiStatus.LOADING);
 
       const { data, status } = await fetchAxios(type, endpoint, body, extraHeaders);
-      console.log(`Fetched succeed with status ${status} and data:\n\t ${JSON.stringify(data)}`);
+      log('d', `Fetched Succeed\nStatus Code: ${status}\nData:\n ${JSON.stringify(data)}`);
 
       setData(data);
       setStatusCode(status);
       setStatus(apiStatus.SUCCESS);
     } catch (err) {
-      console.error("Fetched failed:\n", err);
+      log('w', `Fetched Failed\nResponse Error:\n ${err}`);
 
       setData(err.response?.data);
       setStatusCode(err.response?.status);
@@ -50,7 +51,7 @@ const useAxiosFetch = () => {
 
   useEffect(() => {
     return () => {
-      console.log("Clearing API State");
+      log('d', `Unmounting and Clearing API State`);
       resetAxiosState();
     };
   }, []);

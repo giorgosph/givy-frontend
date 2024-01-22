@@ -23,12 +23,7 @@ const useConfirmation = () => {
   const { fetchAPI, data, status, statusCode } = useAxiosFetch();
   const { state: notificationState, callback } = useNotification();
 
-  const confirmAccount = async (type, formData) => {
-    const { code } = formData;
-    
-    console.log("Account Confirmation Code:", code);
-    await fetchAPI('delete', CONFIRM_EP, { code, type }, config);
-  }
+  const confirmAccount = async (type, formData) => await fetchAPI('delete', CONFIRM_EP, { code: formData.code, type }, config);
 
   const resend = type => callback.sendNotification(type == 'email' ? EMAIL_CODE_EP : MOBILE_CODE_EP);
 

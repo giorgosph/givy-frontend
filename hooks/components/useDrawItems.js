@@ -11,6 +11,7 @@ import useTimeRemaining from '../useTimeRemaining';
 import { optIn } from '../../redux/slices/userSlice';
 import { addItems } from '../../redux/slices/drawSlice';
 
+import log from '../../utils/logger';
 import { auth } from '../../utils/APIs/headers';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { includeByDrawID } from '../../utils/filters/drawFilters';
@@ -79,12 +80,12 @@ const useDrawItems = (draw) => {
   useEffect(() => {
     if(timeRemaining.expired) {
       // TODO -> run animation
-      console.log("Animation starting...");
+      log('d', 'Animation starting ...');
     }
   }, [timeRemaining.expired]);
 
   useEffect(() => {
-    console.log("wsData:\n", wsData);
+    log('d', `wsData:\n ${wsData}`);
     if(wsData?.type == "runningDraws") {
       if(wsData.body.drawId == draw.id) {
         // Stop animation
