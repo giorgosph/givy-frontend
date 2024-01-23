@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 import isEqual from '../../utils/isEqual';
-import { auth } from '../../utils/APIs/headers';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { contactWarning, mobileInfo } from '../../utils/constants/data/modalInfo';
 import { CONTACT_DETAILS_EP, SHIPPING_DETAILS_EP } from '../../utils/constants/url';
@@ -47,13 +46,12 @@ const usePersonalDetails = () => {
   const user = useSelector(state => state.user.user);
  
   const authCtx = useContext(AuthContext);
-  const config = auth(authCtx.token);
   
   const navigation = useNavigation();
 
   const onSubmitShipping = async (formData) => {
     if(!isEqual(shippingDetails(user), formData)) {
-      await fetchAPI('put', SHIPPING_DETAILS_EP,  formData, config);
+      await fetchAPI('put', SHIPPING_DETAILS_EP,  formData, true);
     } else {
       alert("Your details are already up to date!");
       setEditShipping(false);
@@ -62,7 +60,7 @@ const usePersonalDetails = () => {
 
   const onSubmitContact = async (formData) => {
     if(!isEqual(contactDetails(user), formData)) {
-      const fetch = async () => await fetchAPI('put', CONTACT_DETAILS_EP,  formData, config);
+      const fetch = async () => await fetchAPI('put', CONTACT_DETAILS_EP,  formData, true);
 
       modalInfo = await contactWarning(fetch, () => setEditContact(false));
       setVisible(modalInfo);
@@ -105,7 +103,6 @@ const usePersonalDetails = () => {
 
     } else if(status === apiStatus.ERROR) {
       if(statusCode == 422) alert("Invalid email address provided!");
-      else alert("Server Error!\nKindly Contact Support Team");
     } 
 
     // abort request if user leave the component  and clear api state

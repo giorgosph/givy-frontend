@@ -9,7 +9,6 @@ import useAxiosFetch from "../useAxiosFetch";
 import { addItems } from "../../redux/slices/drawSlice";
 import { setUserDraws } from "../../redux/slices/userSlice";
 
-import { auth } from "../../utils/APIs/headers";
 import { USER_DRAWS_EP } from "../../utils/constants/url";
 import { refetchPerDays } from "../../utils/APIs/refetch";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
@@ -24,7 +23,6 @@ const useNavigator = () => {
 
   const { fetchAPI, resetAxiosState, data, status } = useAxiosFetch();
   const authCtx = useContext(AuthContext);
-  const config = auth(authCtx.token);
   const dispatch = useDispatch()
 
   const user = useSelector(state => state.user);
@@ -33,7 +31,7 @@ const useNavigator = () => {
   // Check if draws were fetched more than 1 day ago to refetch
   const refetch = refetchPerDays(user.date);
 
-  const fetchUserDraws = async () => await fetchAPI('get', USER_DRAWS_EP, null, config);
+  const fetchUserDraws = async () => await fetchAPI('get', USER_DRAWS_EP, null, true);
 
   useEffect(() => {
     if(authCtx.isAuthenticated) {
@@ -45,7 +43,7 @@ const useNavigator = () => {
         dispatch(addItems({ items: data.body.wins })); 
         dispatch(setUserDraws({ drawIds: data.body.draws, wins: data.body.wins, date: new Date().getTime() }));
         resetAxiosState();
-      } else if(status === apiStatus.ERROR) alert("Server Error!\nKindly Contact Support Team");
+      }
 
     } else setTabsToRender(defaultTabs());
   }, [authCtx.isAuthenticated, status]);

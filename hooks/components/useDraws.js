@@ -41,9 +41,9 @@ const useDraws = () => {
       if(data?.success) {
         dispatch(addDraws({ draws: data.body, date: new Date().getTime() }));
       }
-    } else if(status === apiStatus.ERROR) alert("Server Error!\nKindly Contact Support Team");
+    }
 
-    // abort request if user leave the component and clear api state
+    // TODO -> abort request if user leave the component
   }, [status]);
 
   return { 

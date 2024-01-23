@@ -7,32 +7,29 @@ export const BASE_URL_WS = `ws://${IP}:${PORT}/ws`;
 /* --------------------------- Users --------------------------- */
 /* ------------------------------------------------------------- */
 
-export const USERS_EP = `${BASE_URL}users/`;
+/* ------- AUTH ------- */
+export const LOGIN_EP = `${BASE_URL}users/login/`;
+export const LOGOUT_EP = `${BASE_URL}users/logout/`;
+export const SIGNUP_EP = `${BASE_URL}users/register/`;
+export const CONFIRM_EP = `${BASE_URL}users/confirm/`;
 
-export const LOGIN_EP = `${USERS_EP}login/`;
-export const SIGNUP_EP = `${USERS_EP}register/`;
-export const CONFIRM_EP = `${USERS_EP}confirm/`;
+export const RP_EP = `${BASE_URL}users/reset-password/`;
+export const FP_EP = `${BASE_URL}users/forgot-password/`;
 
-export const RP_EP = `${USERS_EP}reset-password/`;
-export const FP_EP = `${USERS_EP}forgot-password/`;
+export const REFRESH_TOKEN_EP = `${BASE_URL}users/refresh-token/`;
 
 /* ------- Notifications ------- */
-const EMAIL_EP = `${USERS_EP}email/`;
-const MOBILE_EP = `${USERS_EP}phone/`;
+export const MOBILE_CODE_EP = `${BASE_URL}users/phone/code/`;
 
-export const MOBILE_CODE_EP = `${MOBILE_EP}code/`;
+export const EMAIL_FP_EP = `${BASE_URL}users/email/pass/`;
+export const EMAIL_CODE_EP = `${BASE_URL}users/email/code/`;
+export const CONTACT_US_EP = `${BASE_URL}users/email/contact/`;
 
-export const EMAIL_FP_EP = `${EMAIL_EP}pass/`;
-export const EMAIL_CODE_EP = `${EMAIL_EP}code/`;
-export const CONTACT_US_EP = `${EMAIL_EP}contact/`;
-
-export const FEEDBACK_EP = `${USERS_EP}feedback/`;
+export const FEEDBACK_EP = `${BASE_URL}users/feedback/`;
 
 /* ------- Details ------- */
-export const USER_DETAILS_EP = `${USERS_EP}details/`;
-
-export const CONTACT_DETAILS_EP = `${USER_DETAILS_EP}contact/`;
-export const SHIPPING_DETAILS_EP = `${USER_DETAILS_EP}shipping/`; 
+export const CONTACT_DETAILS_EP = `${BASE_URL}users/details/contact/`;
+export const SHIPPING_DETAILS_EP = `${BASE_URL}users/details/shipping/`; 
 
 /* --------------------------- Draws --------------------------- */
 /* ------------------------------------------------------------- */

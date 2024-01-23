@@ -8,7 +8,6 @@ import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/store';
 import { setUser } from '../../redux/slices/userSlice';
 
-import { auth } from '../../utils/APIs/headers';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { mobileInfo } from '../../utils/constants/data/modalInfo';
 import { FP_EP, LOGIN_EP, RP_EP, SIGNUP_EP } from '../../utils/constants/url';
@@ -26,8 +25,6 @@ const useAuth = () => {
   const { setVisible, renderModal } = useModal();
   const { fetchAPI, data, status, statusCode } = useAxiosFetch();
 
-  const config = auth(authCtx.token);
-
   const logIn = async (formData) => await fetchAPI('put', LOGIN_EP,  formData);
 
   const signUp = async (formData) => {
@@ -41,7 +38,7 @@ const useAuth = () => {
     const { password, confirmPassword } = formData;
 
     if(password !== confirmPassword) return alert("Passwords do not match!");
-    await fetchAPI('put', RP_EP, formData, config);
+    await fetchAPI('put', RP_EP, formData, true);
   }
 
   const forgotPassword = async (formData) => {
@@ -71,6 +68,8 @@ const useAuth = () => {
 
         // User's email is confirmed
         if(emailConfirmed) { 
+
+          const modalInfo = mobileInfo(navigation, () => authCtx.authenticate(authCtx.tempToken));
           mobileConfirmed ? authCtx.authenticate(token) : setVisible(modalInfo); 
           
         } else if(emailConfirmed == false) navigation.navigate("AccountConfirmation", { type: CT.EMAIL });
@@ -80,13 +79,8 @@ const useAuth = () => {
 
     } else if(status === apiStatus.ERROR) {
       if(statusCode === 401) alert("Wrong Credentials");
-      else alert("Server Error!\nKindly Contact Support Team");
     }
   }, [status]);
-
-  /* --------------------------------------------------------------------------------- */
-
-  const modalInfo = mobileInfo(navigation, () => authCtx.authenticate(authCtx.tempToken));
 
   return { 
     state: {

@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+
+import { AuthContext } from "../context/store";
 
 import log from "../utils/logger";
 import { fetchAxios } from "../utils/APIs/axios";
@@ -19,21 +21,25 @@ const useAxiosFetch = () => {
     setStatus(apiStatus.IDLE);
   };
 
-  // TODO -> Create Loading Skeleton
+  const authCtx = useContext(AuthContext);
 
   /** 
+  * Use in comppnents for API requests with predefined properties and checks
+  * 
   * @param type get, put, post, delete
   * @param endpoint the endpoint to connect
   * @param body the body data of the request
   * @param extraHeaders any additional headers
   */
-  const fetchAPI = async (type, endpoint, body=null, extraHeaders=[]) => {
+  const fetchAPI = async (type, endpoint, body=null, authHeader=false) => {
+    const token = authHeader ? authCtx.token || authCtx.tempToken : 0;
+
     try {
       setData(false);
       setStatusCode(false);
       setStatus(apiStatus.LOADING);
 
-      const { data, status } = await fetchAxios(type, endpoint, body, extraHeaders);
+      const { data, status } = await fetchAxios(type, endpoint, body, token, authCtx.resetToken);
       log('d', `Fetched Succeed\nStatus Code: ${status}\nData:\n ${JSON.stringify(data)}`);
 
       setData(data);
@@ -44,8 +50,10 @@ const useAxiosFetch = () => {
 
       setData(err.response?.data);
       setStatusCode(err.response?.status);
-      
       setStatus(apiStatus.ERROR);
+
+      if(err.response?.status === 500 || err.response?.status === 404) alert("Server Error!\nKindly Contact Support Team");
+      else if(err.response?.status === 403) authCtx.logout();
     }
   };
 

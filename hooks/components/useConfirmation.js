@@ -6,7 +6,6 @@ import useNotification from '../useNotification';
 import { AuthContext } from '../../context/store';
 import { useNavigation } from '@react-navigation/native';
 
-import { auth } from '../../utils/APIs/headers';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { CONFIRM_EP, EMAIL_CODE_EP, MOBILE_CODE_EP } from '../../utils/constants/url';
 
@@ -18,14 +17,13 @@ const useConfirmation = () => {
   const navigation = useNavigation();
 
   const authCtx = useContext(AuthContext);
-  const config = auth(authCtx.tempToken || authCtx.token);
 
   const { fetchAPI, data, status, statusCode } = useAxiosFetch();
   const { state: notificationState, callback } = useNotification();
 
-  const confirmAccount = async (type, formData) => await fetchAPI('delete', CONFIRM_EP, { code: formData.code, type }, config);
+  const confirmAccount = async (type, formData) => await fetchAPI('delete', CONFIRM_EP, { code: formData.code, type }, true);
 
-  const resend = type => callback.sendNotification(type == 'email' ? EMAIL_CODE_EP : MOBILE_CODE_EP);
+  const resend = type => callback.sendNotification(type == 'email' ? EMAIL_CODE_EP : MOBILE_CODE_EP, true);
 
   useEffect(() => {
     if(status === apiStatus.SUCCESS) {
@@ -44,7 +42,6 @@ const useConfirmation = () => {
       
     } else if(status === apiStatus.ERROR) {
       if(statusCode == 401) alert("Wrong code provided!");
-      else alert("Server Error!\nKindly Contact Support Team");
     }
   }, [status]);
 

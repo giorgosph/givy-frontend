@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { AuthContext } from '../../context/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,7 +11,6 @@ import { optIn } from '../../redux/slices/userSlice';
 import { addItems } from '../../redux/slices/drawSlice';
 
 import log from '../../utils/logger';
-import { auth } from '../../utils/APIs/headers';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { includeByDrawID } from '../../utils/filters/drawFilters';
 import { DRAW_ITEMS_EP, OPT_IN_EP } from '../../utils/constants/url';
@@ -28,19 +26,16 @@ const useDrawItems = (draw) => {
 
   const { fetchAPI, data, status, statusCode } = useAxiosFetch();
 
-  // Initialization
-  const authCtx = useContext(AuthContext);
-  const config = auth(authCtx.token);
   const navigation = useNavigation();
 
   const { wsData } = useWebSocket();
   const { visible, setVisible, renderWinnerModal } = useModal();
-  const { timeRemaining } = useTimeRemaining(draw.closingDate);
+  const { timeRemaining } = useTimeRemaining(draw.closingDate); // TODO -> move to component to avoid rereners and test if it is efficient
   
   // Get Items and User Draws
   const dispatch = useDispatch();
   const drawItems = useSelector(state => state.draw.items); // All items fetched
-  const userDraws = useSelector(state => state.user.draw);
+  const userDraws = useSelector(state => state.user.draws);
   
   // Get images for current draw
   const images = [draw.imagePath];
@@ -55,7 +50,7 @@ const useDrawItems = (draw) => {
 
   const handleOptIn = async () => {
     // ?? pop up ad
-    await fetchAPI('post', OPT_IN_EP,  { drawId: draw.id }, config);
+    await fetchAPI('post', OPT_IN_EP,  { drawId: draw.id }, true);
   }
 
   /* ----------------------------------------- */
@@ -73,7 +68,7 @@ const useDrawItems = (draw) => {
         dispatch(addItems({ items: data.body }));
       }
       
-    } else if(status === apiStatus.ERROR) alert("Server Error!\nKindly Contact Support Team");
+    } 
 
   }, [data, status]);
 
