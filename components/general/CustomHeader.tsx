@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native";
+import { View, Text, TouchableWithoutFeedback, StyleSheet, GestureResponderEvent } from "react-native";
 
 import ArrowIcon from "../icons/ArrowIcon";
 import { useNavigation } from "@react-navigation/native";
@@ -8,7 +8,17 @@ import { HEADER_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
 import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/constants/styles/colors";
 import CustomTitle from "./CustomTitle";
 
-const CustomHeader = ({ title, onPress }) => {
+/* --------- Types --------- */
+type PropsType = {
+  title: string; 
+  onPress?: (e: GestureResponderEvent) => void;
+};
+
+/* ------------------------- */
+
+const CustomHeader = (props: PropsType) => {
+  const { title, onPress } = props;
+
   const navigation = useNavigation();
   const back = () => navigation.goBack();
 
@@ -22,7 +32,6 @@ const CustomHeader = ({ title, onPress }) => {
         </TouchableWithoutFeedback>
       </View>
 
-      {/* <Text style={styles.title}>{title}</Text> */}
       <CustomTitle text={title} size={1} extraStyles={{ color: ACTIVE_ICON_COLOR }}/>
     </View>
   )

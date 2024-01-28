@@ -1,11 +1,25 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, ColorValue, TextStyle } from "react-native";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
-const CustomTitle = ({ text, size, color, lowercase, extraStyles }) => {
-  let titleStyle; 
+/* --------- Types --------- */
+type PropsType = {
+  text: string;
+  size: 1 | 2 | 3 | 4 | 5 | 6;
+  color?: ColorValue;
+  lowercase?: boolean;
+  extraStyles?: TextStyle; 
+};
+
+/* ------------------------- */
+
+const CustomTitle = (props: PropsType) => {
+  const { text, size, color, lowercase, extraStyles } = props;
+
+  let titleStyle: TextStyle; 
+  
   switch (size) {
     case 1:
       titleStyle = styles.title1
@@ -34,9 +48,9 @@ const CustomTitle = ({ text, size, color, lowercase, extraStyles }) => {
    <Text 
     style={[
       titleStyle, 
-      color && {color: color},
+      !!color && {color: color},
       lowercase && {textTransform: 'lowercase'},
-      extraStyles && extraStyles,
+      !!extraStyles && extraStyles,
     ]}
    >{text}</Text>
   )

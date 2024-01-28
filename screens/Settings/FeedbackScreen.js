@@ -9,7 +9,7 @@ import CustomButton from '../../components/general/CustomButton';
 import CustomHeader from '../../components/general/CustomHeader';
 import MainContainer from '../../components/general/MainContainer';
 
-import { allInputsRegex } from '../../utils/formValidations';
+import { validateAllInputs } from '../../utils/formValidations';
 import { PIXELS } from '../../utils/constants/styles/dimensions';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 
@@ -36,7 +36,7 @@ const FeedbackScreen = () => {
 
         {/* TODO -> extra styles */}
         {/* TODO -> test why regex validations is not working */}
-        <CustomInput control={control} name="comments" rules={allInputsRegex} />
+        <CustomInput control={control} name="comments" rules={validateAllInputs} />
         <CustomButton title="Submit" onPress={handleSubmit(onSubmit)} disabled={loading} />
         <Text style={{color: 'white'}}>New Feedback will replace your old one!</Text>
       </MainContainer>

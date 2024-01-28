@@ -8,7 +8,7 @@ import CustomButton from '../../components/general/CustomButton';
 import CustomHeader from '../../components/general/CustomHeader';
 import MainContainer from '../../components/general/MainContainer';
 
-import { allInputsRegex, maxLength, required } from '../../utils/formValidations';
+import { validateAllInputs, maxLength, required } from '../../utils/formValidations';
 import useNotification from '../../hooks/useNotification';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 
@@ -32,7 +32,7 @@ const ContactUsScreen = () => {
         <CustomInput 
           control={control} 
           name="title" 
-          rules={{...allInputsRegex, ...required, ...maxLength(20)}} 
+          rules={{...validateAllInputs, ...required, ...maxLength(20)}} 
         />
 
         {/* TODO -> implement extra styles for Custom input to make body section bigger */}
@@ -40,7 +40,7 @@ const ContactUsScreen = () => {
         <CustomInput 
           control={control} 
           name="body" 
-          rules={{...allInputsRegex, ...required, ...maxLength(200)}} 
+          rules={{...validateAllInputs, ...required, ...maxLength(200)}} 
         />
         {/* <Text style={styles.characterLimit}>{`${field.value?.length || 0}/50`}</Text> */}
 

@@ -11,8 +11,8 @@ import MainContainer from "../general/MainContainer";
 
 import { isAndroid } from "../../utils/constants/device"
 import { PIXELS } from "../../utils/constants/styles/dimensions";
-import { inputTypes as IT } from "../../utils/constants/data/inputTypes";
-import { allInputsRegex, lettersRegex } from "../../utils/formValidations";
+import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
+import { validateAllInputs, lettersRegex } from "../../utils/formValidations";
 
 const EditShippingDetails = (props) => {
   const { user, loading, setShipping, onSubmit } = props;
@@ -30,11 +30,11 @@ const EditShippingDetails = (props) => {
       <MainContainer>
         <KeyboardAvoidingView behavior={isAndroid ? 'padding' : 'height'}>
           <KeyboardAwareScrollView enableOnAndroid={true} style={styles.container}>
-            <CustomInput control={control} name="country" defaultValue={user?.country} rules={lettersRegex} type={IT.country} />
+            <CustomInput control={control} name="country" defaultValue={user?.country} rules={lettersRegex} autoComplete={AC.country} />
             <CustomInput control={control} name="city" defaultValue={user?.city} rules={lettersRegex} />
-            <CustomInput control={control} name="address1" title={'address 1'} defaultValue={user?.address1} rules={allInputsRegex} type={IT.addressLine1} />
-            <CustomInput control={control} name="address2" title={'address 2'} defaultValue={user?.address2} rules={allInputsRegex} type={IT.addressLine2} />
-            <CustomInput control={control} name="postalCode" title={"postal code"} defaultValue={user?.postalCode} rules={allInputsRegex} type={IT.postalCode} />
+            <CustomInput control={control} name="address1" title={'address 1'} defaultValue={user?.address1} rules={validateAllInputs} autoComplete={AC.addressLine1} />
+            <CustomInput control={control} name="address2" title={'address 2'} defaultValue={user?.address2} rules={validateAllInputs} autoComplete={AC.addressLine2} />
+            <CustomInput control={control} name="postalCode" title={"postal code"} defaultValue={user?.postalCode} rules={validateAllInputs} autoComplete={AC.postalCode} />
           </KeyboardAwareScrollView>
           <View style={styles.buttonContainer}>
             <CustomButton title='submit' disabled={loading} onPress={handleSubmit(onSubmit)} />

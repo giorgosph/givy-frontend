@@ -8,7 +8,14 @@ import SettingIcon from "../icons/SettingsIcon";
 import { HEADER_HEIGHT, ICON_SIZE, PIXELS } from "../../utils/constants/styles/dimensions";
 import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, INACTIVE_ICON_COLOR } from "../../utils/constants/styles/colors";
 
-const Header = ({ inSettings }) => {
+/* ---------- Types ---------- */
+type HeaderProps = {
+  inSettings?: boolean
+};
+
+/* --------------------------- */
+
+const Header = ({ inSettings = false }: HeaderProps) => {
   const authCtx = useContext(AuthContext);
   const navigation = useNavigation();
 

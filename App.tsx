@@ -10,13 +10,13 @@ import NavigationHandler from "./components/NavigationHandler";
 
 import { BACKGROUND_COLOR } from "./utils/constants/styles/colors";
 
-export default function App() {  
+export default function App() {
   return (
     <SafeAreaProvider>
       <StatusBar animated={true} backgroundColor={BACKGROUND_COLOR} />
       <Provider store={store}>
         <AuthContextProvider>
-          <SafeAreaView style={styles.AdroidSafeArea}>
+          <SafeAreaView style={styles.androidSafeArea}>
             <NavigationHandler />
           </SafeAreaView>
         </AuthContextProvider>
@@ -26,10 +26,8 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  AdroidSafeArea: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
+  androidSafeArea: {
+    flex: 1,
     flexDirection: 'column',
     overflow: 'hidden',
   },

@@ -1,25 +1,43 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Animated, Easing } from "react-native";
-
-import { Controller } from "react-hook-form";
+import { Control, Controller, RegisterOptions } from "react-hook-form";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
+import { AutoCompleteType } from "../../utils/constants/data/autoComplete";
 
-const CustomInput = ({ control, name, rules, title, defaultValue, type, inputMode, clearErrors }) => {
+/* --------- Types --------- */
+type InputModeType = 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+
+type PropsType = {
+  control: Control<any>;
+  name: string;
+  rules?: RegisterOptions; // TODO -> make it mandatory (first handle clearErrors logic, used in Login)
+  title?: string;
+  defaultValue?: any;
+  autoComplete?: AutoCompleteType;
+  inputMode?: InputModeType;
+  clearErrors?: () => void;
+};
+
+/* ------------------------- */
+
+const CustomInput = (props: PropsType) => {
+  const { control, name, rules, title, defaultValue, autoComplete, inputMode, clearErrors } = props;
+
   const [isFocused] = useState(new Animated.Value(defaultValue ? 1 : 0));
-  const isPass = type === 'password' || type === 'current-password' || type === 'new-password';
+  const isPass = autoComplete === 'current-password' || autoComplete === 'new-password';
 
   const handleFocus = () => {
     Animated.timing(isFocused, {
       toValue: 1,
       duration: 800,
-      easing: Easing.easeOut,
+      easing: Easing.bezier(0.39, 0.575, 0.565, 1),
       useNativeDriver: false,
     }).start();
   };
 
-  const handleBlur = (value) => {
+  const handleBlur = (value: boolean) => {
     Animated.timing(isFocused, {
       toValue: value ? 1 : 0,
       duration: 300,
@@ -53,7 +71,7 @@ const CustomInput = ({ control, name, rules, title, defaultValue, type, inputMod
 
         const handleErrors = () => {
           if (!clearErrors) 
-            return <Text style={styles.errorText}>{fieldState.error.message || "Invalid Input"}</Text>
+            return <Text style={styles.errorText}>{fieldState.error?.message || "Invalid Input"}</Text>
           clearErrors();
         };
 
@@ -68,16 +86,16 @@ const CustomInput = ({ control, name, rules, title, defaultValue, type, inputMod
               <TextInput
                 // TODO -> add optional textAlign center and extra input styles 
                 // TODO -> improve logic of inputMode etc. (make inputMode options constant and pass as an argument
-                // or do it based on type prop) 
+                // or do it based on autoComplete prop) 
                 style={styles.input}
                 value={!isPass ? value.toLowerCase() : value }
                 onChangeText={onChange}
                 onFocus={handleFocus}
-                onBlur={()=>handleBlur(hasValue)}
+                onBlur={() => handleBlur(hasValue)}
                 placeholder={title || name}
                 defaultValue={defaultValue || ''}
                 inputMode={inputMode || 'text'}
-                autoComplete={ type || null}
+                autoComplete={ autoComplete || undefined}
                 secureTextEntry={isPass}
                 autoCapitalize="none"
               />

@@ -9,13 +9,15 @@ import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, INACTIVE_ICON_COLOR } from "../uti
 import useNavigator from "../hooks/components/useNavigator";
 import { StyleSheet } from "react-native";
 
-const Tab = createBottomTabNavigator();
+import { RootTabPraramList } from "../utils/navigation/types";
 
-const NavigationHandler = () => {
-  const { tabsToRender, onLayoutRootView } = useNavigator();
+const Tab = createBottomTabNavigator<RootTabPraramList>();
+
+const NavigationHandler: React.FC = () => {
+  const { tabsToRender } = useNavigator();
 
   return (
-    <NavigationContainer onLayout={onLayoutRootView}>
+    <NavigationContainer>
       <Tab.Navigator 
         screenOptions={{
           headerShown: false,
@@ -33,10 +35,10 @@ const NavigationHandler = () => {
 
 const styles = StyleSheet.create({
   tabBar: {
-    width: "100vw",
+    width: "100%",
     height: NAV_HEIGHT, 
     backgroundColor: BACKGROUND_COLOR, 
-    borderBlockColor: BACKGROUND_COLOR,
+    borderBottomColor: BACKGROUND_COLOR,
     shadowColor: '#fff',
   }
 });

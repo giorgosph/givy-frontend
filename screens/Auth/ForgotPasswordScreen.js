@@ -12,9 +12,9 @@ import useAuth from "../../hooks/components/useAuth";
 import useNotification from "../../hooks/useNotification";
 
 import { EMAIL_FP_EP } from "../../utils/constants/url";
-import { inputTypes as IT } from "../../utils/constants/data/inputTypes";
-import { confirmationCodeValidation, emailRegex, required } from "../../utils/formValidations";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
+import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
+import { confirmationCodeValidation, emailRegex, required } from "../../utils/formValidations";
 
 const title = "Please enter your email address"
 
@@ -39,11 +39,11 @@ const ForgotPasswordScreen = () => {
       <CustomHeader title="Forgot Password" />
       <MainContainer centered>
           <CustomTitle text={title} />
-          <CustomInput control={control} name="email" rules={{ ...required, ...emailRegex }} type={IT.email} inputMode="email" />
+          <CustomInput control={control} name="email" rules={{ ...required, ...emailRegex }} autoComplete={AC.email} inputMode="email" />
           <CustomButton title={buttonTitle} onPress={handleSubmit(sendEmail)} disabled={loading} />
           {sent && 
             <>
-              <CustomInput control={control} name="code" title="confirmation code" rules={confirmationCodeValidation} type={IT.oneTimeCode} inputMode="numeric" clearErrors={formError} />
+              <CustomInput control={control} name="code" title="confirmation code" rules={confirmationCodeValidation} autoComplete={AC.oneTimeCode} inputMode="numeric" clearErrors={formError} />
               <SetPassword disabled={loading} control={control} handleSubmit={handleSubmit(callback.forgotPassword)} />
             </>
           }

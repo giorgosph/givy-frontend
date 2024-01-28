@@ -10,6 +10,16 @@ import { apiStatus } from "../utils/constants/data/apiStatus";
  * --------- Use when making API calls from a component ---------
  * -------------------------------------------------------------- */
 
+/* --------- Types --------- */
+export type FetchPropsType = {
+  type: 'get' | 'put' | 'post' | 'delete';
+  endpoint: string;
+  body?: object;
+  authHeader?: boolean;
+};
+
+/* ------------------------- */
+
 const useAxiosFetch = () => {
   const [data, setData] = useState(false);
   const [status, setStatus] = useState(apiStatus.IDLE);
@@ -31,8 +41,9 @@ const useAxiosFetch = () => {
   * @param body the body data of the request
   * @param extraHeaders any additional headers
   */
-  const fetchAPI = async (type, endpoint, body=null, authHeader=false) => {
-    const token = authHeader ? authCtx.token || authCtx.tempToken : 0;
+  const fetchAPI = async (props: FetchPropsType) => {
+    const { type, endpoint, body=null, authHeader=false } = props;
+    const token = authHeader ? authCtx.token || authCtx.tempToken : undefined;
 
     try {
       setData(false);

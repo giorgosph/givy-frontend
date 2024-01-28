@@ -1,5 +1,4 @@
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useContext, useState, useCallback } from "react";
+import { useEffect, useContext, useState } from "react";
 
 import { AuthContext } from "../../context/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +26,7 @@ const useNavigator = () => {
 
   const user = useSelector(state => state.user);
 
-  // TODO -> research for better algorithm
+  // TODO -> research for a better algorithm
   // Check if draws were fetched more than 1 day ago to refetch
   const refetch = refetchPerDays(user.date);
 
@@ -48,12 +47,7 @@ const useNavigator = () => {
     } else setTabsToRender(defaultTabs());
   }, [authCtx.isAuthenticated, status]);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (!status === apiStatus.LOADING) await SplashScreen.hideAsync();
-    else await SplashScreen.preventAutoHideAsync();
-  }, [status]);
-
-  return { tabsToRender, onLayoutRootView }
+  return { tabsToRender }
 }
 
 export default useNavigator;

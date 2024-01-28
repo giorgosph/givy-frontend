@@ -13,12 +13,14 @@ import { WIDTH } from '../../utils/constants/styles/dimensions';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR } from '../../utils/constants/styles/colors';
 
-const AuthScreen = ({ navigation }) => { 
+import { DefaultProfileAuthScreenProps } from '../../utils/navigation/types';
+
+const AuthScreen = ({ navigation }: DefaultProfileAuthScreenProps) => { 
   const { state, callback } = useAuth();
   const loading = state.reqStatus === apiStatus.LOADING;
 
   const animation = useRef(new Animated.Value(0)).current;
-  const scrollRef = useRef();
+  const scrollRef = useRef<ScrollView>(null);
 
   const loginNavColor = animation.interpolate({
     inputRange: [0, WIDTH],
@@ -48,12 +50,12 @@ const AuthScreen = ({ navigation }) => {
     <MainContainer>
       <View style={styles.navBarWrap}>
         <AuthNavbar title='Log In' color={loginNavColor} 
-          stylesBorder={[styles.leftBorder, {width: loginNavWidth}]} 
-          onPress={() => scrollRef.current.scrollTo({x: 0})} 
+          stylesBorder={[styles.leftBorder, { width: loginNavWidth }]} 
+          onPress={() => scrollRef.current?.scrollTo({x: 0})} 
         />
         <AuthNavbar title='Sign Up' color={signupNavColor} 
-          stylesBorder={[styles.rightBorder, {width: signupNavWidth}]} 
-          onPress={() => scrollRef.current.scrollTo({x: WIDTH})} 
+          stylesBorder={[styles.rightBorder, { width: signupNavWidth }]} 
+          onPress={() => scrollRef.current?.scrollTo({x: WIDTH})} 
         />
       </View>
       <ScrollView 

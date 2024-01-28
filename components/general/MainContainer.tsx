@@ -2,9 +2,17 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 
 import { BACKGROUND_COLOR } from "../../utils/constants/styles/colors";
-import { HEADER_HEIGHT, MAIN_FULL_HEIGHT, MAIN_HEIGHT, WIDTH } from "../../utils/constants/styles/dimensions";
+import { MAIN_HEIGHT, WIDTH } from "../../utils/constants/styles/dimensions";
 
-const MainContainer = ({ children, centered, fullHeight}) => {
+/* -------- Types -------- */
+type Props = {
+  children: React.ReactNode;
+  centered?: boolean;
+};
+
+/* ----------------------- */
+
+const MainContainer = ({ children, centered = false }: Props) => {
   return (
     <View style={[styles.container, centered && { alignItems: 'center' }]}>
       {children}

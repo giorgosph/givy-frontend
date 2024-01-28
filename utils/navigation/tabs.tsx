@@ -1,23 +1,31 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import HomeIcon from "../../components/icons/HomeIcon"
-import UserIcon from "../../components/icons/UserIcon"
-import SearchIcon from "../../components/icons/SearchIcon"
-import SettingsIcon from "../../components/icons/SettingsIcon"
+import HomeIcon from "../../components/icons/HomeIcon";
+import UserIcon from "../../components/icons/UserIcon";
+import SearchIcon from "../../components/icons/SearchIcon";
+import SettingsIcon from "../../components/icons/SettingsIcon";
 
-import { ClientHomeTab, ClientProfileTab, ClientSearchTab } from "./clientNav";
-import { DefaultHomeTab, DefaultProfileTab, DefaultSettingsTab } from "./defaultNav";
+import ClientHomeTab from "./stacks/ClientHomeTab";
+import ClientSearchTab from "./stacks/ClientSearchTab";
+import ClientProfileTab from "./stacks/ClientProfileTab";
 
-const Tab = createBottomTabNavigator();
+import DefaultHomeTab from "./stacks/DefaultHomeTab";
+import DefaultProfileTab from "./stacks/DefaultProfileTab";
+import DefaultSettingsTab from "./stacks/DefaultSettingsTab";
+
+import { ClientTabsParamList, DefaultTabsParamList } from "./types";
+
+const DefaultTab = createBottomTabNavigator<DefaultTabsParamList>();
+const ClientTab = createBottomTabNavigator<ClientTabsParamList>();
 
 /* ----------------------- User Tabs ----------------------- */
 /* --------------------------------------------------------- */
 
 export function defaultTabs() {
   return (
-    <Tab.Group screenOptions={{ headerShown: false }}>
-      <Tab.Screen
+    <DefaultTab.Group screenOptions={{ headerShown: false }}>
+      <DefaultTab.Screen
         name="DefaultHomeTab"
         component={DefaultHomeTab}
         options={{
@@ -25,7 +33,7 @@ export function defaultTabs() {
           tabBarIcon: ({ color }) => <HomeIcon color={color} />,
         }}
       />
-      <Tab.Screen
+      <DefaultTab.Screen
         name="DefaultProfileTab"
         component={DefaultProfileTab}
         options={{
@@ -33,7 +41,7 @@ export function defaultTabs() {
           tabBarIcon: ({ color }) => <UserIcon color={color} />,
         }}
       />
-      <Tab.Screen
+      <DefaultTab.Screen
         name="DefaultSettingsTab"
         component={DefaultSettingsTab}
         options={{
@@ -41,7 +49,7 @@ export function defaultTabs() {
           tabBarIcon: ({ color }) => <SettingsIcon color={color} />,
         }}
       />
-    </Tab.Group>
+    </DefaultTab.Group>
   );
 }
 
@@ -50,8 +58,8 @@ export function defaultTabs() {
 
 export function clientTabs() {
   return (
-    <Tab.Group screenOptions={{ headerShown: false }}>
-      <Tab.Screen
+    <ClientTab.Group screenOptions={{ headerShown: false }}>
+      <ClientTab.Screen
         name="ClientHomeTab"
         component={ClientHomeTab}
         options={{
@@ -59,7 +67,7 @@ export function clientTabs() {
           tabBarIcon: ({ color }) => <HomeIcon color={color} />,
         }}
       />
-      <Tab.Screen
+      <ClientTab.Screen
         name="ClientSearchTab"
         component={ClientSearchTab}
         options={{
@@ -68,7 +76,7 @@ export function clientTabs() {
         }}
       />
 
-      <Tab.Screen
+      <ClientTab.Screen
         name="ClientProfileTab"
         component={ClientProfileTab}
         options={{
@@ -76,6 +84,6 @@ export function clientTabs() {
           tabBarIcon: ({ color }) => <UserIcon color={color} />,
         }}
       />
-    </Tab.Group>
+    </ClientTab.Group>
   );
 }

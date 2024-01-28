@@ -2,17 +2,35 @@ import React, { useState } from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import ArrowIcon from "../icons/ArrowIcon";
-import { Controller } from "react-hook-form";
+import { Control, Controller, RegisterOptions } from "react-hook-form";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
-const CustomDropdown = ({ control, name, title, rules, data }) => {
+/* --------- Types --------- */
+export type DropdownItemType = {
+  value: string;
+  label: string;
+};
+
+type PropsType = {
+  control: Control<any>;
+  name: string;
+  rules?: RegisterOptions;
+  title?: string;
+  data: DropdownItemType[];
+};
+
+/* ------------------------- */
+
+const CustomDropdown = (props: PropsType) => {
+  const { control, name, title, rules, data } = props;
+
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleModal = () => setIsVisible(!isVisible);
 
-  const handleSelect = (value, onChange) => {
+  const handleSelect = (value: string, onChange: (value: string) => void) => {
     onChange(value);
     setIsVisible(false);
   };

@@ -13,8 +13,8 @@ import useConfirmation from "../../hooks/components/useConfirmation";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
-import { inputTypes } from "../../utils/constants/data/inputTypes";
 import { confirmationCodeValidation } from "../../utils/formValidations";
+import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
 import { BACKGROUND_COLOR, BUTTON_COLOR } from "../../utils/constants/styles/colors";
 
 const AccountConfirmationScreen = ({ route }) => {
@@ -37,7 +37,7 @@ const AccountConfirmationScreen = ({ route }) => {
       <Header />
       <MainContainer centered>
         <CustomTitle text={title} size={1} extraStyles={styles.title} />
-        <CustomInput control={control} name="code" title="confirmation code" rules={confirmationCodeValidation} type={inputTypes.oneTimeCode} inputMode="numeric" clearErrors={formError} />
+        <CustomInput control={control} name="code" title="confirmation code" rules={confirmationCodeValidation} autoComplete={AC.oneTimeCode} inputMode="numeric" clearErrors={formError} />
         <CustomText text={text} extraStyles={styles.text}/>
         <CustomButton 
           title="Submit" 

@@ -2,7 +2,9 @@ import { useContext, useEffect } from 'react';
 
 import useModal from '../useModal';
 import { useDispatch } from 'react-redux';
-import useAxiosFetch from '../useAxiosFetch';
+
+import useAxiosFetch, { FetchPropsType } from '../useAxiosFetch';
+import { SubmitHandler } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
 import { AuthContext } from '../../context/store';
@@ -11,6 +13,7 @@ import { setUser } from '../../redux/slices/userSlice';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { mobileInfo } from '../../utils/constants/data/modalInfo';
 import { FP_EP, LOGIN_EP, RP_EP, SIGNUP_EP } from '../../utils/constants/url';
+import { LoginFormType, ResetPassFormType, SignupFormType } from '../../utils/constants/data/formTypes';
 import { confirmationTypes as CT } from '../../utils/constants/data/confirmationTypes';
 
 /* --------------------------------------------------------------
@@ -25,20 +28,20 @@ const useAuth = () => {
   const { setVisible, renderModal } = useModal();
   const { fetchAPI, data, status, statusCode } = useAxiosFetch();
 
-  const logIn = async (formData) => await fetchAPI('put', LOGIN_EP,  formData);
+  const logIn: SubmitHandler<LoginFormType> = async (formData) => await fetchAPI({ type: 'put', endpoint: LOGIN_EP, body: formData });
 
-  const signUp = async (formData) => {
+  const signUp: SubmitHandler<SignupFormType> = async (formData) => {
     const { password, confirmPassword } = formData;
 
     if(password !== confirmPassword) return alert("Passwords do not match!");
-    await fetchAPI('post', SIGNUP_EP,  formData);
+    await fetchAPI({ type: 'post', endpoint: SIGNUP_EP,  body: formData});
   }
 
-  const resetPassword = async (formData) => {
+  const resetPassword: SubmitHandler<ResetPassFormType> = async (formData) => {
     const { password, confirmPassword } = formData;
 
     if(password !== confirmPassword) return alert("Passwords do not match!");
-    await fetchAPI('put', RP_EP, formData, true);
+    await fetchAPI({ type: 'put', endpoint: RP_EP, body: formData, authHeader: true });
   }
 
   const forgotPassword = async (formData) => {
