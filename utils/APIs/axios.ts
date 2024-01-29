@@ -1,13 +1,26 @@
 import axios from "axios";
 import { REFRESH_TOKEN_EP } from "../constants/url";
 
+/* --------- Types --------- */
+type PropsType = {
+  type: 'get' | 'put' | 'post' | 'delete';
+  endpoint: string;
+  body?: object;
+  token?: string;
+  resetToken: (token: string) => void;
+};
+
+/* ------------------------- */
+
 /**
  * Generic axios calls
  * 
  * @warning Use try/catch every time you use api()
  * @param type -> get, put, post, etc.
  */
-export const fetchAxios = async (type, endpoint, body=null, token, resetToken=()=>{}) => {
+export const fetchAxios = async (props: PropsType) => {
+  const { type, endpoint, body={}, token, resetToken=()=>{} } = props;
+
   const options = {
     url: endpoint,
     method: type,

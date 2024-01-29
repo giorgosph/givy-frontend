@@ -8,7 +8,26 @@ import CustomButton from '../general/CustomButton';
 import { removeUsernamePrefix } from '../../utils/dataFormater';
 import { HEIGHT, MAIN_HEIGHT, PIXELS } from '../../utils/constants/styles/dimensions';
 
-const WinnerModal = ({ visible, onClose }) => {
+/* --------- Types --------- */
+type PropsType = {
+  visible: WinnerVisibleType;
+  onClose: () => void;
+};
+
+export type WinnerVisibleType = {
+  items: ItemsInterface[];
+  winners: { [I in keyof ItemsInterface]: string };
+}
+
+// TODO -> improve those types and move them to new file in order to use them in different places
+export interface ItemsInterface {
+  id: number;
+  title: string;
+};
+/* ------------------------- */
+
+const WinnerModal = (props: PropsType) => {
+  const { visible, onClose } = props;
 
   return (
     <Modal visible={!!visible} transparent animationType="fade">
@@ -25,7 +44,7 @@ const WinnerModal = ({ visible, onClose }) => {
           ))}
         </View>
         <View style={styles.buttonsContainer}>
-          <CustomButton title="OK" style={styles.button} textStyle={styles.buttonText} onPress={onClose}/>
+          <CustomButton title="OK" style={styles.button} textStyle={styles.buttonText} onPress={onClose} />
         </View>
       </View>
     </Modal>

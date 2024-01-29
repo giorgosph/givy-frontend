@@ -20,6 +20,15 @@ export type SignupFormType = {
 };
 
 export type ResetPassFormType = {
+  email?: string;
+  code?: string;
   password: string;
   confirmPassword: string;
+};
+
+export type ForgotPassFormType = {
+  email: string;
+  code: string | undefined;
+  password: string  | undefined;
+  confirmPassword: string  | undefined;
 };

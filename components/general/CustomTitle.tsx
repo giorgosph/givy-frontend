@@ -7,7 +7,7 @@ import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 /* --------- Types --------- */
 type PropsType = {
   text: string;
-  size: 1 | 2 | 3 | 4 | 5 | 6;
+  size?: 1 | 2 | 3 | 4 | 5 | 6;
   color?: ColorValue;
   lowercase?: boolean;
   extraStyles?: TextStyle; 

@@ -20,7 +20,6 @@ const Header = ({ inSettings = false }: HeaderProps) => {
   const navigation = useNavigation();
 
   const handleSettingsPress = () => inSettings ? navigation.goBack() : navigation.navigate('Settings');
-  
 
   return (
     <View style={styles.container}>

@@ -1,25 +1,35 @@
 import React from 'react';
-import { Modal, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Modal, View, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 import CustomText from './CustomText';
 import CustomTitle from './CustomTitle';
 
 import { MAIN_HEIGHT, PIXELS } from '../../utils/constants/styles/dimensions';
 
-const CustomModal = ({
-  visible,
-  title,
-  text,
-  extraStyle,
-  extraTitleStyle,
-  extraTextStyle,
-  buttonText,
-  buttonText2,
-  onPress,
-  onPress2,
-  onClose
-}) => {
+/* --------- Types --------- */
+type ModalPropsType = {
+  visible: CustomModalVisibleType;
+  onClose: () => void
+};
 
+export type CustomModalVisibleType = {
+  title: string;
+  text: string;
+  extraStyle?: ViewStyle;
+  extraTitleStyle?: TextStyle;
+  extraTextStyle?: TextStyle;
+  buttonText?: string;
+  buttonText2?: string;
+  onPress: () => any;
+  onPress2?: () => any;
+};
+
+/* ------------------------- */
+
+const CustomModal = (props: ModalPropsType) => {
+  const { visible, onClose } = props;
+  const { title, text, extraStyle, extraTitleStyle, extraTextStyle, buttonText, buttonText2, onPress, onPress2 } = visible;
+  
   const handlePress1 = () => {
     if (onPress) {
       onPress();
@@ -35,7 +45,7 @@ const CustomModal = ({
   };
 
   return (
-    <Modal visible={visible} transparent animationType="slide">
+    <Modal visible={!!visible} transparent animationType="slide">
       <View style={[styles.modalContainer, extraStyle]}>
         <CustomTitle text={title} extraStyles={extraTitleStyle} color={'black'} />
         <View style={styles.modalHeader} />

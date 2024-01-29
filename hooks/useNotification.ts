@@ -9,19 +9,30 @@ import { CONTACT_US_EP, FEEDBACK_EP } from '../utils/constants/url';
  * -------- Use for sending notifications (email, sms, etc.) --------
  * ------------------------------------------------------------------ */
 
+/* --------- Types --------- */
+type NotificationPropsType = {
+  endpoint: string;
+  body?: object;
+  authHeader?: boolean;
+};
+
+/* ------------------------- */
+
 const useNotification = () => {
   const [sent, setSent] = useState(false);
 
   const { fetchAPI, data, status, statusCode } = useAxiosFetch();
 
-  const sendNotification = async (endpoint, body = null, authHeader=false) => {
+  const sendNotification = async (props: NotificationPropsType) => {
+    const { endpoint, body={}, authHeader=false } = props;
+
     setSent(false);
-    await fetchAPI('put', endpoint, body, authHeader);
-  }
+    await fetchAPI({ type: 'put', endpoint, body, authHeader });
+  };
 
-  const contactUs = async (formData) => await fetchAPI('post', CONTACT_US_EP, formData, true);
+  const contactUs = async (formData) => await fetchAPI({ type: 'post', endpoint: CONTACT_US_EP, body: formData, authHeader: true });
 
-  const feedback = async (formData) => await fetchAPI('post', FEEDBACK_EP, formData, true);
+  const feedback = async (formData) => await fetchAPI({ type: 'post', endpoint: FEEDBACK_EP, body: formData, authHeader: true });
 
   useEffect(() => {
     if(status === apiStatus.SUCCESS) {

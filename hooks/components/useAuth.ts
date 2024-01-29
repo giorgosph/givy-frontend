@@ -3,18 +3,20 @@ import { useContext, useEffect } from 'react';
 import useModal from '../useModal';
 import { useDispatch } from 'react-redux';
 
-import useAxiosFetch, { FetchPropsType } from '../useAxiosFetch';
+import useAxiosFetch from '../useAxiosFetch';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { AuthContext } from '../../context/store';
 import { setUser } from '../../redux/slices/userSlice';
 
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { mobileInfo } from '../../utils/constants/data/modalInfo';
+import { DefaultProfileTabParamList } from '../../utils/navigation/types';
 import { FP_EP, LOGIN_EP, RP_EP, SIGNUP_EP } from '../../utils/constants/url';
-import { LoginFormType, ResetPassFormType, SignupFormType } from '../../utils/constants/data/formTypes';
 import { confirmationTypes as CT } from '../../utils/constants/data/confirmationTypes';
+import { ForgotPassFormType, LoginFormType, ResetPassFormType, SignupFormType } from '../../utils/constants/data/formTypes';
 
 /* --------------------------------------------------------------
  * ------------------- Use for Authentication -------------------
@@ -22,7 +24,7 @@ import { confirmationTypes as CT } from '../../utils/constants/data/confirmation
 
 const useAuth = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<DefaultProfileTabParamList, "Auth", undefined>>();
   const authCtx = useContext(AuthContext);
   
   const { setVisible, renderModal } = useModal();
@@ -35,23 +37,23 @@ const useAuth = () => {
 
     if(password !== confirmPassword) return alert("Passwords do not match!");
     await fetchAPI({ type: 'post', endpoint: SIGNUP_EP,  body: formData});
-  }
+  };
 
   const resetPassword: SubmitHandler<ResetPassFormType> = async (formData) => {
     const { password, confirmPassword } = formData;
 
     if(password !== confirmPassword) return alert("Passwords do not match!");
     await fetchAPI({ type: 'put', endpoint: RP_EP, body: formData, authHeader: true });
-  }
+  };
 
-  const forgotPassword = async (formData) => {
+  const forgotPassword: SubmitHandler<ForgotPassFormType> = async (formData) => {
     const { code, password, confirmPassword } = formData;
 
     if(!code) return alert("Invalid confirmation code");
     if(!password || password !== confirmPassword) return alert("Passwords do not match!");
 
-    await fetchAPI('put', FP_EP, formData);
-  }
+    await fetchAPI({ type: 'put', endpoint: FP_EP, body: formData });
+  };
 
   useEffect(() => {
     if(status === apiStatus.SUCCESS) {
@@ -74,7 +76,7 @@ const useAuth = () => {
 
           const modalInfo = mobileInfo(navigation, () => authCtx.authenticate(authCtx.tempToken));
           mobileConfirmed ? authCtx.authenticate(token) : setVisible(modalInfo); 
-          
+      
         } else if(emailConfirmed == false) navigation.navigate("AccountConfirmation", { type: CT.EMAIL });
         else navigation.goBack(); // Coming from reset password
         

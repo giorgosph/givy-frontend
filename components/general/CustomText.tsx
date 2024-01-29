@@ -1,13 +1,29 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ColorValue, StyleSheet, Text, TextStyle, View } from "react-native";
 
 import CustomTitle from "./CustomTitle";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 
-const CustomText = ({ text, size, color, extraStyles, title, titleSize, titleExtraStyles, horizontal }) => {
-  let textStyle; 
+/* --------- Types --------- */
+type PropsType = {
+  text: string;
+  size?: 1 | 2 | 3 | 4 | 5;
+  color?: ColorValue;
+  extraStyles?: TextStyle; 
+  title?: string; 
+  titleSize?: 1 | 2 | 3 | 4 | 5 | 6;
+  titleExtraStyles?: TextStyle;
+  horizontal?: boolean;
+};
+
+/* ------------------------- */
+
+const CustomText = (props: PropsType) => {
+  const { text, size, color, extraStyles, title, titleSize, titleExtraStyles, horizontal } = props;
+
+  let textStyle: TextStyle; 
   switch (size) {
     case 1:
       textStyle = styles.text1
@@ -35,9 +51,9 @@ const CustomText = ({ text, size, color, extraStyles, title, titleSize, titleExt
         <CustomTitle 
           text={title} 
           size={titleSize || 6} 
-          extraStyles={[styles.title, titleExtraStyles]} /> 
+          extraStyles={titleExtraStyles} /> 
       }
-      <Text style={[textStyle, color && {color: color}, extraStyles && extraStyles]}>{text}</Text>
+      <Text style={[textStyle, !!color && { color: color }, !!extraStyles && extraStyles]}>{text}</Text>
    </View>
   )
 };
