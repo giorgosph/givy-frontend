@@ -21,14 +21,41 @@ export type SignupFormType = {
 
 export type ResetPassFormType = {
   email?: string;
-  code?: string;
+  code?: number;
   password: string;
   confirmPassword: string;
 };
 
 export type ForgotPassFormType = {
   email: string;
-  code: string | undefined;
+  code: number | undefined;
   password: string  | undefined;
   confirmPassword: string  | undefined;
+};
+
+export type ConfirmationCodeFromType = {
+  code: number;
+};
+
+export type ContactDetailsFromType = {
+  email: string;
+  mobile?: number;
+};
+
+export type ShippingDetailsFromType = {
+  country?: string;
+  city?: string;
+  address1?: string;
+  address2?: string;
+  postalCode?: string;
+};
+
+export type ContactUsFromType = {
+  title: string;
+  body: string;
+};
+
+export type FeedbackFormType = {
+  rating: number;
+  comments: string;
 };

@@ -12,16 +12,17 @@ import MainContainer from '../../components/general/MainContainer';
 import { validateAllInputs } from '../../utils/formValidations';
 import { PIXELS } from '../../utils/constants/styles/dimensions';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
+import { FeedbackFormType } from '../../utils/constants/data/formTypes';
 
 import useNotification from '../../hooks/useNotification';
 
 const FeedbackScreen = () => {
-  const { control, handleSubmit, setValue, reset } = useForm();
+  const { control, handleSubmit, setValue, reset } = useForm<FeedbackFormType>();
   
   const { sent, state, callback } = useNotification();
   const loading = state.reqStatus == apiStatus.LOADING || sent
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FeedbackFormType) => {
     callback.feedback(data);
     reset();
   };

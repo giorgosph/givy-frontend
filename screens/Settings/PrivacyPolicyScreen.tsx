@@ -1,7 +1,9 @@
 import React from 'react';
 import { ScrollView, Text, StyleSheet } from 'react-native';
-import MainContainer from '../../components/general/MainContainer';
+
 import CustomHeader from '../../components/general/CustomHeader';
+import MainContainer from '../../components/general/MainContainer';
+
 import { PIXELS } from '../../utils/constants/styles/dimensions';
 
 const PrivacyPolicyScreen = () => {
@@ -157,7 +159,6 @@ const styles = StyleSheet.create({
   },
   subHeader: {
     fontSize: 16,
-    color: 'gray',
     marginBottom: PIXELS,
     color: 'white',
   },

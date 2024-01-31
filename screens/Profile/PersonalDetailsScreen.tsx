@@ -12,11 +12,12 @@ import EditShippingDetails from "../../components/profile/EditShippingDetails";
 import { removeUsernamePrefix } from "../../utils/dataFormater";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { ClientProfilePersonalDetailsScreenProps } from "../../utils/navigation/types";
 import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
 import usePersonalDetails from "../../hooks/components/usePersonalDetails";
 
-const PersonalDetailsScreen = ({ navigation }) => {
+const PersonalDetailsScreen = ({ navigation }: ClientProfilePersonalDetailsScreenProps) => {
   const { state, callback, user} = usePersonalDetails();
   const loading = state.reqStatus === apiStatus.LOADING;
 
@@ -24,7 +25,7 @@ const PersonalDetailsScreen = ({ navigation }) => {
 
   const fullName = `${user?.firstName} ${user?.lastName}`;
 
-  const navTo = (screen) => navigation.navigate(screen);
+  const navTo = navigation.navigate;
 
   return (
    <>

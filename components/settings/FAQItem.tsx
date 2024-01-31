@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
+
 import { PIXELS } from '../../utils/constants/styles/dimensions';
 
-const FAQItem = ({ question, answer }) => {
+/* ------- Types ------- */
+type PropsType = {
+  question: string;
+  answer: string;
+};
+
+/* --------------------- */
+
+const FAQItem = ({ question, answer }: PropsType) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpansion = () => setIsExpanded(!isExpanded);

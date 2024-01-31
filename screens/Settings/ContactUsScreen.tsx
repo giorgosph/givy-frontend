@@ -8,18 +8,20 @@ import CustomButton from '../../components/general/CustomButton';
 import CustomHeader from '../../components/general/CustomHeader';
 import MainContainer from '../../components/general/MainContainer';
 
-import { validateAllInputs, maxLength, required } from '../../utils/formValidations';
-import useNotification from '../../hooks/useNotification';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
+import { ContactUsFromType } from '../../utils/constants/data/formTypes';
+import { validateAllInputs, maxLength, required } from '../../utils/formValidations';
+
+import useNotification from '../../hooks/useNotification';
 
 const ContactUsScreen = () => {
-  const { control, formState, handleSubmit, reset } = useForm();
+  const { control, formState, handleSubmit, reset } = useForm<ContactUsFromType>();
   const { isDirty, isValid } = formState;
 
   const { sent, state, callback } = useNotification();
   const disable = state.reqStatus === apiStatus.LOADING || !isDirty || !isValid || sent;
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: ContactUsFromType) => {
     callback.contactUs(data);
     reset();
   };

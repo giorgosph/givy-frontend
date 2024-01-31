@@ -13,12 +13,11 @@ import BottomClientSettings from "../../components/settings/BottomClientSettings
 
 import { clearUser } from "../../redux/slices/userSlice";
 import { clearDraws } from "../../redux/slices/drawSlice";
+import { DefaultSettingsTabProps, SettingsScreenProps } from "../../utils/navigation/types";
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = ({ navigation }: SettingsScreenProps | DefaultSettingsTabProps) => {
   const dispatch = useDispatch();
   const authCtx = useContext(AuthContext);
-
-  const navTo = (screen) => () => navigation.navigate(screen);
 
   const logout = () => {
     authCtx.logout();
@@ -31,11 +30,18 @@ const SettingsScreen = ({ navigation }) => {
     <Header inSettings />
     <MainContainer centered >
       <View style={styles.container}>
+
         {!authCtx.isAuthenticated ? 
-          <UserSettings navTo={navTo} /> : <TopClientSettings navTo={navTo} logout={logout} />
+          <UserSettings navigation={navigation as DefaultSettingsTabProps['navigation']} /> 
+          : <TopClientSettings navigation={navigation as SettingsScreenProps['navigation']} logout={logout} />
         }
-        <SharedSettings navTo={navTo} />
-        {authCtx.isAuthenticated && <BottomClientSettings navTo={navTo} />}
+        
+        <SharedSettings navigation={navigation as SettingsScreenProps['navigation']} />
+
+        {authCtx.isAuthenticated && 
+          <BottomClientSettings navigation={navigation as SettingsScreenProps['navigation']} />
+        }
+        
       </View>
     </MainContainer>
    </>

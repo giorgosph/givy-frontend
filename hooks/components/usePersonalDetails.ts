@@ -2,24 +2,26 @@ import { useContext, useEffect, useState } from 'react';
 
 import useAxiosFetch from '../useAxiosFetch';
 import { AuthContext } from '../../context/store';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { updateEmail, updateMobile, updateShippingDetails } from '../../redux/slices/userSlice';
 
 import isEqual from '../../utils/isEqual';
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { contactWarning, mobileInfo } from '../../utils/constants/data/modalInfo';
 import { CONTACT_DETAILS_EP, SHIPPING_DETAILS_EP } from '../../utils/constants/url';
-
-import { updateEmail, updateMobile, updateShippingDetails } from '../../redux/slices/userSlice';
+import { ContactDetailsFromType, ShippingDetailsFromType } from '../../utils/constants/data/formTypes';
 
 import useModal from '../useModal';
+import { CustomModalVisibleType } from '../../components/general/CustomModal';
 
 /* ---------------------------------------------------------------
  * --------------- Use when editing user's details ---------------
  * --------------------------------------------------------------- */
 
-const contactDetails = user => ({
-  email: user?.email,
+const contactDetails = user => ({ // TODO -> specify
+  email: user.email,
   mobile: user?.mobile
 });
 
@@ -31,7 +33,7 @@ const shippingDetails = user => ({
   postalCode: user?.postalCode,
 });
 
-let modalInfo;
+let modalInfo: CustomModalVisibleType;
 
 /* --------------------------------------------------- */
 
@@ -49,18 +51,18 @@ const usePersonalDetails = () => {
   
   const navigation = useNavigation();
 
-  const onSubmitShipping = async (formData) => {
+  const onSubmitShipping = async (formData: ShippingDetailsFromType) => {
     if(!isEqual(shippingDetails(user), formData)) {
-      await fetchAPI('put', SHIPPING_DETAILS_EP,  formData, true);
+      await fetchAPI({ type: 'put', endpoint: SHIPPING_DETAILS_EP, body: formData, authHeader: true});
     } else {
       alert("Your details are already up to date!");
       setEditShipping(false);
     }
   };
 
-  const onSubmitContact = async (formData) => {
+  const onSubmitContact = async (formData: ContactDetailsFromType) => {
     if(!isEqual(contactDetails(user), formData)) {
-      const fetch = async () => await fetchAPI('put', CONTACT_DETAILS_EP,  formData, true);
+      const fetch = async () => await fetchAPI({ type: 'put', endpoint: CONTACT_DETAILS_EP, body: formData, authHeader: true});
 
       modalInfo = await contactWarning(fetch, () => setEditContact(false));
       setVisible(modalInfo);

@@ -2,14 +2,19 @@
  *      Use for passing Account Confirmation prop. 
  *  ---------------------------------------------------- */
 
+/* ----------- Types ----------- */
+export type ConfirmationValueType = 'email' | 'mobile';
+
 export type ConfirmationType = {
-  value: string;
+  value: ConfirmationValueType;
   text: {
     buttonTitle: string;
     title: string;
     text: string;
   };
 };
+
+/* ----------------------------- */
 
 export const confirmationTypes: Record<string, ConfirmationType> = {
   EMAIL: {

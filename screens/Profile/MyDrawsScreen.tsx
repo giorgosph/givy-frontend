@@ -10,8 +10,9 @@ import { apiStatus } from "../../utils/constants/data/apiStatus";
 
 import useDraws from "../../hooks/components/useDraws";
 import SkeletonDraw from "../../components/skeletons/SkeletonDraw";
+import { ClientProfileMyDrawsScreenProps, ClientProfileTabProps } from "../../utils/navigation/types";
 
-const MyDraws = ({ navigation }) => {
+const MyDraws = ({ navigation }: ClientProfileMyDrawsScreenProps & ClientProfileTabProps) => {
   const { state, userDraws: draws } = useDraws(); // use to fetch draws if not already set
   const loading = state.reqStatus === apiStatus.LOADING;
 
@@ -22,10 +23,10 @@ const MyDraws = ({ navigation }) => {
 
   return (
     <>
-      <CustomHeader title="My Draws" navigation={navigation} />
+      <CustomHeader title="My Draws" />
       <MainContainer centered>
         {loading ? <SkeletonDraw /> : (
-          draws && draws.length > 0 ? draws.map(draw => <DrawListing key={draw.id} draw={draw} opted />) 
+          !!draws && draws.length > 0 ? draws.map(draw => <DrawListing key={draw.id} draw={draw} opted />) 
           : (
             <View>
               <Text style={{color: 'white'}}>You are not registered to any draw yet.</Text>

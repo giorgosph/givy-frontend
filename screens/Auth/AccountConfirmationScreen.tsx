@@ -15,12 +15,14 @@ import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { confirmationCodeValidation } from "../../utils/formValidations";
 import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
+import { ConfirmationCodeFromType } from "../../utils/constants/data/formTypes";
 import { BACKGROUND_COLOR, BUTTON_COLOR } from "../../utils/constants/styles/colors";
+import { ClientHomeAccountConfirmationScreenProps } from "../../utils/navigation/types";
 
-const AccountConfirmationScreen = ({ route }) => {
+const AccountConfirmationScreen = ({ route }: ClientHomeAccountConfirmationScreenProps) => {
   const { type } = route.params;
 
-  const { control, handleSubmit, clearErrors } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+  const { control, handleSubmit, clearErrors } = useForm<ConfirmationCodeFromType>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
   const { state, notificationState, callback } = useConfirmation();
   const loading = state.reqStatus === apiStatus.LOADING || notificationState.reqStatus === apiStatus.LOADING;

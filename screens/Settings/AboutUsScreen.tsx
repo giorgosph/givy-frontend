@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, ScrollView } from 'react-native';
 
 import CustomHeader from '../../components/general/CustomHeader';
 import MainContainer from '../../components/general/MainContainer';
-import { ScrollView } from 'moti';
+
 import { PIXELS } from '../../utils/constants/styles/dimensions';
 
 const AboutUsScreen = () => {

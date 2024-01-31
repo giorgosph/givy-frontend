@@ -8,20 +8,21 @@ import CustomHeader from "../../components/general/CustomHeader";
 import MainContainer from "../../components/general/MainContainer";
 
 import { includeByID } from "../../utils/filters/drawFilters";
+import { ClientProfileMyWinsScreenProps, ClientProfileTabProps } from "../../utils/navigation/types";
 
-const MyWins = ({ navigation }) => {
+const MyWins = ({ navigation }: ClientProfileMyWinsScreenProps & ClientProfileTabProps) => {
   const drawItems = useSelector(state => state.draw.items); // All items fetched
   const userItems = useSelector(state => state.user.wins); 
   const items = includeByID(drawItems, userItems); // Winning items
 
   const handlePress = async () => {
-    await navigation.goBack();
+    navigation.goBack();
     navigation.navigate("ClientSearchTab");
   }
 
   return (
    <>
-    <CustomHeader title="My Wins" navigation={navigation} />
+    <CustomHeader title="My Wins" />
     <MainContainer centered>
       {items && items.length ? items.map(item => <ItemListing key={item.id} item={item} />) 
       : (

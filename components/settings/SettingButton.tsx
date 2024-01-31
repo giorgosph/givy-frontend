@@ -6,7 +6,15 @@ import ArrowIcon from "../icons/ArrowIcon";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { SETTING_BUTTON_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/constants/styles/colors";
 
-const SettingButton = ({ title, onPress }) => {
+/* --------- Types --------- */
+type PropsType = {
+  title: string;
+  onPress: () => void;
+};
+
+/* ------------------------- */
+
+const SettingButton = ({ title, onPress }: PropsType) => {
   return (
     <TouchableHighlight style={styles.buttonWrap} underlayColor='#592E2E' onPress={onPress} >
       <View style={styles.button} >

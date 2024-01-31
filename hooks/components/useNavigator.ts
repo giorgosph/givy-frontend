@@ -30,7 +30,7 @@ const useNavigator = () => {
   // Check if draws were fetched more than 1 day ago to refetch
   const refetch = refetchPerDays(user.date);
 
-  const fetchUserDraws = async () => await fetchAPI('get', USER_DRAWS_EP, null, true);
+  const fetchUserDraws = async () => await fetchAPI({type: 'get', endpoint: USER_DRAWS_EP, authHeader: true });
 
   useEffect(() => {
     if(authCtx.isAuthenticated) {

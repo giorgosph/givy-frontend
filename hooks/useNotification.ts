@@ -4,6 +4,7 @@ import useAxiosFetch from './useAxiosFetch';
 
 import { apiStatus } from '../utils/constants/data/apiStatus';
 import { CONTACT_US_EP, FEEDBACK_EP } from '../utils/constants/url';
+import { ContactUsFromType, FeedbackFormType } from '../utils/constants/data/formTypes';
 
 /* ------------------------------------------------------------------
  * -------- Use for sending notifications (email, sms, etc.) --------
@@ -30,9 +31,9 @@ const useNotification = () => {
     await fetchAPI({ type: 'put', endpoint, body, authHeader });
   };
 
-  const contactUs = async (formData) => await fetchAPI({ type: 'post', endpoint: CONTACT_US_EP, body: formData, authHeader: true });
+  const contactUs = async (formData: ContactUsFromType) => await fetchAPI({ type: 'post', endpoint: CONTACT_US_EP, body: formData, authHeader: true });
 
-  const feedback = async (formData) => await fetchAPI({ type: 'post', endpoint: FEEDBACK_EP, body: formData, authHeader: true });
+  const feedback = async (formData: FeedbackFormType) => await fetchAPI({ type: 'post', endpoint: FEEDBACK_EP, body: formData, authHeader: true });
 
   useEffect(() => {
     if(status === apiStatus.SUCCESS) {

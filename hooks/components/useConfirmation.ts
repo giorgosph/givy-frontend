@@ -8,6 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { apiStatus } from '../../utils/constants/data/apiStatus';
 import { CONFIRM_EP, EMAIL_CODE_EP, MOBILE_CODE_EP } from '../../utils/constants/url';
+import { ConfirmationCodeFromType } from '../../utils/constants/data/formTypes';
+import { ConfirmationValueType } from '../../utils/constants/data/confirmationTypes';
 
 /* ----------------------------------------------------------------
  * --------------- Use for email/phone confirmation ---------------
@@ -21,9 +23,16 @@ const useConfirmation = () => {
   const { fetchAPI, data, status, statusCode } = useAxiosFetch();
   const { state: notificationState, callback } = useNotification();
 
-  const confirmAccount = async (type, formData) => await fetchAPI('delete', CONFIRM_EP, { code: formData.code, type }, true);
+  const confirmAccount = async (type: ConfirmationValueType, formData: ConfirmationCodeFromType) => {
+    await fetchAPI({
+      type: 'delete', 
+      endpoint: CONFIRM_EP, 
+      body: { code: formData.code, type }, 
+      authHeader: true 
+    });
+  };
 
-  const resend = type => callback.sendNotification(type == 'email' ? EMAIL_CODE_EP : MOBILE_CODE_EP, true);
+  const resend = (type: ConfirmationValueType) => callback.sendNotification({ endpoint: type == 'email' ? EMAIL_CODE_EP : MOBILE_CODE_EP, authHeader: true });
 
   useEffect(() => {
     if(status === apiStatus.SUCCESS) {

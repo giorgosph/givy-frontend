@@ -1,11 +1,22 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 
-import CustomTitle from "../general/CustomTitle";
 import CustomText from "../general/CustomText";
+import CustomTitle from "../general/CustomTitle";
+
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 
-const DetailsField = ({ title, text }) => {
+/* ------ Types ------ */
+type PropsType = {
+  title: string;
+  text: string;
+};
+
+/* ------------------- */
+
+const DetailsField = (props: PropsType) => {
+  const { title, text } = props;
+  
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>

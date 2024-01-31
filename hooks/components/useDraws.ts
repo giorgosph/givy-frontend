@@ -14,8 +14,8 @@ import { excludeByID, includeByID } from '../../utils/filters/drawFilters';
  * --------------------------------------------------------- */
 
 const useDraws = () => {
-  const [draws, setDraws] = useState(false);
-  const [userDraws, setUserDraws] = useState(false);
+  const [draws, setDraws] = useState<object[] | null>(null);
+  const [userDraws, setUserDraws] = useState<object[] | null>(null);
 
   const { fetchAPI, data, status } = useAxiosFetch();
   
@@ -27,7 +27,7 @@ const useDraws = () => {
   // Check if draws were fetched more than 1 day ago to refetch
   const refetch = refetchPerDays(draw.date);
 
-  const fecthData = async () => await fetchAPI('get', DRAWS_EP);
+  const fecthData = async () => await fetchAPI({ type: 'get', endpoint: DRAWS_EP });
 
   useEffect(() => {
       setDraws(excludeByID(draw.draws, user.draws)); // not opted in

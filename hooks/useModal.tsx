@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { TextStyle, ViewStyle } from "react-native";
 
-import CustomModal, { CustomModalVisibleType } from "../components/general/CustomModal";
 import WinnerModal, { WinnerVisibleType } from "../components/draw/WinnerModal";
+import CustomModal, { CustomModalVisibleType } from "../components/general/CustomModal";
 
 /* -------------------------------------------------------------
  * ------------------- Use to render a Modal -------------------

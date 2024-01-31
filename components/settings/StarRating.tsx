@@ -1,12 +1,23 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 
-import { useWatch } from "react-hook-form";
+import { Control, UseFormSetValue, useWatch } from "react-hook-form";
 import { FontAwesome } from '@expo/vector-icons';
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { FeedbackFormType } from "../../utils/constants/data/formTypes";
 
-const StarRating = ({ control, setValue }) => {
+/* -------- Types -------- */
+type PropsType = {
+  control: Control<FeedbackFormType>;
+  setValue: UseFormSetValue<FeedbackFormType>
+};
+
+/* ----------------------- */
+
+const StarRating = (props: PropsType) => {
+  const { control, setValue } = props;
+  
   const value = useWatch({
     control,
     name: "rating",

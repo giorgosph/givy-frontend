@@ -13,11 +13,22 @@ import { isAndroid } from "../../utils/constants/device"
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
 import { validateAllInputs, lettersRegex } from "../../utils/formValidations";
+import { ShippingDetailsFromType } from "../../utils/constants/data/formTypes";
 
-const EditShippingDetails = (props) => {
+/* -------- Types -------- */
+type PropsType = {
+  user: object; // TODO -> specify 
+  loading: boolean; 
+  setShipping: React.Dispatch<React.SetStateAction<boolean>>; 
+  onSubmit: (formData: any) => Promise<void>;
+};
+
+/* ----------------------- */
+
+const EditShippingDetails = (props: PropsType) => {
   const { user, loading, setShipping, onSubmit } = props;
 
-  const { control, reset, handleSubmit } = useForm();
+  const { control, reset, handleSubmit } = useForm<ShippingDetailsFromType>();
 
   const onPress = () => {
     reset();

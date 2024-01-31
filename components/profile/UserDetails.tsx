@@ -8,7 +8,18 @@ import CustomButton from "../general/CustomButton";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { AUTH_INACTIVE_COLOR, HEADING_BRIGHT_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
-const UserDetails = ({ user, setEditContact, setEditShipping }) => {
+/* -------- Types -------- */
+type PropsType = {
+  user: object; // TODO -> specify 
+  setEditContact: React.Dispatch<React.SetStateAction<boolean>>; 
+  setEditShipping: React.Dispatch<React.SetStateAction<boolean>>; 
+};
+
+/* ----------------------- */
+
+const UserDetails = (props: PropsType) => {
+  const { user, setEditContact, setEditShipping } = props;
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.section}>
@@ -17,6 +28,7 @@ const UserDetails = ({ user, setEditContact, setEditShipping }) => {
         <DetailsField title={"email:"} text={user?.email} />
         <DetailsField title={"phone number:"} text={user?.mobile} />
         <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} onPress={()=>setEditContact(true)} />
+        
       </View>
       
       <View style={styles.section}>
@@ -51,6 +63,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: AUTH_INACTIVE_COLOR,
+  },
+  buttonText:{
+    color: AUTH_INACTIVE_COLOR,
   },
   separator: {
     width: '80%',

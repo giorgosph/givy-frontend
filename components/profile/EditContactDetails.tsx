@@ -10,12 +10,23 @@ import MainContainer from "../general/MainContainer";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
+import { ContactDetailsFromType } from "../../utils/constants/data/formTypes";
 import { emailRegex, numbersRegex, required } from "../../utils/formValidations";
 
-const EditContactDetails = (props) => {
+/* -------- Types -------- */
+type PropsType = {
+  user: object; // TODO -> specify 
+  loading: boolean; 
+  setContact: React.Dispatch<React.SetStateAction<boolean>>; 
+  onSubmit: (formData: any) => Promise<void>;
+};
+
+/* ----------------------- */
+
+const EditContactDetails = (props: PropsType) => {
   const { user, loading, setContact, onSubmit } = props;
 
-  const { control, reset, handleSubmit } = useForm();
+  const { control, reset, handleSubmit } = useForm<ContactDetailsFromType>();
 
   const onPress = () => {
     reset(); 
