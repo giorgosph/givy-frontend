@@ -1,4 +1,4 @@
-const refetchPerDays = (date: string, extraDays = 1) => {
+const refetchPerDays = (date: number | null, extraDays = 1) => {
   if (!!date) {
     const currentDate = new Date();
     const savedDate = new Date(date); // from timestamp to date object

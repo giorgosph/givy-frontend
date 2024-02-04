@@ -8,17 +8,17 @@ type PropsType = {
   type: "d" | "i" | "w" | "e" | "dn";
   message: string;
   token?: string;
-  resetToken?: () => void;
+  resetToken?: (token: string) => void;
 } & (
   | {
       type: "dn";
       token: string;
-      resetToken: () => void;
+      resetToken: (token: string) => void;
     }
   | {
       type: Exclude<"d" | "i" | "w" | "e", "dn">;
       token?: string;
-      resetToken?: () => void;
+      resetToken?: (token: string) => void;
     }
 );
 

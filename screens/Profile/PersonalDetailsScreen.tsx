@@ -23,7 +23,7 @@ const PersonalDetailsScreen = ({ navigation }: ClientProfilePersonalDetailsScree
 
   const { contact, shipping, setContact, setShipping } = state.screen;
 
-  const fullName = `${user?.firstName} ${user?.lastName}`;
+  const fullName = `${user.firstName} ${user.lastName}`;
 
   const navTo = navigation.navigate;
 

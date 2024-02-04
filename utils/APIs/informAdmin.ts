@@ -6,7 +6,7 @@ import { DEVNOT_EP } from "../constants/url";
 type PropsType = {
   message: string;
   token: string; // TODO: specify
-  resetToken: () => void;
+  resetToken: (token: string) => void;
 };
 
 /* ------------------- */

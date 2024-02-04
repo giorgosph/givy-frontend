@@ -5,12 +5,13 @@ import DetailsField from "./DeatailsField";
 import CustomTitle from "../general/CustomTitle";
 import CustomButton from "../general/CustomButton";
 
+import { UserDetailsType } from "../../utils/types/objectTypes";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { AUTH_INACTIVE_COLOR, HEADING_BRIGHT_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
 /* -------- Types -------- */
 type PropsType = {
-  user: object; // TODO -> specify 
+  user: UserDetailsType;
   setEditContact: React.Dispatch<React.SetStateAction<boolean>>; 
   setEditShipping: React.Dispatch<React.SetStateAction<boolean>>; 
 };
@@ -25,8 +26,8 @@ const UserDetails = (props: PropsType) => {
       <View style={styles.section}>
         <CustomTitle text={"Contact Details"} color={HEADING_BRIGHT_COLOR} />
         <View style={styles.separator} />
-        <DetailsField title={"email:"} text={user?.email} />
-        <DetailsField title={"phone number:"} text={user?.mobile} />
+        <DetailsField title={"email:"} text={user.email} />
+        <DetailsField title={"phone number:"} text={user.mobile || ''} />
         <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} onPress={()=>setEditContact(true)} />
         
       </View>
@@ -34,11 +35,11 @@ const UserDetails = (props: PropsType) => {
       <View style={styles.section}>
         <CustomTitle text={"Shipping Details"} color={HEADING_BRIGHT_COLOR} />
         <View style={styles.separator} />
-        <DetailsField title={"country:"} text={user?.country} />
-        <DetailsField title={"city:"} text={user?.city} />
-        <DetailsField title={"address 1:"} text={user?.address1} />
-        <DetailsField title={"address 2:"} text={user?.address2} />
-        <DetailsField title={"postal code:"} text={user?.postalCode} />
+        <DetailsField title={"country:"} text={user.country || ''} />
+        <DetailsField title={"city:"} text={user.city || ''} />
+        <DetailsField title={"address 1:"} text={user.address1 || ''} />
+        <DetailsField title={"address 2:"} text={user.address2 || ''} />
+        <DetailsField title={"postal code:"} text={user.postalCode || ''} />
         <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} onPress={()=>setEditShipping(true)} />
       </View>
     </ScrollView>

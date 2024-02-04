@@ -9,13 +9,14 @@ import CustomButton from "../general/CustomButton";
 import MainContainer from "../general/MainContainer";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { ContactDetailsType } from "../../utils/types/objectTypes";
 import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
 import { ContactDetailsFromType } from "../../utils/constants/data/formTypes";
 import { emailRegex, numbersRegex, required } from "../../utils/formValidations";
 
 /* -------- Types -------- */
 type PropsType = {
-  user: object; // TODO -> specify 
+  user: ContactDetailsType;
   loading: boolean; 
   setContact: React.Dispatch<React.SetStateAction<boolean>>; 
   onSubmit: (formData: any) => Promise<void>;
@@ -38,8 +39,8 @@ const EditContactDetails = (props: PropsType) => {
       <CustomHeader title='Contact Details' onPress={onPress}/>
       <MainContainer>
         <View style={styles.container}>
-          <CustomInput control={control} name="email" defaultValue={user?.email} rules={{ ...required, ...emailRegex }} autoComplete={AC.email} inputMode='email' />
-          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user?.mobile} rules={numbersRegex} autoComplete={AC.tel} inputMode='numeric' /> 
+          <CustomInput control={control} name="email" defaultValue={user.email} rules={{ ...required, ...emailRegex }} autoComplete={AC.email} inputMode='email' />
+          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user.mobile} rules={numbersRegex} autoComplete={AC.tel} inputMode='numeric' /> 
         </View>
         <View style={styles.buttonContainer}>
           <CustomButton title='submit' disabled={loading} onPress={handleSubmit(onSubmit)} />
