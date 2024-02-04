@@ -11,7 +11,7 @@ type PropsType = {
   text: string;
   size?: 1 | 2 | 3 | 4 | 5;
   color?: ColorValue;
-  extraStyles?: TextStyle; 
+  extraStyles?: TextStyle | TextStyle[]; 
   title?: string; 
   titleSize?: 1 | 2 | 3 | 4 | 5 | 6;
   titleExtraStyles?: TextStyle;

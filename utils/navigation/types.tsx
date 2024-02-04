@@ -118,7 +118,7 @@ export type ClientHomeAccountConfirmationScreenProps = NativeStackScreenProps<Cl
 /* --------------------------------------------------------------- */
 export type ClientSearchTabParamList = {
   DrawsList: undefined;
-  DrawDetails: undefined;
+  DrawDetails: { draw: object }; // TODO -> specify draw object type
 
   FAQ: undefined;
   AboutUs: undefined;

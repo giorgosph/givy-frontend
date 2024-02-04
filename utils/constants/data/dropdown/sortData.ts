@@ -1,10 +1,14 @@
 import { DropdownItemType } from "../../../../components/general/CustomDropdown";
 
-const sortData: DropdownItemType[] = [
-  { value: 'default', label: 'Default'},
-  { value: 'openingDay', label: 'Opening Day'},
-  { value: 'closingDay', label: 'Closing Day'},
-  { value: 'raffleValue', label: 'Raffle Total Price'}
-];
+export type SortDataValueType =
+  | "default"
+  | "openingDay"
+  | "closingDay"
+  | "raffleValue";
 
-export default sortData;
+export const sortData: DropdownItemType[] = [
+  { value: "default", label: "Default" },
+  { value: "openingDay", label: "Opening Day" },
+  { value: "closingDay", label: "Closing Day" },
+  { value: "raffleValue", label: "Raffle Total Price" },
+];
