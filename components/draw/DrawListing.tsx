@@ -10,11 +10,12 @@ import CustomTitle from '../general/CustomTitle';
 import { PIXELS } from '../../utils/constants/styles/dimensions';
 import { ClientSearchTabParamList } from '../../utils/navigation/types';
 import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR, HEADING_FADE_COLOR } from '../../utils/constants/styles/colors';
+import { DrawType } from '../../utils/types/objectTypes';
 
 /* ------ Types ------ */
 type PropsType = {
-  draw: object;
-  opted: boolean; 
+  draw: DrawType;
+  opted?: boolean; 
 };
 
 /* ------------------- */
@@ -23,7 +24,7 @@ const DrawListing = (props: PropsType) => {
   const { draw, opted = false } = props;
 
   const navigation = useNavigation<NativeStackNavigationProp<ClientSearchTabParamList, "DrawsList">>();
-  const handleNav = (draw: object) => navigation.navigate('DrawDetails', { draw });
+  const handleNav = (draw: DrawType) => navigation.navigate('DrawDetails', { draw });
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => handleNav(draw)}>

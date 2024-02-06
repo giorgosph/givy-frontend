@@ -33,11 +33,15 @@ const Signup = (props: PropsType) => {
         <CustomInput control={control} name="firstName" title="first name" rules={{ ...required, ...lettersRegex }} autoComplete={AC.name} />
         <CustomInput control={control} name="lastName" title="last name" rules={{ ...required, ...lettersRegex }} autoComplete={AC.familyName} />
         <CustomInput control={control} name="username" rules={usernameValidation} autoComplete={AC.username} />
+        
         <CustomInput control={control} name="email" rules={{ ...required, ...emailRegex }} autoComplete={AC.email} inputMode='email' />
         <CustomInput control={control} name="mobile" title="phone number" rules={numbersRegex} autoComplete={AC.tel} inputMode='numeric' /> 
+        
         <CustomInput control={control} name="password" rules={passwordValidation} autoComplete={AC.newPassword} />
         <CustomInput control={control} name="confirmPassword" title="confirm password" rules={required} autoComplete={AC.newPassword} />
+        
         <CustomDropdown control={control} name="gender" rules={required} data={genderData} />
+        
         <CustomInput control={control} name="country" rules={lettersRegex} autoComplete={AC.country} />
         <CustomInput control={control} name="city" rules={lettersRegex} />
         <CustomInput control={control} name="address1" title="address 1" rules={validateAllInputs} autoComplete={AC.addressLine1} />

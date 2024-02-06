@@ -5,13 +5,14 @@ import CustomTitle from "../general/CustomTitle";
 import CustomButton from "../general/CustomButton";
 import FilterDropdown from "../general/FilterDropdown";
 
+import { DrawType } from "../../utils/types/objectTypes";
 import { HEADER_HEIGHT, MAIN_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
 
 /* ------ Types ------ */
 type PropsType = {
-  draws: object[] | null;
+  draws: DrawType[];
   enable: boolean; 
-  onSubmit: (data: object[] | null) => void; 
+  onSubmit: (data: DrawType[]) => void; 
 };
 
 /* ------------------- */
@@ -25,12 +26,12 @@ const DrawFilter = (props: PropsType) => {
   const [categories, setCategories] = useState<number[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('none');
 
-  const [filteredDraws, setFilteredDraws] = useState<object[] | null>([]);
+  const [filteredDraws, setFilteredDraws] = useState<DrawType[]>([]);
 
   useEffect(() => {
     const updatedLocations: number[] = [];
     const updatedCategories: number[] = [];
-    const filtered: object[] | null = [];
+    const filtered: DrawType[] = [];
 
     !!draws && draws.length > 0 && draws.forEach(draw => {
       const location = draw.location;

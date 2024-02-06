@@ -1,31 +1,49 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
 
-import useAxiosFetch from '../useAxiosFetch';
-import { AuthContext } from '../../context/store';
-import { useNavigation } from '@react-navigation/native';
+import useModal from "../useModal";
+import useAxiosFetch from "../useAxiosFetch";
+import { AuthContext } from "../../context/store";
+import { useNavigation } from "@react-navigation/native";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { updateEmail, updateMobile, updateShippingDetails } from '../../redux/slices/userSlice';
+import { HttpStatusCode } from "axios";
+import { RootState } from "../../redux/rootReducer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateEmail,
+  updateMobile,
+  updateShippingDetails,
+} from "../../redux/slices/userSlice";
 
-import isEqual from '../../utils/isEqual';
-import { apiStatus } from '../../utils/constants/data/apiStatus';
-import { contactWarning, mobileInfo } from '../../utils/constants/data/modalInfo';
-import { CONTACT_DETAILS_EP, SHIPPING_DETAILS_EP } from '../../utils/constants/url';
-import { ContactDetailsFromType, ShippingDetailsFromType } from '../../utils/constants/data/formTypes';
+import { CustomModalVisibleType } from "../../components/general/CustomModal";
 
-import useModal from '../useModal';
-import { CustomModalVisibleType } from '../../components/general/CustomModal';
+import isEqual from "../../utils/isEqual";
+import log from "../../utils/logger";
+import { apiStatus } from "../../utils/constants/data/apiStatus";
+import { UserDetailsResponseType } from "../../utils/types/responseTypes";
+import {
+  contactWarning,
+  mobileInfo,
+} from "../../utils/constants/data/modalInfo";
+import {
+  CONTACT_DETAILS_EP,
+  SHIPPING_DETAILS_EP,
+} from "../../utils/constants/url";
+import {
+  ContactDetailsFromType,
+  ShippingDetailsFromType,
+} from "../../utils/constants/data/formTypes";
 
 /* ---------------------------------------------------------------
  * --------------- Use when editing user's details ---------------
  * --------------------------------------------------------------- */
 
-const contactDetails = user => ({ // TODO -> specify
+const contactDetails = (user) => ({
+  // TODO -> specify
   email: user.email,
-  mobile: user?.mobile
+  mobile: user?.mobile,
 });
 
-const shippingDetails = user => ({
+const shippingDetails = (user) => ({
   country: user?.country,
   city: user?.city,
   address1: user?.address1,
@@ -42,18 +60,24 @@ const usePersonalDetails = () => {
   const [editShipping, setEditShipping] = useState(false);
 
   const { setVisible, renderModal } = useModal();
-  const { fetchAPI, data, status, statusCode } = useAxiosFetch();
-  
+  const { fetchAPI, data, status, statusCode } =
+    useAxiosFetch<UserDetailsResponseType>();
+
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user.user);
- 
+  const user = useSelector((state: RootState) => state.user.user);
+
   const authCtx = useContext(AuthContext);
-  
+
   const navigation = useNavigation();
 
   const onSubmitShipping = async (formData: ShippingDetailsFromType) => {
-    if(!isEqual(shippingDetails(user), formData)) {
-      await fetchAPI({ type: 'put', endpoint: SHIPPING_DETAILS_EP, body: formData, authHeader: true});
+    if (!isEqual(shippingDetails(user), formData)) {
+      await fetchAPI({
+        type: "put",
+        endpoint: SHIPPING_DETAILS_EP,
+        body: formData,
+        authHeader: true,
+      });
     } else {
       alert("Your details are already up to date!");
       setEditShipping(false);
@@ -61,8 +85,14 @@ const usePersonalDetails = () => {
   };
 
   const onSubmitContact = async (formData: ContactDetailsFromType) => {
-    if(!isEqual(contactDetails(user), formData)) {
-      const fetch = async () => await fetchAPI({ type: 'put', endpoint: CONTACT_DETAILS_EP, body: formData, authHeader: true});
+    if (!isEqual(contactDetails(user), formData)) {
+      const fetch = async () =>
+        await fetchAPI({
+          type: "put",
+          endpoint: CONTACT_DETAILS_EP,
+          body: formData,
+          authHeader: true,
+        });
 
       modalInfo = await contactWarning(fetch, () => setEditContact(false));
       setVisible(modalInfo);
@@ -75,47 +105,57 @@ const usePersonalDetails = () => {
   // NOTE: No need to refetch data as user's details can only be changed by the user.
 
   useEffect(() => {
-    if(status === apiStatus.SUCCESS) {
+    if (status === apiStatus.SUCCESS) {
+      if (data?.success) {
+        if (data.body?.shippingDetails) {
+          dispatch(updateShippingDetails({ user: data.body.shippingDetails }));
+          setEditShipping(false);
 
-      if(data.body?.shippingDetails) {
-        dispatch(updateShippingDetails({ user: data.body.shippingDetails}));
-        setEditShipping(false);
+          alert("Details Updated Successfully!");
+        } else if (data.body?.contactDetails) {
+          const { email, mobile } = data.body.contactDetails;
 
-        alert("Details Updated Successfully!");
-      } else if(data.body?.contactDetails) {
-        const { email, mobile } = data.body.contactDetails;
-        
-        // Mobile has been updated
-        if(mobile != false) {
-          dispatch(updateMobile({ mobile }));
-          if(email == false && mobile) {
-            modalInfo = mobileInfo(navigation, () => setEditContact(false));
-            setVisible(modalInfo); 
+          // Mobile has been updated
+          if (mobile) {
+            dispatch(updateMobile({ mobile }));
+            if (email) {
+              modalInfo = mobileInfo(navigation, () => setEditContact(false));
+              setVisible(modalInfo);
+            }
+            // TODO -> open modal to navigate to account confirmation or close edit contact
           }
-          // TODO -> open modal to navigate to account confirmation or close edit contact
-        }
 
-        // Email has been updated
-        if(email != false) {
-          dispatch(updateEmail({ email }));
-          authCtx.holdToken(authCtx.token);
-          alert("Email Changed!");
+          // Email has been updated
+          if (email) {
+            dispatch(updateEmail({ email }));
+            authCtx.logout();
+            alert("Email Changed!");
+          }
         }
-      } 
-
-    } else if(status === apiStatus.ERROR) {
-      if(statusCode == 422) alert("Invalid email address provided!");
-    } 
+      }
+    } else if (status === apiStatus.ERROR) {
+      if (!data?.success) {
+        if (statusCode == HttpStatusCode.UnprocessableEntity)
+          alert("Invalid email address provided!");
+      } else {
+        log({ type: "e", message: `Unexpected error:\n ${data}` });
+        alert(
+          "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"
+        );
+      }
+    }
 
     // abort request if user leave the component  and clear api state
   }, [status]);
 
-  return { 
+  return {
     state: {
       reqStatus: status,
-      screen: { 
-        contact: editContact, setContact: setEditContact,
-        shipping: editShipping, setShipping: setEditShipping
+      screen: {
+        contact: editContact,
+        setContact: setEditContact,
+        shipping: editShipping,
+        setShipping: setEditShipping,
       },
     },
     callback: {
@@ -125,6 +165,6 @@ const usePersonalDetails = () => {
     },
     user: user,
   };
-}
+};
 
 export default usePersonalDetails;

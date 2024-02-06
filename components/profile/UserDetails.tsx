@@ -27,9 +27,8 @@ const UserDetails = (props: PropsType) => {
         <CustomTitle text={"Contact Details"} color={HEADING_BRIGHT_COLOR} />
         <View style={styles.separator} />
         <DetailsField title={"email:"} text={user.email} />
-        <DetailsField title={"phone number:"} text={user.mobile || ''} />
+        <DetailsField title={"phone number:"} text={String(user.mobile) || ''} />
         <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} onPress={()=>setEditContact(true)} />
-        
       </View>
       
       <View style={styles.section}>

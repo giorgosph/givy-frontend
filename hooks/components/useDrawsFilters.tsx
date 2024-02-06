@@ -8,6 +8,7 @@ import isEqual from '../../utils/isEqual';
 import { SortDataValueType } from '../../utils/constants/data/dropdown/sortData';
 
 import useDraws from './useDraws';
+import { DrawType } from '../../utils/types/objectTypes';
 
 /* --------------------------------------------------------
  * --------------- Use to filter/sort Draws ---------------
@@ -18,7 +19,7 @@ const useDrawsFilters = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const [sortData, setSortData] = useState<SortDataValueType>('default');
-  const [filteredDraws, setFilteredDraws] = useState<object[] | null>(null);
+  const [filteredDraws, setFilteredDraws] = useState<DrawType[]>();
 
   const { state, draws } = useDraws();
 
@@ -26,7 +27,7 @@ const useDrawsFilters = () => {
 
   const toggleFilter = () => setIsFilterOpen(!isFilterOpen);
 
-  const onSubmitFilter = (data: object[] | null) => {
+  const onSubmitFilter = (data: DrawType[]) => {
     setIsFilterOpen(false);
     setFilteredDraws(data); 
   }; 
@@ -66,7 +67,7 @@ const useDrawsFilters = () => {
   return { 
     state,
     component: { 
-      Filter: () => <DrawFilter enable={isFilterOpen} onSubmit={onSubmitFilter} draws={draws} />,
+      Filter: () => <DrawFilter enable={isFilterOpen} onSubmit={onSubmitFilter} draws={draws as DrawType[]} />,
       Sort: () => <DrawSort enable={isSortOpen} handleSort={onSubmitSort} selectedItem={sortData}/>,
       FilterButtons: () => 
         <FilterIcons 

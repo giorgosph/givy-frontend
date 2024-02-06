@@ -1,10 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import useAxiosFetch from './useAxiosFetch';
+import { HttpStatusCode } from "axios";
+import useAxiosFetch from "./useAxiosFetch";
 
-import { apiStatus } from '../utils/constants/data/apiStatus';
-import { CONTACT_US_EP, FEEDBACK_EP } from '../utils/constants/url';
-import { ContactUsFromType, FeedbackFormType } from '../utils/constants/data/formTypes';
+import log from "../utils/logger";
+import { apiStatus } from "../utils/constants/data/apiStatus";
+import { CONTACT_US_EP, FEEDBACK_EP } from "../utils/constants/url";
+import { NotificationResponseType } from "../utils/types/responseTypes";
+import {
+  ContactUsFromType,
+  FeedbackFormType,
+} from "../utils/constants/data/formTypes";
 
 /* ------------------------------------------------------------------
  * -------- Use for sending notifications (email, sms, etc.) --------
@@ -22,40 +28,68 @@ type NotificationPropsType = {
 const useNotification = () => {
   const [sent, setSent] = useState(false);
 
-  const { fetchAPI, data, status, statusCode } = useAxiosFetch();
+  const { fetchAPI, data, status, statusCode } =
+    useAxiosFetch<NotificationResponseType>();
 
   const sendNotification = async (props: NotificationPropsType) => {
-    const { endpoint, body={}, authHeader=false } = props;
+    const { endpoint, body = {}, authHeader = false } = props;
 
     setSent(false);
-    await fetchAPI({ type: 'put', endpoint, body, authHeader });
+    await fetchAPI({ type: "put", endpoint, body, authHeader });
   };
 
-  const contactUs = async (formData: ContactUsFromType) => await fetchAPI({ type: 'post', endpoint: CONTACT_US_EP, body: formData, authHeader: true });
+  const contactUs = async (formData: ContactUsFromType) =>
+    await fetchAPI({
+      type: "post",
+      endpoint: CONTACT_US_EP,
+      body: formData,
+      authHeader: true,
+    });
 
-  const feedback = async (formData: FeedbackFormType) => await fetchAPI({ type: 'post', endpoint: FEEDBACK_EP, body: formData, authHeader: true });
+  const feedback = async (formData: FeedbackFormType) =>
+    await fetchAPI({
+      type: "post",
+      endpoint: FEEDBACK_EP,
+      body: formData,
+      authHeader: true,
+    });
 
   useEffect(() => {
-    if(status === apiStatus.SUCCESS) {
-      setSent(true);
-      alert(`${data.body.type} sent successfully!`);
-    } else if(status === apiStatus.ERROR) {
-      if(statusCode == 401) alert(`${data.body.type} cannot be sent!`);
-      else if(statusCode == 409) alert("You are not allowed to submit a feedback more than once a day.");
+    if (status === apiStatus.SUCCESS) {
+      if (data?.success) {
+        setSent(true);
+        alert(`${data.body.type} sent successfully!`);
+      }
+    } else if (status === apiStatus.ERROR) {
+      if (!data?.success) {
+        if (statusCode == HttpStatusCode.Unauthorized)
+          alert("`Email cannot be sent!`");
+        else if (statusCode == HttpStatusCode.Conflict)
+          alert(
+            "You are not allowed to submit a feedback more than once a day."
+          );
+      } else {
+        log({ type: "e", message: `Unexpected error:\n ${data}` });
+        alert(
+          "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"
+        );
+      }
     }
   }, [status]);
 
   // TODO -> add callback object and move sent to state object
-  
-  return { 
+
+  return {
     state: {
-      reqStatus: status, 
+      reqStatus: status,
     },
     callback: {
-      sendNotification, contactUs, feedback
+      sendNotification,
+      contactUs,
+      feedback,
     },
-    sent
+    sent,
   };
-}
+};
 
 export default useNotification;

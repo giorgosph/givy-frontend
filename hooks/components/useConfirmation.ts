@@ -3,15 +3,18 @@ import { useContext, useEffect } from "react";
 import useAxiosFetch from "../useAxiosFetch";
 import useNotification from "../useNotification";
 
+import { HttpStatusCode } from "axios";
 import { AuthContext } from "../../context/store";
 import { useNavigation } from "@react-navigation/native";
 
+import log from "../../utils/logger";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 import {
   CONFIRM_EP,
   EMAIL_CODE_EP,
   MOBILE_CODE_EP,
 } from "../../utils/constants/url";
+import { ConfirmAccountResponseType } from "../../utils/types/responseTypes";
 import { ConfirmationCodeFromType } from "../../utils/constants/data/formTypes";
 import { ConfirmationValueType } from "../../utils/constants/data/confirmationTypes";
 
@@ -24,7 +27,8 @@ const useConfirmation = () => {
 
   const authCtx = useContext(AuthContext);
 
-  const { fetchAPI, data, status, statusCode } = useAxiosFetch();
+  const { fetchAPI, data, status, statusCode } =
+    useAxiosFetch<ConfirmAccountResponseType>();
   const { state: notificationState, callback } = useNotification();
 
   const confirmAccount = async (
@@ -47,19 +51,29 @@ const useConfirmation = () => {
 
   useEffect(() => {
     if (status === apiStatus.SUCCESS) {
-      const isEmail = data.body?.confirm == "email"; // email has been confirmed
-      const isMobile = data.body?.confirm == "mobile"; // mobile has been confirmed
+      if (data?.success) {
+        const isEmail = data.body.confirm === "email"; // email has been confirmed
+        const isMobile = data.body.confirm === "mobile"; // mobile has been confirmed
 
-      if (isEmail) {
-        authCtx.authenticate(authCtx.tempToken);
-        alert("Email Address Confirmed Successfully!");
-      } else if (isMobile) {
-        // TODO -> Edit userSlice, set phone confirmed to true
-        navigation.goBack();
-        alert("Phone Number Confirmed Successfully!");
+        if (isEmail) {
+          authCtx.authenticate(authCtx.tempToken as string);
+          alert("Email Address Confirmed Successfully!");
+        } else if (isMobile) {
+          // TODO -> Edit userSlice, set phone confirmed to true
+          navigation.goBack();
+          alert("Phone Number Confirmed Successfully!");
+        }
       }
     } else if (status === apiStatus.ERROR) {
-      if (statusCode == 401) alert("Wrong code provided!");
+      if (!data?.success) {
+        if (statusCode == HttpStatusCode.Unauthorized)
+          alert("Wrong code provided!");
+      } else {
+        log({ type: "e", message: `Unexpected error:\n ${data}` });
+        alert(
+          "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"
+        );
+      }
     }
   }, [status]);
 

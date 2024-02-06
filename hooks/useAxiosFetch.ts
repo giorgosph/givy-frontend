@@ -73,16 +73,17 @@ const useAxiosFetch = <T>() => {
       log({ type: "w", message: `Fetched Failed\nResponse Error:\n ${err}` });
       const { data, status } = err.response;
 
-      setData(data);
-      setStatusCode(status);
-      setStatus(apiStatus.ERROR);
-
       if (
         status === HttpStatusCode.InternalServerError ||
         status === HttpStatusCode.NotFound
       )
         alert("Server Error!\nKindly Contact Support Team");
       else if (status === HttpStatusCode.Forbidden) authCtx.logout();
+      else {
+        setData(data);
+        setStatusCode(status);
+        setStatus(apiStatus.ERROR);
+      }
     }
   };
 

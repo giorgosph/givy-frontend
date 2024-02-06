@@ -69,3 +69,7 @@ export type ItemType = {
   price: number;
   winner?: string;
 };
+
+export type WinnersType = {
+  [index: number]: string;
+};

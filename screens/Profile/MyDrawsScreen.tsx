@@ -10,9 +10,9 @@ import { apiStatus } from "../../utils/constants/data/apiStatus";
 
 import useDraws from "../../hooks/components/useDraws";
 import SkeletonDraw from "../../components/skeletons/SkeletonDraw";
-import { ClientProfileMyDrawsScreenProps, ClientProfileTabProps } from "../../utils/navigation/types";
+import { ClientProfileMyDrawsScreenProps } from "../../utils/navigation/types";
 
-const MyDraws = ({ navigation }: ClientProfileMyDrawsScreenProps & ClientProfileTabProps) => {
+const MyDraws = ({ navigation }: ClientProfileMyDrawsScreenProps) => {
   const { state, userDraws: draws } = useDraws(); // use to fetch draws if not already set
   const loading = state.reqStatus === apiStatus.LOADING;
 

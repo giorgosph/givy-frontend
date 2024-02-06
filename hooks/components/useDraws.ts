@@ -1,57 +1,67 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import useAxiosFetch from '../useAxiosFetch';
+import useAxiosFetch from "../useAxiosFetch";
+import { RootState } from "../../redux/rootReducer";
 
-import { DRAWS_EP } from '../../utils/constants/url';
-import { addDraws } from '../../redux/slices/drawSlice';
-import { refetchPerDays } from '../../utils/APIs/refetch';
-import { apiStatus } from '../../utils/constants/data/apiStatus';
-import { excludeByID, includeByID } from '../../utils/filters/drawFilters';
+import log from "../../utils/logger";
+import { DRAWS_EP } from "../../utils/constants/url";
+import { addDraws } from "../../redux/slices/drawSlice";
+import { DrawType } from "../../utils/types/objectTypes";
+import { refetchPerDays } from "../../utils/APIs/refetch";
+import { apiStatus } from "../../utils/constants/data/apiStatus";
+import { DrawsResponseType } from "../../utils/types/responseTypes";
+import { excludeByID, includeByID } from "../../utils/filters/drawFilters";
 
 /* ---------------------------------------------------------
  * --------------- Use to fetch/handle Draws ---------------
  * --------------------------------------------------------- */
 
 const useDraws = () => {
-  const [draws, setDraws] = useState<object[] | null>(null);
-  const [userDraws, setUserDraws] = useState<object[] | null>(null);
+  const [draws, setDraws] = useState<DrawType[]>();
+  const [userDraws, setUserDraws] = useState<DrawType[]>();
 
-  const { fetchAPI, data, status } = useAxiosFetch();
-  
+  const { fetchAPI, data, status } = useAxiosFetch<DrawsResponseType>();
+
   const dispatch = useDispatch();
-  const draw = useSelector(state => state.draw);
-  const user = useSelector(state => state.user);
-  
+  const draw = useSelector((state: RootState) => state.draw);
+  const user = useSelector((state: RootState) => state.user);
+
   // TODO -> research for better algorithm
   // Check if draws were fetched more than 1 day ago to refetch
   const refetch = refetchPerDays(draw.date);
 
-  const fecthData = async () => await fetchAPI({ type: 'get', endpoint: DRAWS_EP });
+  const fecthData = async () =>
+    await fetchAPI({ type: "get", endpoint: DRAWS_EP });
 
   useEffect(() => {
-      setDraws(excludeByID(draw.draws, user.draws)); // not opted in
-      setUserDraws(includeByID(draw.draws, user.draws)); // opted in
+    setDraws(excludeByID(draw.draws, user.draws)); // not opted in
+    setUserDraws(includeByID(draw.draws, user.draws)); // opted in
   }, [draw.draws, user.draws]);
 
   useEffect(() => {
-
-    if(status === apiStatus.IDLE && refetch) fecthData(); // TODO -> investigate best solution
-    else if(status === apiStatus.SUCCESS) {
-      if(data?.success) {
+    if (status === apiStatus.IDLE && refetch)
+      fecthData(); // TODO -> investigate best solution
+    else if (status === apiStatus.SUCCESS) {
+      if (data?.success)
         dispatch(addDraws({ draws: data.body, date: new Date().getTime() }));
-      }
+    } else if (status === apiStatus.ERROR) {
+      log({ type: "e", message: `Unexpected error:\n ${data}` });
+      alert(
+        "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"
+      );
     }
 
     // TODO -> abort request if user leave the component
   }, [status]);
 
-  return { 
+  return {
     state: {
-      reqStatus: status
+      reqStatus: status,
     },
-    draws, userDraws
+    draws,
+    userDraws,
   };
-}
+};
 
 export default useDraws;

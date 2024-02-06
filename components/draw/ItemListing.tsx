@@ -6,10 +6,11 @@ import CustomText from "../general/CustomText";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { AUTH_ACTIVE_COLOR } from "../../utils/constants/styles/colors";
+import { ItemType } from "../../utils/types/objectTypes";
 
 /* ------ Types ------ */
 type PropsType = {
-  item: object;
+  item: ItemType;
 };
 
 /* ------------------- */

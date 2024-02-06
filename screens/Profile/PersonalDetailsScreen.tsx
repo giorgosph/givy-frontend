@@ -16,14 +16,15 @@ import { ClientProfilePersonalDetailsScreenProps } from "../../utils/navigation/
 import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
 import usePersonalDetails from "../../hooks/components/usePersonalDetails";
+import { UserDetailsType } from "../../utils/types/objectTypes";
 
 const PersonalDetailsScreen = ({ navigation }: ClientProfilePersonalDetailsScreenProps) => {
-  const { state, callback, user} = usePersonalDetails();
+  const { state, callback, user } = usePersonalDetails();
   const loading = state.reqStatus === apiStatus.LOADING;
 
   const { contact, shipping, setContact, setShipping } = state.screen;
 
-  const fullName = `${user.firstName} ${user.lastName}`;
+  const fullName = `${user!.firstName} ${user!.lastName}`;
 
   const navTo = navigation.navigate;
 
@@ -31,17 +32,17 @@ const PersonalDetailsScreen = ({ navigation }: ClientProfilePersonalDetailsScree
    <>
       {callback.renderModal()}
       {contact ? 
-        <EditContactDetails loading={loading} setContact={setContact} onSubmit={callback.contact}  user={user} /> 
+        <EditContactDetails loading={loading} setContact={setContact} onSubmit={callback.contact}  user={user as UserDetailsType} /> 
       : shipping ? 
-        <EditShippingDetails loading={loading} setShipping={setShipping} onSubmit={callback.shipping} user={user} />
+        <EditShippingDetails loading={loading} setShipping={setShipping} onSubmit={callback.shipping} user={user as UserDetailsType} />
       : (
         <>
           <Header />
           <MainContainer >
             <View style={styles.detailsContainer}>
               <CustomTitle text={fullName} extraStyles={styles.title} />
-              <CustomTitle text={`@${removeUsernamePrefix(user?.username)}`} size={4} lowercase extraStyles={styles.subTitle} />
-              <UserDetails user={user} setEditContact={setContact} setEditShipping={setShipping} />
+              <CustomTitle text={`@${removeUsernamePrefix(user!.username)}`} size={4} lowercase extraStyles={styles.subTitle} />
+              <UserDetails user={user as UserDetailsType} setEditContact={setContact} setEditShipping={setShipping} />
             </View>
             <View style={styles.buttonsContainer}>
               <CustomButton title={'My Draws'} style={styles.button1} textStyle={styles.buttonText1} onPress={()=>navTo('MyDraws')} />

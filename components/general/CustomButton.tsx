@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, View, ViewStyle, TextStyle } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View, ViewStyle, TextStyle, GestureResponderEvent } from 'react-native';
 
 import { BACKGROUND_COLOR, BUTTON_COLOR } from '../../utils/constants/styles/colors';
 import { BUTTON_HEIGHT, BUTTON_WIDTH, PIXELS } from '../../utils/constants/styles/dimensions';
@@ -7,7 +7,7 @@ import { BUTTON_HEIGHT, BUTTON_WIDTH, PIXELS } from '../../utils/constants/style
 /* --------- Types --------- */
 type PropsType = {
   title: string; 
-  onPress: () => void; 
+  onPress: (e: GestureResponderEvent) => any; 
   disabled?: boolean; 
   style?: ViewStyle; 
   textStyle?: TextStyle;
@@ -19,11 +19,9 @@ const CustomButton = (props: PropsType) => {
   const { title, onPress, disabled=false, style, textStyle } = props;
   
   return (
-    <View style={[styles.button, {opacity: disabled ? 0.4 : 1}, !!style && style]}>
-      <TouchableOpacity disabled={disabled} onPress={onPress}>
-        <Text style={[styles.text, !!textStyle && textStyle]}>{title}</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity disabled={disabled} onPress={onPress} style={[styles.button, {opacity: disabled ? 0.4 : 1}, !!style && style]}>
+      <Text style={[styles.text, !!textStyle && textStyle]}>{title}</Text>
+    </TouchableOpacity>
   );
 };
 

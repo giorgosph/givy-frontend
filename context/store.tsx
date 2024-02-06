@@ -70,7 +70,7 @@ function AuthContextProvider({ children }) {
       holdToken,
       resetToken,
     };
-  }, []);
+  }, [token, tempToken]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

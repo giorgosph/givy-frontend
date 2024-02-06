@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, View, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 import CustomText from './CustomText';
@@ -30,6 +30,10 @@ const CustomModal = (props: ModalPropsType) => {
   const { visible, onClose } = props;
   const { title, text, extraStyle, extraTitleStyle, extraTextStyle, buttonText, buttonText2, onPress, onPress2 } = visible;
   
+  useEffect(()=> {
+    console.log(visible);
+  }, [visible])
+
   const handlePress1 = () => {
     if (onPress) {
       onPress();

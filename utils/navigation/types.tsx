@@ -1,7 +1,9 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
+import { DrawType } from "../types/objectTypes";
 import { ConfirmationType } from "../constants/data/confirmationTypes";
+import { CompositeScreenProps } from "@react-navigation/native";
 
 /* ---------------------------------------------------------------------------- */
 /* ----------------------------------- Tabs ----------------------------------- */
@@ -118,7 +120,7 @@ export type ClientHomeAccountConfirmationScreenProps = NativeStackScreenProps<Cl
 /* --------------------------------------------------------------- */
 export type ClientSearchTabParamList = {
   DrawsList: undefined;
-  DrawDetails: { draw: object }; // TODO -> specify draw object type
+  DrawDetails: { draw: DrawType };
 
   FAQ: undefined;
   AboutUs: undefined;
@@ -157,13 +159,13 @@ export type ClientProfileTabParamList = {
   PrivacyPolicy: undefined;
   TermsConditions: undefined;
 
-  DrawDetails: undefined;
+  DrawDetails: { draw: DrawType };
   AccountConfirmation: { type: ConfirmationType };
 };
 
 export type ClientProfilePersonalDetailsScreenProps = NativeStackScreenProps<ClientProfileTabParamList, "PersonalDetails">;
-export type ClientProfileMyDrawsScreenProps = NativeStackScreenProps<ClientProfileTabParamList, "MyDraws">;
-export type ClientProfileMyWinsScreenProps = NativeStackScreenProps<ClientProfileTabParamList, "MyWins">;
+export type ClientProfileMyDrawsScreenProps = CompositeScreenProps<NativeStackScreenProps<ClientProfileTabParamList, "MyDraws">, BottomTabScreenProps<ClientTabsParamList, 'ClientProfileTab'>>;
+export type ClientProfileMyWinsScreenProps = CompositeScreenProps<NativeStackScreenProps<ClientProfileTabParamList, "MyWins">, BottomTabScreenProps<ClientTabsParamList, 'ClientProfileTab'>>;
 export type ClientProfileFAQScreenProps = NativeStackScreenProps<ClientProfileTabParamList, "FAQ">;
 export type ClientProfileAboutUsScreenProps = NativeStackScreenProps<ClientProfileTabParamList, "AboutUs">;
 export type ClientProfileFeedbackScreenProps = NativeStackScreenProps<ClientProfileTabParamList, "Feedback">;

@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useAxiosFetch from "../useAxiosFetch";
 
-import { RootState } from "../../redux/store";
+import { RootState } from "../../redux/rootReducer";
 import { addItems } from "../../redux/slices/drawSlice";
 import { setUserDraws } from "../../redux/slices/userSlice";
 
+import log from "../../utils/logger";
 import { USER_DRAWS_EP } from "../../utils/constants/url";
 import { refetchPerDays } from "../../utils/APIs/refetch";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
@@ -43,15 +44,22 @@ const useNavigator = () => {
         setTabsToRender(clientTabs());
         if (refetch) fetchUserDraws();
       } else if (status === apiStatus.SUCCESS && !!data) {
-        dispatch(addItems({ items: data.body.wins }));
-        dispatch(
-          setUserDraws({
-            drawIds: data.body.draws,
-            wins: data.body.wins,
-            date: new Date().getTime(),
-          })
+        if (data?.success) {
+          dispatch(addItems({ items: data.body.wins }));
+          dispatch(
+            setUserDraws({
+              drawIds: data.body.draws,
+              wins: data.body.wins,
+              date: new Date().getTime(),
+            })
+          );
+          resetAxiosState();
+        }
+      } else if (status === apiStatus.ERROR) {
+        log({ type: "e", message: `Unexpected error:\n ${data}` });
+        alert(
+          "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"
         );
-        resetAxiosState();
       }
     } else setTabsToRender(defaultTabs());
   }, [authCtx.isAuthenticated, status]);

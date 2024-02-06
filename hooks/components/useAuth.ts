@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 
 import useModal from "../useModal";
+import { HttpStatusCode } from "axios";
 import { useDispatch } from "react-redux";
 
 import useAxiosFetch from "../useAxiosFetch";
@@ -11,6 +12,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthContext } from "../../context/store";
 import { setUser } from "../../redux/slices/userSlice";
 
+import log from "../../utils/logger";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { mobileInfo } from "../../utils/constants/data/modalInfo";
 import { DefaultProfileTabParamList } from "../../utils/navigation/types";
@@ -102,10 +104,20 @@ const useAuth = () => {
         } else if (emailConfirmed == false)
           navigation.navigate("AccountConfirmation", { type: CT.EMAIL });
         else navigation.goBack(); // Coming from reset password
-      } else if (data?.body?.type)
-        alert(`${data.body.type} is already registered!`);
+      }
     } else if (status === apiStatus.ERROR) {
-      if (statusCode === 401) alert("Wrong Credentials");
+      if (!data?.success) {
+        if (
+          statusCode === HttpStatusCode.Unauthorized ||
+          statusCode === HttpStatusCode.Conflict
+        )
+          alert(data!.message);
+      } else {
+        log({ type: "e", message: `Unexpected error:\n ${data}` });
+        alert(
+          "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"
+        );
+      }
     }
   }, [status]);
 

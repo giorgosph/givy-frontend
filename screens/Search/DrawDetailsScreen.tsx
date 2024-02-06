@@ -35,7 +35,8 @@ const DrawDetailsScreen = ({ route }: ClientSearchDrawDetailsScreenProps) => {
       <MainContainer centered>
         {loading ? <SkeletonDrawDetails /> : (
         <>
-          <ImageCarousel images={images} loop />
+          {/* TODO -> remove as string[] after making image not null */}
+          <ImageCarousel images={images as string[]} loop />
 
           <CustomCountdown timeRemaining={timeRemaining} />
 

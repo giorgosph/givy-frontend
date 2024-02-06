@@ -4,8 +4,8 @@ import { AuthContext } from "../context/store";
 import log from "../utils/logger";
 import { BASE_URL_WS } from "../utils/constants/url";
 
-const useWebSocket = () => {
-  const [wsData, setWsData] = useState(false);
+const useWebSocket = <T>() => {
+  const [wsData, setWsData] = useState<T>();
 
   const authCtx = useContext(AuthContext);
 
@@ -29,7 +29,7 @@ const useWebSocket = () => {
       log({
         type: "dn",
         message: `WebSocket error:\n ${JSON.stringify(error)}`,
-        token: authCtx.token,
+        token: authCtx.token as string,
         resetToken: authCtx.resetToken,
       });
     };

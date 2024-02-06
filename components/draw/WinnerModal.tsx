@@ -6,6 +6,7 @@ import CustomTitle from '../general/CustomTitle';
 import CustomButton from '../general/CustomButton';
 
 import { removeUsernamePrefix } from '../../utils/dataFormater';
+import { ItemType, WinnersType } from '../../utils/types/objectTypes';
 import { HEIGHT, MAIN_HEIGHT, PIXELS } from '../../utils/constants/styles/dimensions';
 
 /* --------- Types --------- */
@@ -15,15 +16,10 @@ type PropsType = {
 };
 
 export type WinnerVisibleType = {
-  items: ItemsInterface[];
-  winners: { [I in keyof ItemsInterface]: string };
+  items: ItemType[];
+  winners: WinnersType;
 }
 
-// TODO -> improve those types and move them to new file in order to use them in different places
-export interface ItemsInterface {
-  id: number;
-  title: string;
-};
 /* ------------------------- */
 
 const WinnerModal = (props: PropsType) => {
