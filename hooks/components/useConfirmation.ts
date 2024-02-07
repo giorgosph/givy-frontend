@@ -68,7 +68,7 @@ const useConfirmation = () => {
       if (!data?.success) {
         if (statusCode == HttpStatusCode.Unauthorized)
           alert("Wrong code provided!");
-      } else {
+      } else if (!!statusCode) {
         log({ type: "e", message: `Unexpected error:\n ${data}` });
         alert(
           "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"

@@ -27,18 +27,18 @@ const UserDetails = (props: PropsType) => {
         <CustomTitle text={"Contact Details"} color={HEADING_BRIGHT_COLOR} />
         <View style={styles.separator} />
         <DetailsField title={"email:"} text={user.email} />
-        <DetailsField title={"phone number:"} text={String(user.mobile) || ''} />
+        <DetailsField title={"phone number:"} text={String(user.mobile)} />
         <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} onPress={()=>setEditContact(true)} />
       </View>
       
       <View style={styles.section}>
         <CustomTitle text={"Shipping Details"} color={HEADING_BRIGHT_COLOR} />
         <View style={styles.separator} />
-        <DetailsField title={"country:"} text={user.country || ''} />
-        <DetailsField title={"city:"} text={user.city || ''} />
-        <DetailsField title={"address 1:"} text={user.address1 || ''} />
-        <DetailsField title={"address 2:"} text={user.address2 || ''} />
-        <DetailsField title={"postal code:"} text={user.postalCode || ''} />
+        <DetailsField title={"country:"} text={user.country} />
+        <DetailsField title={"city:"} text={user.city} />
+        <DetailsField title={"address 1:"} text={user.address1} />
+        <DetailsField title={"address 2:"} text={user.address2} />
+        <DetailsField title={"postal code:"} text={user.postalCode} />
         <CustomButton title={'Edit'} style={styles.button} textStyle={styles.buttonText} onPress={()=>setEditShipping(true)} />
       </View>
     </ScrollView>

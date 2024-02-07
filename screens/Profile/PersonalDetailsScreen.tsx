@@ -24,7 +24,7 @@ const PersonalDetailsScreen = ({ navigation }: ClientProfilePersonalDetailsScree
 
   const { contact, shipping, setContact, setShipping } = state.screen;
 
-  const fullName = `${user!.firstName} ${user!.lastName}`;
+  const fullName = `${user.firstName} ${user.lastName}`;
 
   const navTo = navigation.navigate;
 
@@ -32,17 +32,17 @@ const PersonalDetailsScreen = ({ navigation }: ClientProfilePersonalDetailsScree
    <>
       {callback.renderModal()}
       {contact ? 
-        <EditContactDetails loading={loading} setContact={setContact} onSubmit={callback.contact}  user={user as UserDetailsType} /> 
+        <EditContactDetails loading={loading} setContact={setContact} onSubmit={callback.contact}  user={user} /> 
       : shipping ? 
-        <EditShippingDetails loading={loading} setShipping={setShipping} onSubmit={callback.shipping} user={user as UserDetailsType} />
+        <EditShippingDetails loading={loading} setShipping={setShipping} onSubmit={callback.shipping} user={user} />
       : (
         <>
           <Header />
           <MainContainer >
             <View style={styles.detailsContainer}>
               <CustomTitle text={fullName} extraStyles={styles.title} />
-              <CustomTitle text={`@${removeUsernamePrefix(user!.username)}`} size={4} lowercase extraStyles={styles.subTitle} />
-              <UserDetails user={user as UserDetailsType} setEditContact={setContact} setEditShipping={setShipping} />
+              <CustomTitle text={`@${removeUsernamePrefix(user.username)}`} size={4} lowercase extraStyles={styles.subTitle} />
+              <UserDetails user={user} setEditContact={setContact} setEditShipping={setShipping} />
             </View>
             <View style={styles.buttonsContainer}>
               <CustomButton title={'My Draws'} style={styles.button1} textStyle={styles.buttonText1} onPress={()=>navTo('MyDraws')} />

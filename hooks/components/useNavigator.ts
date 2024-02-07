@@ -23,12 +23,13 @@ import { UserDrawsResponseType } from "../../utils/types/responseTypes";
 const useNavigator = () => {
   const [tabsToRender, setTabsToRender] = useState(defaultTabs());
 
-  const { fetchAPI, resetAxiosState, data, status } =
+  const { fetchAPI, resetAxiosState, data, status, statusCode } =
     useAxiosFetch<UserDrawsResponseType>();
 
   const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
 
+  const { isAuthenticated, token, tempToken, logout, authenticate } = authCtx;
   const user = useSelector((state: RootState) => state.user);
 
   // TODO -> research for a better algorithm
@@ -40,11 +41,11 @@ const useNavigator = () => {
 
   useEffect(() => {
     if (authCtx.isAuthenticated) {
-      if (status === apiStatus.IDLE) {
-        setTabsToRender(clientTabs());
-        if (refetch) fetchUserDraws();
-      } else if (status === apiStatus.SUCCESS && !!data) {
-        if (data?.success) {
+      setTabsToRender(clientTabs());
+
+      if (status === apiStatus.IDLE && refetch) fetchUserDraws();
+      else if (status === apiStatus.SUCCESS && !!data) {
+        if (data.success) {
           dispatch(addItems({ items: data.body.wins }));
           dispatch(
             setUserDraws({
@@ -53,16 +54,15 @@ const useNavigator = () => {
               date: new Date().getTime(),
             })
           );
-          resetAxiosState();
         }
-      } else if (status === apiStatus.ERROR) {
+      } else if (status === apiStatus.ERROR && !!statusCode) {
         log({ type: "e", message: `Unexpected error:\n ${data}` });
         alert(
           "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"
         );
       }
     } else setTabsToRender(defaultTabs());
-  }, [authCtx.isAuthenticated, status]);
+  }, [isAuthenticated, token, tempToken, logout, authenticate, status]);
 
   return { tabsToRender };
 };

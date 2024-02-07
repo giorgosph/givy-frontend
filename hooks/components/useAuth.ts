@@ -89,18 +89,16 @@ const useAuth = () => {
         data.body?.pass && alert("Password changed successfully!");
 
         // TODO -> if mobile provided && data.body.confirmed.mobile == false then set user to mobile not confirmed
-        token && authCtx.holdToken(token);
+        authCtx.holdToken(token);
         user && dispatch(setUser({ user }));
 
         // User's email is confirmed
         if (emailConfirmed) {
           const modalInfo = mobileInfo(navigation, () =>
-            authCtx.authenticate(authCtx.tempToken || "")
+            authCtx.authenticate(token)
           );
 
-          mobileConfirmed
-            ? authCtx.authenticate(token || "")
-            : setVisible(modalInfo);
+          mobileConfirmed ? authCtx.authenticate(token) : setVisible(modalInfo);
         } else if (emailConfirmed == false)
           navigation.navigate("AccountConfirmation", { type: CT.EMAIL });
         else navigation.goBack(); // Coming from reset password
@@ -112,7 +110,7 @@ const useAuth = () => {
           statusCode === HttpStatusCode.Conflict
         )
           alert(data!.message);
-      } else {
+      } else if (!!statusCode) {
         log({ type: "e", message: `Unexpected error:\n ${data}` });
         alert(
           "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"

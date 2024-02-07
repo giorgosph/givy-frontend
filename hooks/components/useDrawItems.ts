@@ -82,7 +82,7 @@ const useDrawItems = (draw: DrawType) => {
           dispatch(addItems({ items: data.body }));
         }
       }
-    } else if (status === apiStatus.ERROR) {
+    } else if (status === apiStatus.ERROR && !!statusCode) {
       log({ type: "e", message: `Unexpected error:\n ${data}` });
       alert(
         "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"

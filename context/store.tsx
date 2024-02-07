@@ -3,6 +3,8 @@ import React, { createContext, useState, useMemo } from "react";
 import log from "../utils/logger";
 import { fetchAxios } from "../utils/APIs/axios";
 import { LOGOUT_EP } from "../utils/constants/url";
+import { useDispatch } from "react-redux";
+import { clearUser } from "../redux/slices/userSlice";
 
 /* ----- Types ----- */
 type ContextType = {
@@ -32,6 +34,8 @@ function AuthContextProvider({ children }) {
   const [tempToken, setTempToken] = useState<string | false>(false);
   // const [token, setToken] = useState("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjAwMDAkam9obiIsImVtYWlsIjoiam9obkBleGFtcGxlLmNvbSIsImlhdCI6MTcwNTY2MDM2Mn0.zNfRxS6bjYSopamR5UOeJLMaebk_kl5w5DnTJbE3dN8");
 
+  const dispatch = useDispatch();
+
   function holdToken(token: string) {
     setTempToken(token);
     setToken(false);
@@ -57,6 +61,7 @@ function AuthContextProvider({ children }) {
       token && log({ type: "dn", message: `Error Singing out: ${err}`, token, resetToken});
     } finally {
       setToken(false);
+      dispatch(clearUser());
     }
   }
 

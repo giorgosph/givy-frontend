@@ -33,7 +33,7 @@ const DrawDetailsScreen = ({ route }: ClientSearchDrawDetailsScreenProps) => {
       {callback.renderWinnerModal()}
       <CustomHeader title={draw.title} />
       <MainContainer centered>
-        {loading ? <SkeletonDrawDetails /> : (
+        {loading && items.length == 0 ? <SkeletonDrawDetails /> : (
         <>
           {/* TODO -> remove as string[] after making image not null */}
           <ImageCarousel images={images as string[]} loop />

@@ -5,10 +5,10 @@ import DrawFilter from '../../components/draw/DrawFilter';
 import FilterIcons from '../../components/draw/FilterIcons';
 
 import isEqual from '../../utils/isEqual';
+import { DrawType } from '../../utils/types/objectTypes';
 import { SortDataValueType } from '../../utils/constants/data/dropdown/sortData';
 
 import useDraws from './useDraws';
-import { DrawType } from '../../utils/types/objectTypes';
 
 /* --------------------------------------------------------
  * --------------- Use to filter/sort Draws ---------------

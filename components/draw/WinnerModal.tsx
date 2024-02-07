@@ -32,7 +32,7 @@ const WinnerModal = (props: PropsType) => {
         <View style={styles.modalHeader} />
 
         <View style={styles.textContainer}>
-          {visible.items.map(item => (
+          {!!visible && visible.items.map(item => (
             <View key={item.id} style={styles.textWinnersContainer}>
               <CustomTitle text={`${item.title}:`} size={6} color={'black'} />
               <CustomText text={removeUsernamePrefix(visible.winners[item.id])} size={1} color={'black'} />

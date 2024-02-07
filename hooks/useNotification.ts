@@ -68,7 +68,7 @@ const useNotification = () => {
           alert(
             "You are not allowed to submit a feedback more than once a day."
           );
-      } else {
+      } else if (!!statusCode) {
         log({ type: "e", message: `Unexpected error:\n ${data}` });
         alert(
           "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"

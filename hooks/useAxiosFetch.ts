@@ -82,8 +82,8 @@ const useAxiosFetch = <T>() => {
       else {
         setData(data);
         setStatusCode(status);
-        setStatus(apiStatus.ERROR);
       }
+      setStatus(apiStatus.ERROR);
     }
   };
 

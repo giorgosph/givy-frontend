@@ -21,7 +21,8 @@ const useDraws = () => {
   const [draws, setDraws] = useState<DrawType[]>();
   const [userDraws, setUserDraws] = useState<DrawType[]>();
 
-  const { fetchAPI, data, status } = useAxiosFetch<DrawsResponseType>();
+  const { fetchAPI, data, status, statusCode } =
+    useAxiosFetch<DrawsResponseType>();
 
   const dispatch = useDispatch();
   const draw = useSelector((state: RootState) => state.draw);
@@ -45,7 +46,7 @@ const useDraws = () => {
     else if (status === apiStatus.SUCCESS) {
       if (data?.success)
         dispatch(addDraws({ draws: data.body, date: new Date().getTime() }));
-    } else if (status === apiStatus.ERROR) {
+    } else if (status === apiStatus.ERROR && !!statusCode) {
       log({ type: "e", message: `Unexpected error:\n ${data}` });
       alert(
         "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"

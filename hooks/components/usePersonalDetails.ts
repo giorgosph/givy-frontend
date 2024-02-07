@@ -137,7 +137,7 @@ const usePersonalDetails = () => {
       if (!data?.success) {
         if (statusCode == HttpStatusCode.UnprocessableEntity)
           alert("Invalid email address provided!");
-      } else {
+      } else if (!!statusCode) {
         log({ type: "e", message: `Unexpected error:\n ${data}` });
         alert(
           "Server Error!\nKindly Contact Support Team\nDev message: Unexpected Error!"
