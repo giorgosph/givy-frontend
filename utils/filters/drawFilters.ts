@@ -9,6 +9,7 @@ const includeByID = <T extends IID>(draws: T[], ids: number[]) => {
     const filteredDraws = draws.filter((draw) =>
       ids.some((id) => id === draw.id)
     );
+
     return filteredDraws;
   } else return [];
 };

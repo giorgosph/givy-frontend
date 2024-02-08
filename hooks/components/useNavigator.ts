@@ -54,6 +54,8 @@ const useNavigator = () => {
               date: new Date().getTime(),
             })
           );
+
+          resetAxiosState();
         }
       } else if (status === apiStatus.ERROR && !!statusCode) {
         log({ type: "e", message: `Unexpected error:\n ${data}` });

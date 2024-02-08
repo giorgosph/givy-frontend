@@ -27,7 +27,7 @@ type ResponseInvalidDataType = {
 /* --------------------------------------------- */
 export type UserDrawsResponseType = ResponseSuccessType & {
   body: {
-    draws: number[];
+    draws: { drawId: number }[];
     wins: ItemType[];
   };
 };

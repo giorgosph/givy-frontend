@@ -71,14 +71,14 @@ const userSlice = createSlice({
     setUserDraws: (
       state,
       action: PayloadAction<{
-        drawIds: number[];
+        drawIds: { drawId: number }[];
         wins: ItemType[];
         date: number;
       }>
     ) => {
       const { drawIds, wins } = action.payload;
 
-      drawIds.map((drawId) => state.draws.push(drawId));
+      drawIds.map(({ drawId }) => state.draws.push(drawId));
       wins.map(({ id }) => state.wins.push(id));
       state.date = action.payload.date;
 
