@@ -5,7 +5,7 @@ import ArrowIcon from "../icons/ArrowIcon";
 import { useNavigation } from "@react-navigation/native";
 
 import { HEADER_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
-import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/constants/styles/colors";
+import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, HEADER_BG_COLOR, HEADER_TITLE_COLOR, SETTING_BUTTON_TEXT_COLOR } from "../../utils/constants/styles/colors";
 import CustomTitle from "./CustomTitle";
 
 /* --------- Types --------- */
@@ -32,7 +32,7 @@ const CustomHeader = (props: PropsType) => {
         </TouchableWithoutFeedback>
       </View>
 
-      <CustomTitle text={title} size={1} extraStyles={{ color: ACTIVE_ICON_COLOR }}/>
+      <CustomTitle text={title} size={3} extraStyles={{ color: HEADER_TITLE_COLOR }}/>
     </View>
   )
 };
@@ -41,17 +41,18 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: HEADER_HEIGHT,
+    paddingBottom: PIXELS / 4,
     paddingHorizontal: PIXELS * 2,
     margin: 0,
     display: 'flex',
     flexDirection: 'row',
     justifyContent:'center',
     alignItems: 'center',
-    backgroundColor: BACKGROUND_COLOR,
+    backgroundColor: HEADER_BG_COLOR,
     zIndex: 5,
   },
   title: {
-    color: ACTIVE_ICON_COLOR,
+    color: HEADER_TITLE_COLOR,
     fontSize: 26,
     fontWeight: '800',
     justifyContent: 'center',

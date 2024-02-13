@@ -24,13 +24,10 @@ const styles = StyleSheet.create({
   container: {
     width: WIDTH,
     height: MAIN_HEIGHT,
-    backgroundColor: BACKGROUND_COLOR,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    overflowX: 'auto',
-    overflowY: 'hidden',
-    position: 'relative',
+    backgroundColor: BACKGROUND_COLOR,
     zIndex: 1,
   },
 });

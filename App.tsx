@@ -8,12 +8,12 @@ import { Provider } from "react-redux";
 import AuthContextProvider from "./context/store";
 import NavigationHandler from "./components/NavigationHandler";
 
-import { BACKGROUND_COLOR } from "./utils/constants/styles/colors";
+import { HEADER_BG_COLOR } from "./utils/constants/styles/colors";
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <StatusBar animated={true} backgroundColor={BACKGROUND_COLOR} />
+      <StatusBar animated={true} backgroundColor={HEADER_BG_COLOR} />
       <Provider store={store}>
         <AuthContextProvider>
           <SafeAreaView style={styles.androidSafeArea}>

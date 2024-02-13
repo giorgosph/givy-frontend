@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/store";
 
 import SettingIcon from "../icons/SettingsIcon";
 import { HEADER_HEIGHT, ICON_SIZE, PIXELS } from "../../utils/constants/styles/dimensions";
-import { ACTIVE_ICON_COLOR, BACKGROUND_COLOR, INACTIVE_ICON_COLOR } from "../../utils/constants/styles/colors";
+import { ACTIVE_ICON_COLOR, HEADER_BG_COLOR, HEADER_TITLE_COLOR, INACTIVE_ICON_COLOR } from "../../utils/constants/styles/colors";
 
 /* ---------- Types ---------- */
 type HeaderProps = {
@@ -41,18 +41,19 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: HEADER_HEIGHT,
-    paddingHorizontal: PIXELS * 2,
+    paddingBottom:  PIXELS / 4,
+    paddingHorizontal: PIXELS * 1.75,
     margin: 0,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent:'space-between',
     alignItems: 'center',
-    backgroundColor: BACKGROUND_COLOR,
+    justifyContent:'space-between',
+    backgroundColor: HEADER_BG_COLOR,
     zIndex: 5,
   },
   title: {
-    color: ACTIVE_ICON_COLOR,
-    fontSize: 30,
+    color: HEADER_TITLE_COLOR,
+    fontSize: 26,
     fontWeight: '800',
   },
   iconWrap: {
@@ -62,8 +63,11 @@ const styles = StyleSheet.create({
   touchableView: {
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
+    padding: PIXELS * 1.15,
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#6D2121',
+    borderRadius: ICON_SIZE,
   },
 });
 
