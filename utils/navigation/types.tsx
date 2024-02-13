@@ -44,10 +44,10 @@ export type RootTabPraramList = DefaultTabsParamList | ClientTabsParamList;
 /* ---------------------- Default Home Tab ---------------------- */
 /* -------------------------------------------------------------- */
 export type DefaultHomeTabParamList = {
-  Home: undefined;
+  DefaultHome: undefined;
 };
 
-export type DefaultHomeScreenProps = NativeStackScreenProps<DefaultHomeTabParamList, "Home">;
+export type DefaultHomeScreenProps = NativeStackScreenProps<DefaultHomeTabParamList, "DefaultHome">;
 
 /* --------------------- Default Profile Tab --------------------- */
 /* --------------------------------------------------------------- */
@@ -91,29 +91,11 @@ export type DefaultSettingsTermsConditionsScreenProps = NativeStackScreenProps<D
 /* ----------------------- Client Home Tab ----------------------- */
 /* --------------------------------------------------------------- */
 export type ClientHomeTabParamList = {
-  Home: undefined;
-
-  FAQ: undefined;
-  AboutUs: undefined;
-  Settings: undefined;
-  Feedback: undefined;
-  ContactUs: undefined;
-  ResetPassword: undefined;
-  PrivacyPolicy: undefined;
-  TermsConditions: undefined;
-
+  ClientHome: undefined;
   AccountConfirmation: { type: ConfirmationType };
 };
 
-export type ClientHomeScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "Home">;
-export type ClientHomeFAQScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "FAQ">;
-export type ClientHomeAboutUsScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "AboutUs">;
-export type ClientHomeFeedbackScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "Feedback">;
-export type ClientHomeSettingsScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "Settings">;
-export type ClientHomeContactUsScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "ContactUs">;
-export type ClientHomeResetPasswordScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "ResetPassword">;
-export type ClientHomePrivacyPolicyScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "PrivacyPolicy">;
-export type ClientHomeTermsConditionsScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "TermsConditions">;
+export type ClientHomeScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "ClientHome">;
 export type ClientHomeAccountConfirmationScreenProps = NativeStackScreenProps<ClientHomeTabParamList, "AccountConfirmation">;
 
 /* ---------------------- Client Search Tab ---------------------- */
@@ -121,27 +103,10 @@ export type ClientHomeAccountConfirmationScreenProps = NativeStackScreenProps<Cl
 export type ClientSearchTabParamList = {
   DrawsList: undefined;
   DrawDetails: { draw: DrawType };
-
-  FAQ: undefined;
-  AboutUs: undefined;
-  Settings: undefined;
-  Feedback: undefined;
-  ContactUs: undefined;
-  ResetPassword: undefined;
-  PrivacyPolicy: undefined;
-  TermsConditions: undefined;
 };
 
 export type ClientSearchDrawsListScreenProps = NativeStackScreenProps<ClientSearchTabParamList, "DrawsList">;
 export type ClientSearchDrawDetailsScreenProps = NativeStackScreenProps<ClientSearchTabParamList, "DrawDetails">;
-export type ClientSearchFAQScreenProps = NativeStackScreenProps<ClientSearchTabParamList, "FAQ">;
-export type ClientSearchAboutUsScreenProps = NativeStackScreenProps<ClientSearchTabParamList, "AboutUs">;
-export type ClientSearchFeedbackScreenProps = NativeStackScreenProps<ClientSearchTabParamList, "Feedback">;
-export type ClientSearchSettingsScreenProps = NativeStackScreenProps<ClientSearchTabParamList, "Settings">;
-export type ClientSearchContactUsScreenProps = NativeStackScreenProps<ClientSearchTabParamList, "ContactUs">;
-export type ClientSearchResetPasswordScreenProps = NativeStackScreenProps<ClientSearchTabParamList, "ResetPassword">;
-export type ClientSearchPrivacyPolicyScreenProps = NativeStackScreenProps<ClientSearchTabParamList, "PrivacyPolicy">;
-export type ClientSearchTermsConditionsScreenProps = NativeStackScreenProps<ClientSearchTabParamList, "TermsConditions">;
 
 /* --------------------- Client Profile Tab --------------------- */
 /* -------------------------------------------------------------- */

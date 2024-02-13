@@ -37,7 +37,7 @@ const PersonalDetailsScreen = ({ navigation }: ClientProfilePersonalDetailsScree
         <EditShippingDetails loading={loading} setShipping={setShipping} onSubmit={callback.shipping} user={user} />
       : (
         <>
-          <Header />
+          <Header showSettings />
           <MainContainer >
             <View style={styles.detailsContainer}>
               <CustomTitle text={fullName} extraStyles={styles.title} />

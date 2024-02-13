@@ -11,11 +11,13 @@ import { ACTIVE_ICON_COLOR, HEADER_BG_COLOR, HEADER_TITLE_COLOR, INACTIVE_ICON_C
 /* ---------- Types ---------- */
 type HeaderProps = {
   inSettings?: boolean
+  showSettings?: boolean
 };
 
 /* --------------------------- */
 
-const Header = ({ inSettings = false }: HeaderProps) => {
+const Header = (props: HeaderProps) => {
+  const { showSettings = false, inSettings = false } = props;
   const authCtx = useContext(AuthContext);
   const navigation = useNavigation();
 
@@ -26,11 +28,13 @@ const Header = ({ inSettings = false }: HeaderProps) => {
       <Text style={styles.title}>Givy</Text>
       {authCtx.isAuthenticated && (
         <View style={styles.iconWrap}>
-          <TouchableWithoutFeedback onPress={handleSettingsPress}>
-            <View style={styles.touchableView}>
-              <SettingIcon color={inSettings ? ACTIVE_ICON_COLOR : INACTIVE_ICON_COLOR} />
-            </View>
+          {showSettings && (
+            <TouchableWithoutFeedback onPress={handleSettingsPress}>
+              <View style={styles.touchableView}>
+                <SettingIcon color={inSettings ? ACTIVE_ICON_COLOR : INACTIVE_ICON_COLOR} /> 
+              </View>
           </TouchableWithoutFeedback>
+          )}
         </View>
       )}
     </View>
