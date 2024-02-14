@@ -24,9 +24,7 @@ const useTimeRemaining = (props: PropsType) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (timeRemaining.expired || intervalRef.current) {
-      return; // Stop re-running the hook if timeRemaining.expired is true or if interval exists
-    }
+    if (timeRemaining.expired || intervalRef.current) return;
 
     intervalRef.current = setInterval(() => {
       setTimeRemaining(getTimeRemaining({ closingDate }));

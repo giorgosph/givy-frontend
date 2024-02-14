@@ -5,7 +5,7 @@ export type CountdownTimeType = {
   hours: RangeType<24>;
   minutes: RangeType<60>;
   seconds: RangeType<60>;
-  closingSoon: boolean;
+  closingSoon?: boolean;
   expired: boolean;
 };
 

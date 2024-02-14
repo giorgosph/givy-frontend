@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 import Header from "../../components/general/Header";
 import MainContainer from "../../components/general/MainContainer";
@@ -7,14 +7,16 @@ import MainContainer from "../../components/general/MainContainer";
 import { HEADING_COLOR } from "../../utils/constants/styles/colors";
 import { ClientHomeScreenProps } from "../../utils/navigation/types";
 import { PIXELS, WIDTH } from "../../utils/constants/styles/dimensions";
+import UpcomingDraw from "../../components/home/UpcomingDraw";
 
 
 const DefaultHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
 
   return (
-    <>
+    <ScrollView>
       <Header />
       <MainContainer>
+        <UpcomingDraw />
         <View style={styles.contentLeftWrap}>
           <Text style={styles.title}>Lorem Ipsum</Text>
           <Text style={styles.paragraph}>
@@ -30,7 +32,7 @@ const DefaultHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
           </Text>
         </View>
       </MainContainer>
-    </>
+    </ScrollView>
   );
 };
 
