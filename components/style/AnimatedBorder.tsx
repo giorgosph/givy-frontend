@@ -26,7 +26,7 @@ const AnimatedBorder = (props: PropsType) => {
     Animated.loop(
       Animated.timing(animation, {
         toValue: 1,
-        duration: 1500,
+        duration: 1750,
         easing: Easing.linear,
         useNativeDriver: false,
       })
@@ -57,7 +57,7 @@ const AnimatedBorder = (props: PropsType) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
+    borderWidth: 2,
     alignSelf: "center",
     overflow: "hidden",
     position: "relative",

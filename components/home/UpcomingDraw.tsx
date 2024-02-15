@@ -16,11 +16,12 @@ const UpcomingDraw = () => {
   return (
     <AnimatedBorder style={styles.container}>
       <InnerShadow
-        width={325}
-        height={140}
+        width={323}
+        height={138}
         borderRadius={PIXELS * 2}
-        color="rgb(197, 175, 155)"
+        color="rgb(211, 189, 179)"
         style={styles.wrap}
+        border
       >
         <View style={styles.titleContainer}>
           <Text style={styles.title}>The Maniac Raffle</Text>
@@ -28,14 +29,23 @@ const UpcomingDraw = () => {
         <View style={{ alignItems: "center" }}>
           <CustomCountdown
             timeRemaining={{
-              days: 24,
+              days: 1,
               hours: 10,
               minutes: 21,
               seconds: 33,
               expired: false,
             }}
-            border
           />
+        </View>
+        <View style={styles.textParentContainer}>
+          <View style={styles.textContainer}>
+            <Text style={styles.drawInfoTitle}>Total Raffle Value</Text>
+            <Text style={styles.drawInfoText}>£1 250</Text>
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.drawInfoTitle}>Most Valuable Item</Text>
+            <Text style={styles.drawInfoText}>Iphone 30 Pro</Text>
+          </View>
         </View>
       </InnerShadow>
     </AnimatedBorder>
@@ -47,21 +57,7 @@ const styles = StyleSheet.create({
     width: 325,
     height: 140,
     marginVertical: PIXELS * 2,
-    backgroundColor: "#C5AF9B",
-    shadowColor: "#D1B6B6",
-    ...Platform.select({
-      ios: {
-        shadowOffset: {
-          width: 0,
-          height: 0,
-        },
-        shadowOpacity: 0.8,
-        shadowRadius: 12,
-      },
-      android: {
-        elevation: 12,
-      },
-    }),
+    backgroundColor: "rgb(211, 189, 179)",
     borderRadius: PIXELS * 2,
   },
   wrap: {
@@ -74,10 +70,40 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: "700",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 2,
+    fontWeight: "900",
+    textShadowColor: "white",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
     color: "#4D0808",
+  },
+  textParentContainer: {
+    width: "100%",
+    flexDirection: "row",
+  },
+  textContainer: {
+    flex: 1,
+    padding: PIXELS / 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  drawInfoTitle: {
+    fontSize: 12,
+    fontWeight: "500",
+    color: "#270404",
+  },
+  drawInfoText: {
+    width: "100%",
+    height: "80%",
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#592525",
+    textShadowColor: "rgba(39, 4, 4, 0.55)",
+    textShadowRadius: 12,
+    textShadowOffset: {
+      width: 2,
+      height: 2,
+    },
   },
 });
 

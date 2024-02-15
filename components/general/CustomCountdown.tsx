@@ -6,24 +6,23 @@ import InnerShadow from "../style/InnerShadow";
 /* ------- Types -------*/
 type PropsType = {
   timeRemaining: CountdownTimeType;
-  border?: boolean;
 };
 
 /* ---------------------*/
 
 const CustomCountdown = (props: PropsType) => {
-  const { timeRemaining, border = false } = props;
+  const { timeRemaining } = props;
 
   const renderDigits = (value: number) => {
     const digits = value.toString().padStart(2, "0").split("");
     return digits.map((digit, index) => (
       <InnerShadow
         key={index}
-        width={32}
-        height={40}
+        width={28}
+        height={36}
         color="rgb(217, 217, 217)"
         borderRadius={8}
-        border={border}
+        border
       >
         <Text style={styles.digitText}>{digit}</Text>
       </InnerShadow>
