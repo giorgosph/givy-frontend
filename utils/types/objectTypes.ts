@@ -57,6 +57,7 @@ export type DrawType = {
   openingDate: string;
   creationDate: string;
   closingDate: string;
+  totalPrice?: number;
 };
 
 export type ItemType = {

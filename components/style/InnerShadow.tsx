@@ -44,7 +44,7 @@ const InnerShadow = (props: PropsType) => {
         {
           width: width,
           height: height,
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
+          backgroundColor: "#000",
           borderRadius: borderRadius,
           shadowColor: "black",
           alignSelf: "center",

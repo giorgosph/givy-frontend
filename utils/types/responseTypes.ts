@@ -36,6 +36,13 @@ export type DrawsResponseType = ResponseSuccessType & {
   body: DrawType[];
 };
 
+export type BestDrawResponseType = ResponseSuccessType & {
+  body: {
+    draw: DrawType;
+    items: ItemType[];
+  };
+};
+
 export type DrawItemsResponseType = ResponseSuccessType &
   (
     | {

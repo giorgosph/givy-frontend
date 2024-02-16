@@ -1,61 +1,72 @@
 import React from "react";
-import { View, Text, StyleSheet, Platform } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
-import AnimatedBorder from "../style/AnimatedBorder";
-
-import { PIXELS } from "../../utils/constants/styles/dimensions";
-import CustomCountdown from "../general/CustomCountdown";
 import InnerShadow from "../style/InnerShadow";
+import AnimatedBorder from "../style/AnimatedBorder";
+import CustomCountdown from "../general/CustomCountdown";
 
-/* ----- Types ----- */
-type PropsType = {};
+import {
+  BORDER_WIDTH_BEST_DRAW,
+  PIXELS,
+} from "../../utils/constants/styles/dimensions";
 
-/* ----------------- */
+import useUpcomingDraw from "../../hooks/components/useUpcomingDraw";
+
+const width = 325;
+const height = 160;
 
 const UpcomingDraw = () => {
-  return (
+  const {
+    state,
+    bestDraw: draw,
+    bestItem: item,
+    timeRemaining,
+  } = useUpcomingDraw();
+
+  return !!draw && !!item ? (
     <AnimatedBorder style={styles.container}>
       <InnerShadow
-        width={323}
-        height={138}
+        width={width - BORDER_WIDTH_BEST_DRAW * 2}
+        height={height - BORDER_WIDTH_BEST_DRAW * 2}
         borderRadius={PIXELS * 2}
         color="rgb(211, 189, 179)"
         style={styles.wrap}
         border
       >
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>The Maniac Raffle</Text>
+          <Text style={styles.title}>{draw.title}</Text>
         </View>
+
         <View style={{ alignItems: "center" }}>
-          <CustomCountdown
-            timeRemaining={{
-              days: 1,
-              hours: 10,
-              minutes: 21,
-              seconds: 33,
-              expired: false,
-            }}
-          />
+          <CustomCountdown timeRemaining={timeRemaining} />
         </View>
+
         <View style={styles.textParentContainer}>
-          <View style={styles.textContainer}>
+          <View style={[styles.textContainer, styles.leftTextContainer]}>
             <Text style={styles.drawInfoTitle}>Total Raffle Value</Text>
-            <Text style={styles.drawInfoText}>£1 250</Text>
+            {/* function to style item.price */}
+            <Text style={[styles.drawInfoText, styles.drawInfoLeftText]}>
+              £{draw.totalPrice}
+            </Text>
           </View>
-          <View style={styles.textContainer}>
+          <View style={[styles.textContainer, styles.rightTextContainer]}>
             <Text style={styles.drawInfoTitle}>Most Valuable Item</Text>
-            <Text style={styles.drawInfoText}>Iphone 30 Pro</Text>
+            <Text style={[styles.drawInfoText, styles.drawInfoRightText]}>
+              {item.title}
+            </Text>
           </View>
         </View>
       </InnerShadow>
     </AnimatedBorder>
+  ) : (
+    <></>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: 325,
-    height: 140,
+    width: width,
+    height: height,
     marginVertical: PIXELS * 2,
     backgroundColor: "rgb(211, 189, 179)",
     borderRadius: PIXELS * 2,
@@ -64,7 +75,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   titleContainer: {
-    marginBottom: PIXELS / 4,
+    marginBottom: PIXELS / 2,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -80,22 +91,33 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
   },
-  textContainer: {
+  leftTextContainer: {
     flex: 1,
+  },
+  rightTextContainer: {
+    flex: 1.5,
+  },
+  textContainer: {
     padding: PIXELS / 2,
     alignItems: "center",
     justifyContent: "center",
   },
   drawInfoTitle: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "500",
     color: "#270404",
+  },
+  drawInfoLeftText: {
+    fontSize: 18,
+  },
+  drawInfoRightText: {
+    fontSize: 16,
   },
   drawInfoText: {
     width: "100%",
     height: "80%",
+    paddingTop: PIXELS / 4,
     textAlign: "center",
-    fontSize: 16,
     fontWeight: "700",
     color: "#592525",
     textShadowColor: "rgba(39, 4, 4, 0.55)",

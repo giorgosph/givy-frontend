@@ -6,6 +6,7 @@ import { DrawType, ItemType } from "../../utils/types/objectTypes";
 /* ----- Types ----- */
 interface IDrawSlice {
   draws: DrawType[];
+  bestDraw: DrawType;
   items: ItemType[];
   date: number | null;
 }
@@ -14,6 +15,7 @@ interface IDrawSlice {
 
 const initialState: IDrawSlice = {
   draws: [],
+  bestDraw: null,
   items: [],
   date: null,
 };
@@ -24,7 +26,7 @@ const drawSlice = createSlice({
   reducers: {
     addDraws: (
       state,
-      action: PayloadAction<{ draws: DrawType[]; date: number | null }>
+      action: PayloadAction<{ draws: DrawType[]; date?: number }>
     ) => {
       const { draws, date } = action.payload;
 
@@ -45,6 +47,16 @@ const drawSlice = createSlice({
 
       if (!!date) state.date = date;
     },
+    addBestDraw: (state, action: PayloadAction<{ draw: DrawType }>) => {
+      const { draw } = action.payload;
+
+      state.bestDraw = draw;
+      log({ type: "i", message: `Redux-Draws | Best Draw ${draw.id} added` });
+    },
+    removeBestDraw: (state) => {
+      state.bestDraw = null;
+      log({ type: "i", message: `Redux-Draws | Best Draw has been cleared` });
+    },
     addItems: (state, action: PayloadAction<{ items: ItemType[] }>) => {
       action.payload.items.forEach((item) => {
         const itemExist = state.items.some((exItem) => exItem.id === item.id);
@@ -62,12 +74,14 @@ const drawSlice = createSlice({
     clearDraws: (state) => {
       state.date = null;
       state.draws = [];
+      state.bestDraw = null;
       state.items = [];
       log({ type: "i", message: `Redux-Draws | State has been cleared` });
     },
   },
 });
 
-export const { addDraws, addItems, clearDraws } = drawSlice.actions;
+export const { addDraws, addItems, clearDraws, addBestDraw, removeBestDraw } =
+  drawSlice.actions;
 
 export default drawSlice.reducer;

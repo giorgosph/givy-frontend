@@ -37,6 +37,7 @@ export const SHIPPING_DETAILS_EP = `${BASE_URL}users/details/shipping/`;
 /* ------------------------------------------------------------- */
 
 export const DRAWS_EP = `${BASE_URL}draws/`;
+export const BEST_DRAW_EP = `${DRAWS_EP}best/`;
 
 export const OPT_IN_EP = `${DRAWS_EP}register/`;
 export const USER_DRAWS_EP = `${DRAWS_EP}user/`;

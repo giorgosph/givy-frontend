@@ -24,7 +24,8 @@ const useTimeRemaining = (props: PropsType) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (timeRemaining.expired || intervalRef.current) return;
+    if (timeRemaining.expired || intervalRef.current || !closingDate.getTime())
+      return;
 
     intervalRef.current = setInterval(() => {
       setTimeRemaining(getTimeRemaining({ closingDate }));

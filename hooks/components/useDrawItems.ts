@@ -36,7 +36,9 @@ const useDrawItems = (draw: DrawType) => {
   const { visible, setVisible, renderWinnerModal } = useModal();
 
   const closingDate = new Date(draw.closingDate);
-  const { timeRemaining } = useTimeRemaining({ closingDate }); // TODO -> move to component to avoid rereners and test if it is efficient
+  // TODO -> move to component to avoid rereners and test if it is efficient
+  // NOTE -> I made a change to useTimeRemaining and it may work fine now
+  const { timeRemaining } = useTimeRemaining({ closingDate });
 
   // Get Items and User Draws
   const dispatch = useDispatch();

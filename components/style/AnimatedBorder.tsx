@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Animated, Easing, ViewStyle } from "react-native";
-import { BACKGROUND_COLOR } from "../../utils/constants/styles/colors";
+import { StyleSheet, Animated, Easing, ViewStyle } from "react-native";
+
 import { isAndroid } from "../../utils/constants/device";
+import { BACKGROUND_COLOR } from "../../utils/constants/styles/colors";
+import { BORDER_WIDTH_BEST_DRAW } from "../../utils/constants/styles/dimensions";
 
 /* ----- Types ----- */
 type PropsType = {
@@ -57,7 +59,7 @@ const AnimatedBorder = (props: PropsType) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 2,
+    borderWidth: BORDER_WIDTH_BEST_DRAW,
     alignSelf: "center",
     overflow: "hidden",
     position: "relative",

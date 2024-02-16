@@ -33,4 +33,19 @@ const includeByDrawID = (items: ItemType[], ids: number[]) => {
   } else return [];
 };
 
-export { includeByID, excludeByID, includeByDrawID };
+const getHighestPricedItem = (items: ItemType[]) => {
+  if (!items || items.length === 0) return 0;
+  else if (items.length === 1) return items[0];
+
+  let highestPricedItem = items[0];
+
+  for (let i = 1; i < items.length; i++) {
+    if (items[i].price > highestPricedItem.price) {
+      highestPricedItem = items[i];
+    }
+  }
+
+  return highestPricedItem;
+};
+
+export { includeByID, excludeByID, includeByDrawID, getHighestPricedItem };
