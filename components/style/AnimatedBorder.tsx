@@ -28,7 +28,7 @@ const AnimatedBorder = (props: PropsType) => {
     Animated.loop(
       Animated.timing(animation, {
         toValue: 1,
-        duration: 1750,
+        duration: 2000,
         easing: Easing.linear,
         useNativeDriver: false,
       })
@@ -36,8 +36,16 @@ const AnimatedBorder = (props: PropsType) => {
   };
 
   const interpolateColors = animation.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: ["red", BACKGROUND_COLOR, "red"],
+    inputRange: [0, 0.125, 0.25, 0.5, 0.75, 0.875, 1],
+    outputRange: [
+      "white",
+      "#EE67B0",
+      "#9956EE",
+      BACKGROUND_COLOR,
+      "#9956EE",
+      "#EE67B0",
+      "white",
+    ],
   });
 
   return (
@@ -65,12 +73,12 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   androidShadow: {
-    elevation: 60,
+    elevation: 20,
   },
   iosShadow: {
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
-    shadowRadius: 40,
+    shadowRadius: 20,
   },
 });
 

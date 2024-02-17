@@ -1,16 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import InnerShadow from "../style/InnerShadow";
 import AnimatedBorder from "../style/AnimatedBorder";
 import CustomCountdown from "../general/CustomCountdown";
 
-import {
-  BORDER_WIDTH_BEST_DRAW,
-  PIXELS,
-} from "../../utils/constants/styles/dimensions";
+import { PIXELS } from "../../utils/constants/styles/dimensions";
 
 import useUpcomingDraw from "../../hooks/components/useUpcomingDraw";
+import { LinearGradient } from "expo-linear-gradient";
 
 const width = 325;
 const height = 160;
@@ -25,14 +22,13 @@ const UpcomingDraw = () => {
 
   return !!draw && !!item ? (
     <AnimatedBorder style={styles.container}>
-      <InnerShadow
-        width={width - BORDER_WIDTH_BEST_DRAW * 2}
-        height={height - BORDER_WIDTH_BEST_DRAW * 2}
-        borderRadius={PIXELS * 2}
-        color="rgb(211, 189, 179)"
-        style={styles.wrap}
-        border
-      >
+      <LinearGradient
+        colors={["#EE67B0", "#9956EE"]}
+        style={styles.gradient}
+        start={{ x: 0.3, y: 0.6 }}
+        end={{ x: 0.6, y: 0.3 }}
+      />
+      <View style={styles.blur}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{draw.title}</Text>
         </View>
@@ -56,7 +52,7 @@ const UpcomingDraw = () => {
             </Text>
           </View>
         </View>
-      </InnerShadow>
+      </View>
     </AnimatedBorder>
   ) : (
     <></>
@@ -68,8 +64,21 @@ const styles = StyleSheet.create({
     width: width,
     height: height,
     marginVertical: PIXELS * 2,
-    backgroundColor: "rgb(211, 189, 179)",
     borderRadius: PIXELS * 2,
+  },
+  gradient: {
+    width: width,
+    height: height,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    zIndex: 10,
+  },
+  blur: {
+    width: width,
+    height: height,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    zIndex: 11,
   },
   wrap: {
     justifyContent: "flex-start",
@@ -84,7 +93,7 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     textShadowColor: "white",
     textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 1,
+    textShadowRadius: 4,
     color: "#4D0808",
   },
   textParentContainer: {
@@ -104,7 +113,7 @@ const styles = StyleSheet.create({
   },
   drawInfoTitle: {
     fontSize: 13,
-    fontWeight: "500",
+    fontWeight: "600",
     color: "#270404",
   },
   drawInfoLeftText: {
@@ -119,9 +128,9 @@ const styles = StyleSheet.create({
     paddingTop: PIXELS / 4,
     textAlign: "center",
     fontWeight: "700",
-    color: "#592525",
-    textShadowColor: "rgba(39, 4, 4, 0.55)",
-    textShadowRadius: 12,
+    color: "white",
+    textShadowColor: "rgba(39, 4, 4, 0.8)",
+    textShadowRadius: 8,
     textShadowOffset: {
       width: 2,
       height: 2,
