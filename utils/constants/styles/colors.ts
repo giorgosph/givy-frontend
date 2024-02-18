@@ -24,3 +24,17 @@ export const COLOR3 = "#F17750";
 export const COLOR4 = "#561010";
 export const COLOR5 = "#F15959";
 export const COLOR6 = "#592E2E";
+
+/* ------------------- Skeleton ------------------- */
+/* ------------------------------------------------ */
+
+export const SKELETON_THREE_COLORS = [
+  BACKGROUND_COLOR,
+  "#8b7e7e",
+  BACKGROUND_COLOR,
+];
+export const SKELETON_SECONDARY_COLORS = [
+  BACKGROUND_COLOR,
+  "#555",
+  BACKGROUND_COLOR,
+];

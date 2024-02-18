@@ -1,16 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import AnimatedBorder from "../style/AnimatedBorder";
-import CustomCountdown from "../general/CustomCountdown";
-
-import { PIXELS } from "../../utils/constants/styles/dimensions";
-
-import useUpcomingDraw from "../../hooks/components/useUpcomingDraw";
 import { LinearGradient } from "expo-linear-gradient";
 
-const width = 325;
-const height = 160;
+import AnimatedBorder from "../style/AnimatedBorder";
+import CustomCountdown from "../general/CustomCountdown";
+import SkeletonUpcomingDraw from "../skeletons/SkeletonUpcomingDraw";
+
+import { apiStatus } from "../../utils/constants/data/apiStatus";
+import {
+  BEST_DRAW_HEIGHT,
+  BEST_DRAW_WIDTH,
+  PIXELS,
+} from "../../utils/constants/styles/dimensions";
+
+import useUpcomingDraw from "../../hooks/components/useUpcomingDraw";
 
 const UpcomingDraw = () => {
   const {
@@ -20,7 +24,9 @@ const UpcomingDraw = () => {
     timeRemaining,
   } = useUpcomingDraw();
 
-  return !!draw && !!item ? (
+  return state.reqStatus === apiStatus.LOADING ? (
+    <SkeletonUpcomingDraw />
+  ) : !!draw && !!item ? (
     <AnimatedBorder style={styles.container}>
       <LinearGradient
         colors={["#EE67B0", "#9956EE"]}
@@ -61,22 +67,22 @@ const UpcomingDraw = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: width,
-    height: height,
+    width: BEST_DRAW_WIDTH,
+    height: BEST_DRAW_HEIGHT,
     marginVertical: PIXELS * 2,
     borderRadius: PIXELS * 2,
   },
   gradient: {
-    width: width,
-    height: height,
+    width: BEST_DRAW_WIDTH,
+    height: BEST_DRAW_HEIGHT,
     position: "absolute",
     top: 0,
     left: 0,
     zIndex: 10,
   },
   blur: {
-    width: width,
-    height: height,
+    width: BEST_DRAW_WIDTH,
+    height: BEST_DRAW_HEIGHT,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     zIndex: 11,
   },

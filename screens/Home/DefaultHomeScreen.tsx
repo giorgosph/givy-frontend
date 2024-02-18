@@ -14,11 +14,8 @@ import Header from "../../components/general/Header";
 import UpcomingDraw from "../../components/home/UpcomingDraw";
 import MainContainer from "../../components/general/MainContainer";
 
-import {
-  HEADING_COLOR,
-  HEADING_FADE_COLOR,
-} from "../../utils/constants/styles/colors";
 import { ClientHomeScreenProps } from "../../utils/navigation/types";
+import { HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 import { PIXELS, WIDTH } from "../../utils/constants/styles/dimensions";
 
 const DefaultHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
@@ -75,9 +72,12 @@ const DefaultHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
         <View style={styles.firstContainer}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Givey</Text>
-            <Text style={[styles.title, styles.title2]}>Raffle Fiesta</Text>
-            <Text style={styles.paragraph}>The Party Of Free Prizes</Text>
+            <Text style={[styles.title, styles.title2]}>
+              <Text style={{ color: "#EE67B0" }}>Raffle </Text>Fiesta
+            </Text>
+            <Text style={styles.text}>Where Luck Meets Excitement</Text>
           </View>
+
           <TouchableWithoutFeedback onPress={onTouch}>
             <LottieView
               source={require("../../assets/lottie/gift.json")}
@@ -91,7 +91,7 @@ const DefaultHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
 
         <View style={styles.contentRightWrap}>
           <Text style={styles.title}>Lorem Ipsum</Text>
-          <Text style={styles.paragraph}>
+          <Text style={styles.text}>
             Lorem ipsum dolor sit amet consectetur adipiscing elit. Nulla a
             ultrices quam, nec congue sapien.Nullam nisl dolor,
           </Text>
@@ -104,8 +104,9 @@ const DefaultHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
 const styles = StyleSheet.create({
   firstContainer: {
     width: "100%",
-    paddingLeft: PIXELS * 2,
-    marginTop: PIXELS * 5,
+    paddingLeft: PIXELS * 1.5,
+    marginTop: PIXELS * 4,
+    marginBottom: PIXELS,
     flexDirection: "row",
   },
   titleContainer: {
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     position: "absolute",
-    top: -PIXELS * 2.5,
+    top: -PIXELS * 2,
     right: -PIXELS / 2,
   },
   contentRightWrap: {
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     position: "relative",
     top: -10,
   },
-  paragraph: {
+  text: {
     fontSize: 16,
     fontWeight: "600",
     color: HEADING_FADE_COLOR,

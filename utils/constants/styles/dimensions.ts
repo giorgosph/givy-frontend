@@ -19,4 +19,6 @@ export const ITEM_LIST_HEIGHT =
 
 export const ICON_SIZE = PIXELS * 1.8;
 
-export const BORDER_WIDTH_BEST_DRAW = 2;
+export const BEST_DRAW_WIDTH = 325;
+export const BEST_DRAW_HEIGHT = 160;
+export const BEST_DRAW_BORDER_WIDTH = 2;

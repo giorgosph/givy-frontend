@@ -3,7 +3,7 @@ import { StyleSheet, Animated, Easing, ViewStyle } from "react-native";
 
 import { isAndroid } from "../../utils/constants/device";
 import { BACKGROUND_COLOR } from "../../utils/constants/styles/colors";
-import { BORDER_WIDTH_BEST_DRAW } from "../../utils/constants/styles/dimensions";
+import { BEST_DRAW_BORDER_WIDTH } from "../../utils/constants/styles/dimensions";
 
 /* ----- Types ----- */
 type PropsType = {
@@ -67,7 +67,7 @@ const AnimatedBorder = (props: PropsType) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: BORDER_WIDTH_BEST_DRAW,
+    borderWidth: BEST_DRAW_BORDER_WIDTH,
     alignSelf: "center",
     overflow: "hidden",
     position: "relative",
