@@ -12,11 +12,12 @@ import LottieView from "lottie-react-native";
 
 import Header from "../../components/general/Header";
 import UpcomingDraw from "../../components/home/UpcomingDraw";
+import FeaturedDraws from "../../components/home/FeaturedDraws";
 import MainContainer from "../../components/general/MainContainer";
 
 import { ClientHomeScreenProps } from "../../utils/navigation/types";
-import { HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 import { PIXELS, WIDTH } from "../../utils/constants/styles/dimensions";
+import { HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 
 const DefaultHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -89,13 +90,7 @@ const DefaultHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
 
         <UpcomingDraw />
 
-        <View style={styles.contentRightWrap}>
-          <Text style={styles.title}>Lorem Ipsum</Text>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit. Nulla a
-            ultrices quam, nec congue sapien.Nullam nisl dolor,
-          </Text>
-        </View>
+        <FeaturedDraws />
       </MainContainer>
     </ScrollView>
   );
@@ -105,8 +100,7 @@ const styles = StyleSheet.create({
   firstContainer: {
     width: "100%",
     paddingLeft: PIXELS * 1.5,
-    marginTop: PIXELS * 4,
-    marginBottom: PIXELS,
+    marginTop: PIXELS * 2,
     flexDirection: "row",
   },
   titleContainer: {

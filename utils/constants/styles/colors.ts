@@ -1,4 +1,5 @@
 export const BACKGROUND_COLOR = "#221515";
+export const BACKGROUND_SECONDARY_COLOR = "#2B1E1E";
 export const HEADER_BG_COLOR = "#1B0F0F";
 
 export const HEADER_TITLE_COLOR = "#EE4C4C";
