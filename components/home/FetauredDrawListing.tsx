@@ -4,7 +4,7 @@ import {
   Image,
   StyleSheet,
   TouchableWithoutFeedback,
-  Dimensions,
+  Platform,
 } from "react-native";
 
 /* ----- Types ----- */
@@ -72,6 +72,20 @@ const styles = StyleSheet.create({
     height: 150,
     overflow: "hidden",
     borderRadius: 16,
+    shadowColor: "#000",
+    ...Platform.select({
+      ios: {
+        shadowOffset: {
+          width: 0,
+          height: 0,
+        },
+        shadowOpacity: 0.8,
+        shadowRadius: 24,
+      },
+      android: {
+        elevation: 24,
+      },
+    }),
     position: "relative",
   },
   image: {
@@ -79,12 +93,14 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: "cover",
     position: "absolute",
+    zIndex: 10,
   },
   sideButton: {
     position: "absolute",
     top: 0,
     bottom: 0,
     width: "50%",
+    zIndex: 11,
   },
   leftButton: {
     left: 0,
@@ -102,6 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     position: "absolute",
     bottom: 0,
+    zIndex: 12,
   },
   dot: {
     width: 8,

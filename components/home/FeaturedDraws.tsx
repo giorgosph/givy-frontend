@@ -2,28 +2,38 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import FeaturedDrawListing from "./FetauredDrawListing";
+import SkeletonFeaturedDraws from "../skeletons/SkeletonFeaturedDraws";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { apiStatus } from "../../utils/constants/data/apiStatus";
 import {
   BACKGROUND_SECONDARY_COLOR,
   HEADING_FADE_COLOR,
 } from "../../utils/constants/styles/colors";
 
-const images = [
-  "https://www.dusanholovej.com/files/layout/img/blog/TUTORIAL-Shampoo-and-Shower-Gel.jpg",
-  "https://petapixel.com/assets/uploads/2023/06/Boss-Infinite-800x533.jpg",
-  "https://cloudfront.omsphoto.com/wp-content/uploads/2023/12/GucciGuilty59015.jpg",
-];
+import useFeaturedDraws from "../../hooks/components/useFeaturedDraws";
 
 const FeaturedDraws = () => {
-  return (
+  const { state, draws } = useFeaturedDraws();
+
+  return state.reqStatus === apiStatus.LOADING ? (
     <View style={styles.container}>
       <Text style={styles.title}>Featured Draws</Text>
       <View style={styles.drawContainer}>
-        <FeaturedDrawListing images={images} />
-        <FeaturedDrawListing images={images} />
+        <SkeletonFeaturedDraws />
       </View>
     </View>
+  ) : (
+    !!draws && (
+      <View style={styles.container}>
+        <Text style={styles.title}>Featured Draws</Text>
+        <View style={styles.drawContainer}>
+          {draws.map((draw) => (
+            <FeaturedDrawListing images={draw.drawImages} />
+          ))}
+        </View>
+      </View>
+    )
   );
 };
 

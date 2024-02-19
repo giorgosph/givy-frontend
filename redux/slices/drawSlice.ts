@@ -7,6 +7,10 @@ import { DrawType, ItemType } from "../../utils/types/objectTypes";
 interface IDrawSlice {
   draws: DrawType[];
   bestDraw: DrawType;
+  feauturedDraws: {
+    draws: DrawType[];
+    date: number | null;
+  };
   items: ItemType[];
   date: number | null;
 }
@@ -16,6 +20,10 @@ interface IDrawSlice {
 const initialState: IDrawSlice = {
   draws: [],
   bestDraw: null,
+  feauturedDraws: {
+    draws: [],
+    date: null,
+  },
   items: [],
   date: null,
 };
@@ -53,6 +61,19 @@ const drawSlice = createSlice({
       state.bestDraw = draw;
       log({ type: "i", message: `Redux-Draws | Best Draw ${draw.id} added` });
     },
+    setFeaturedDraws: (
+      state,
+      action: PayloadAction<{ draws: DrawType[]; date: number }>
+    ) => {
+      const { draws, date } = action.payload;
+
+      state.feauturedDraws.date = date;
+      state.feauturedDraws.draws = draws;
+      log({
+        type: "i",
+        message: `Redux-Draws | Featured Draws set on ${date}`,
+      });
+    },
     removeBestDraw: (state) => {
       state.bestDraw = null;
       log({ type: "i", message: `Redux-Draws | Best Draw has been cleared` });
@@ -74,6 +95,10 @@ const drawSlice = createSlice({
     clearDraws: (state) => {
       state.date = null;
       state.draws = [];
+      state.feauturedDraws = {
+        draws: [],
+        date: null,
+      };
       state.bestDraw = null;
       state.items = [];
       log({ type: "i", message: `Redux-Draws | State has been cleared` });
@@ -81,7 +106,13 @@ const drawSlice = createSlice({
   },
 });
 
-export const { addDraws, addItems, clearDraws, addBestDraw, removeBestDraw } =
-  drawSlice.actions;
+export const {
+  addDraws,
+  addItems,
+  clearDraws,
+  addBestDraw,
+  removeBestDraw,
+  setFeaturedDraws,
+} = drawSlice.actions;
 
 export default drawSlice.reducer;

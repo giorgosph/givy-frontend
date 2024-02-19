@@ -58,6 +58,7 @@ export type DrawType = {
   creationDate: string;
   closingDate: string;
   totalPrice?: number;
+  drawImages?: string[];
 };
 
 export type ItemType = {
