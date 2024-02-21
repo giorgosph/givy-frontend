@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
   container: {
     width: BEST_DRAW_WIDTH,
     height: BEST_DRAW_HEIGHT,
-    marginVertical: PIXELS * 3,
     borderRadius: PIXELS * 2,
   },
   gradient: {

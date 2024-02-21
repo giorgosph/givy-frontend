@@ -29,7 +29,7 @@ const FeaturedDraws = () => {
         <Text style={styles.title}>Featured Draws</Text>
         <View style={styles.drawContainer}>
           {draws.map((draw) => (
-            <FeaturedDrawListing images={draw.drawImages} />
+            <FeaturedDrawListing key={draw.id} images={draw.drawImages} />
           ))}
         </View>
       </View>
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   container: {
     width: "96%",
     padding: PIXELS,
+    marginVertical: PIXELS * 4,
     alignSelf: "center",
     backgroundColor: BACKGROUND_SECONDARY_COLOR,
     borderRadius: PIXELS * 2,

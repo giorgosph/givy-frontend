@@ -14,7 +14,7 @@ type Props = {
 
 const MainContainer = ({ children, centered = false }: Props) => {
   return (
-    <View style={[styles.container, centered && { alignItems: 'center' }]}>
+    <View style={[styles.container, centered && { alignItems: "center" }]}>
       {children}
     </View>
   );
@@ -23,10 +23,11 @@ const MainContainer = ({ children, centered = false }: Props) => {
 const styles = StyleSheet.create({
   container: {
     width: WIDTH,
-    height: MAIN_HEIGHT,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
+    minHeight: MAIN_HEIGHT,
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     backgroundColor: BACKGROUND_COLOR,
     zIndex: 1,
   },
