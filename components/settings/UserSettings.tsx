@@ -7,7 +7,7 @@ import { DefaultSettingsTabProps } from "../../utils/navigation/types";
 
 /* --------- Types --------- */
 type PropsType = {
-  navigation: DefaultSettingsTabProps['navigation'];
+  navigation: DefaultSettingsTabProps["navigation"];
 };
 
 /* ------------------------- */
@@ -15,9 +15,12 @@ type PropsType = {
 const UserSettings = ({ navigation }: PropsType) => {
   return (
     <View>
-      <SettingButton title="Log In/Sign Up" onPress={() => navigation.navigate("DefaultProfileTab")} />
+      <SettingButton
+        title="Log In/Sign Up"
+        onPress={() => navigation.navigate("DefaultProfileTab")}
+      />
     </View>
-  )
+  );
 };
 
 export default UserSettings;

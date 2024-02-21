@@ -142,7 +142,7 @@ const DefaultHomeScreen = ({ navigation }: DefaultHomeScreenProps) => {
           <View style={styles.textContinerRight}>
             <Text style={styles.text}>
               Givey is looking to help new innovative products get attention. Go
-              ahead and create an account to contact us and learn more!
+              ahead and contact us and learn more!
             </Text>
           </View>
 
