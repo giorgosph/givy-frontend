@@ -10,6 +10,8 @@ import {
 } from "../../utils/constants/styles/colors";
 
 import useLeaderboard from "../../hooks/components/useLeaderboard";
+import { apiStatus } from "../../utils/constants/data/apiStatus";
+import SkeletonLeaderboard from "../skeletons/SkeletonLeaderboard";
 
 /* ----- Types ----- */
 type ItemPropsType = {
@@ -34,7 +36,9 @@ const Leaderboard = () => {
     );
   };
 
-  return topWinners.length > 0 ? (
+  return state.reqStatus === apiStatus.LOADING ? (
+    <SkeletonLeaderboard />
+  ) : topWinners.length > 0 ? (
     <View style={styles.container}>
       <View style={styles.tableContainer}>
         <View style={styles.header}>
