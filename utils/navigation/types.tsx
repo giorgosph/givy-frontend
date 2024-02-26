@@ -152,9 +152,9 @@ export type ClientHomeTabParamList = {
   AccountConfirmation: { type: ConfirmationType };
 };
 
-export type ClientHomeScreenProps = NativeStackScreenProps<
-  ClientHomeTabParamList,
-  "ClientHome"
+export type ClientHomeScreenProps = CompositeScreenProps<
+  NativeStackScreenProps<ClientHomeTabParamList, "ClientHome">,
+  BottomTabScreenProps<ClientTabsParamList, "ClientHomeTab">
 >;
 export type ClientHomeAccountConfirmationScreenProps = NativeStackScreenProps<
   ClientHomeTabParamList,

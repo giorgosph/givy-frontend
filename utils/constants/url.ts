@@ -1,10 +1,11 @@
 const IP = "192.168.0.9";
+// const IP = "192.168.0.7"; // ilias
 const PORT = 3000;
 
 // TODO -> Improve types by specifing url instead of string
 
 export const BASE_URL = `http://${IP}:${PORT}/api/v1/`;
-export const BASE_URL_WS = `ws://${IP}:${PORT}/ws`;
+export const BASE_URL_WS = `ws://${IP}:${PORT}/ws/`;
 
 /* --------------------------- Users --------------------------- */
 /* ------------------------------------------------------------- */
@@ -32,6 +33,9 @@ export const FEEDBACK_EP = `${BASE_URL}users/feedback/`;
 /* ------- Details ------- */
 export const CONTACT_DETAILS_EP = `${BASE_URL}users/details/contact/`;
 export const SHIPPING_DETAILS_EP = `${BASE_URL}users/details/shipping/`;
+
+/* ------- Winners ------- */
+export const TOP_WINNERS_EP = `${BASE_URL}users/topWinners/`;
 
 /* --------------------------- Draws --------------------------- */
 /* ------------------------------------------------------------- */

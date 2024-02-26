@@ -25,7 +25,6 @@ import {
  * --------------------------------------------------------- */
 
 const useUpcomingDraw = () => {
-  const [bestDraw, setBestDraw] = useState<DrawType>();
   const [bestItem, setBestItem] = useState<ItemType>();
 
   const { fetchAPI, data, status, statusCode, resetAxiosState } =
@@ -54,7 +53,6 @@ const useUpcomingDraw = () => {
     if (status === apiStatus.IDLE && !draw.bestDraw) fecthData();
     else if (status === apiStatus.SUCCESS) {
       if (data?.success) {
-        setBestDraw(data.body.draw);
         dispatch(addBestDraw({ draw: data.body.draw }));
         dispatch(addItems({ items: data.body.items }));
       }
@@ -72,7 +70,7 @@ const useUpcomingDraw = () => {
     state: {
       reqStatus: status,
     },
-    bestDraw,
+    bestDraw: draw.bestDraw,
     bestItem,
     timeRemaining,
   };

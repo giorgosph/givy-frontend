@@ -6,7 +6,7 @@ import { SettingsScreenProps } from "../../utils/navigation/types";
 
 /* --------- Types --------- */
 type PropsType = {
-  navigation: SettingsScreenProps['navigation'];
+  navigation: SettingsScreenProps["navigation"];
 };
 
 /* ------------------------- */
@@ -15,16 +15,24 @@ const SharedSettings = ({ navigation }: PropsType) => {
   return (
     <>
       <View>
-        <SettingButton title="Terms & Conditions" onPress={() => navigation.navigate("TermsConditions")} />
-        <SettingButton title="Privacy Policy" onPress={() => navigation.navigate("PrivacyPolicy")} />
+        <SettingButton
+          title="Terms & Conditions"
+          onPress={() => navigation.navigate("TermsConditions")}
+        />
+        <SettingButton
+          title="Privacy Policy"
+          onPress={() => navigation.navigate("PrivacyPolicy")}
+        />
       </View>
       <View>
         <SettingButton title="FAQ" onPress={() => navigation.navigate("FAQ")} />
-        <SettingButton title="About Us" onPress={() => navigation.navigate("AboutUs")} />
-        <SettingButton title="Contact Us" onPress={() => navigation.navigate("ContactUs")} />
+        <SettingButton
+          title="About Us"
+          onPress={() => navigation.navigate("AboutUs")}
+        />
       </View>
     </>
-  )
+  );
 };
 
 export default SharedSettings;

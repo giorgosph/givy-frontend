@@ -75,3 +75,9 @@ export type ItemType = {
 export type WinnersType = {
   [index: number]: string;
 };
+
+export type TopWinnersType = {
+  username: string;
+  numberOfWins: number;
+  totalValue: number;
+};

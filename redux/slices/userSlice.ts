@@ -4,6 +4,7 @@ import log from "../../utils/logger";
 import {
   ItemType,
   ShippingDetailsType,
+  TopWinnersType,
   UserDetailsType,
 } from "../../utils/types/objectTypes";
 
@@ -13,6 +14,10 @@ export interface IUserSlice {
   date: number | null;
   draws: number[];
   wins: number[];
+  topWinners: {
+    users: TopWinnersType[];
+    date: number | null;
+  };
 }
 
 /* ----------------- */
@@ -22,6 +27,10 @@ const initialState: IUserSlice = {
   date: null,
   draws: [],
   wins: [],
+  topWinners: {
+    users: [],
+    date: null,
+  },
 };
 
 const userSlice = createSlice({
@@ -103,24 +112,44 @@ const userSlice = createSlice({
         message: `Redux-User | Won item ${action.payload.itemId}`,
       });
     },
+    setTopWinners: (
+      state,
+      action: PayloadAction<{ topWinners: TopWinnersType[]; date: number }>
+    ) => {
+      const { topWinners, date } = action.payload;
+
+      state.topWinners.users = topWinners;
+      state.topWinners.users = topWinners;
+      log({
+        type: "d",
+        message: `Redux-User | Top Winners has been set on ${date}:\n${JSON.stringify(
+          topWinners
+        )}`,
+      });
+    },
     clearUser: (state) => {
       state.user = null;
       state.date = null;
       state.draws = [];
       state.wins = [];
+      state.topWinners = {
+        users: [],
+        date: null,
+      };
       log({ type: "i", message: `Redux-User | State has been cleared` });
     },
   },
 });
 
 export const {
+  optIn,
   setUser,
+  clearUser,
   updateEmail,
   updateMobile,
-  updateShippingDetails,
   setUserDraws,
-  optIn,
-  clearUser,
+  setTopWinners,
+  updateShippingDetails,
 } = userSlice.actions;
 
 export default userSlice.reducer;

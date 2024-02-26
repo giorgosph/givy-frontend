@@ -6,7 +6,6 @@ import { RootState } from "../../redux/rootReducer";
 import { setFeaturedDraws } from "../../redux/slices/drawSlice";
 
 import log from "../../utils/logger";
-import { DrawType } from "../../utils/types/objectTypes";
 import { refetchPerDays } from "../../utils/APIs/refetch";
 import { FEATURED_DRAWS_EP } from "../../utils/constants/url";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
@@ -17,8 +16,6 @@ import { DrawsResponseType } from "../../utils/types/responseTypes";
  * ----------------------------------------------------------- */
 
 const useFeaturedDraws = () => {
-  const [draws, setDraws] = useState<DrawType[]>();
-
   const { fetchAPI, data, status, statusCode } =
     useAxiosFetch<DrawsResponseType>();
 
@@ -35,10 +32,10 @@ const useFeaturedDraws = () => {
   useEffect(() => {
     if (status === apiStatus.IDLE && refetch) fecthData();
     else if (status === apiStatus.SUCCESS) {
-      if (data?.success) setDraws(data.body);
-      dispatch(
-        setFeaturedDraws({ draws: data.body, date: new Date().getTime() })
-      );
+      if (data?.success)
+        dispatch(
+          setFeaturedDraws({ draws: data.body, date: new Date().getTime() })
+        );
     } else if (status === apiStatus.ERROR && !!statusCode) {
       log({ type: "e", message: `Unexpected error:\n ${data}` });
       alert(
@@ -51,7 +48,7 @@ const useFeaturedDraws = () => {
     state: {
       reqStatus: status,
     },
-    draws,
+    draws: draw.draws,
   };
 };
 

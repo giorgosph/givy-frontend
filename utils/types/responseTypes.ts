@@ -3,6 +3,7 @@ import {
   DrawType,
   ItemType,
   ShippingDetailsType,
+  TopWinnersType,
   UserDetailsType,
 } from "./objectTypes";
 
@@ -136,3 +137,7 @@ export type UserDetailsResponseType =
           }
       ))
   | ResponseInvalidDataType;
+
+export type TopWinnersResponseType = ResponseSuccessType & {
+  body: TopWinnersType[];
+};
