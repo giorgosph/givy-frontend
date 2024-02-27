@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -20,6 +20,8 @@ import { ClientHomeScreenProps } from "../../utils/navigation/types";
 import {
   BEST_DRAW_HEIGHT,
   BEST_DRAW_WIDTH,
+  HEADER_HEIGHT,
+  MAIN_HEIGHT,
   PIXELS,
   WIDTH,
 } from "../../utils/constants/styles/dimensions";
@@ -29,10 +31,12 @@ import useModal from "../../hooks/useModal";
 import { mobileInfo } from "../../utils/constants/data/modalInfo";
 import UpcomingDraw from "../../components/home/UpcomingDraw";
 import Leaderboard from "../../components/home/Leaderboard";
+import AnimatedLottieView from "lottie-react-native";
 
 const ClientHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
   const { setVisible, renderModal } = useModal();
   const authCtx = useContext(AuthContext);
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const navToDetails = () => navigation.navigate("ClientSearchTab");
 
@@ -43,18 +47,48 @@ const ClientHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
     // authCtx.token && setVisible(mobileInfo(navigation, () => 0));
   }, []);
 
+  const scrollToHeight = () => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({
+        y: MAIN_HEIGHT + HEADER_HEIGHT,
+        animated: true,
+      });
+    }
+  };
+
   return (
     <>
       {renderModal()}
-      <ScrollView>
+      <ScrollView ref={scrollViewRef}>
         <Header />
         <MainContainer>
-          <View style={styles.contentLeftWrap}>
-            <Text style={styles.title}>Lorem Ipsum</Text>
+          <View style={styles.titleContainer}>
+            <View>
+              <Text style={styles.title}>Experience the Givey Bliss Blitz</Text>
+              <Text style={[styles.title, styles.titleEffect]}>
+                Experience the Givey Bliss Blitz
+              </Text>
+              <Text style={[styles.title, styles.titleEffect2]}>
+                Experience the Givey Bliss Blitz
+              </Text>
+            </View>
+            <Text style={styles.textTitle}>Giving Made Thrilling</Text>
             <Text style={styles.paragraph}>
-              Lorem ipsum dolor sit amet consectetur adipiscing elit. Nulla a
-              ultrices quam, nec congue sapien.Nullam nisl dolor,
+              Save the Dates | Don't Miss Short Term Raffles
             </Text>
+
+            <AnimatedLottieView
+              source={require("../../assets/lottie/date.json")}
+              style={styles.dateLottieStyle}
+              autoPlay
+            />
+            <TouchableWithoutFeedback onPress={scrollToHeight}>
+              <AnimatedLottieView
+                source={require("../../assets/lottie/scroll.json")}
+                style={styles.arrowLottieStyle}
+                autoPlay
+              />
+            </TouchableWithoutFeedback>
           </View>
 
           <TouchableWithoutFeedback onPress={navToDetails}>
@@ -70,17 +104,7 @@ const ClientHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
             <Text style={styles.textDesc}>
               It's Free, Keep Up For New Short Term Raffles
             </Text>
-            <View>
-              <Leaderboard />
-            </View>
-          </View>
-
-          <View style={styles.contentRightWrap}>
-            <Text style={styles.title}>Lorem Ipsum</Text>
-            <Text style={styles.paragraph}>
-              Lorem ipsum dolor sit amet consectetur adipiscing elit. Nulla a
-              ultrices quam, nec congue sapien.Nullam nisl dolor,
-            </Text>
+            <Leaderboard />
           </View>
         </MainContainer>
       </ScrollView>
@@ -89,21 +113,33 @@ const ClientHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  titleContainer: {
+    width: "100%",
+    height: MAIN_HEIGHT,
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  dateLottieStyle: {
+    width: "96%",
+    aspectRatio: 1,
+    position: "relative",
+    top: PIXELS,
+  },
+  arrowLottieStyle: {
+    width: "40%",
+    aspectRatio: 1,
+    position: "relative",
+    bottom: PIXELS / 2,
+  },
   textContiner: {
     width: WIDTH - PIXELS * 2,
     padding: PIXELS,
-    marginTop: PIXELS * 4,
+    marginVertical: PIXELS * 4,
     alignSelf: "center",
     justifyContent: "center",
     backgroundColor: BACKGROUND_SECONDARY_COLOR,
     borderRadius: 24,
     overflow: "hidden",
-    zIndex: 13,
-  },
-  textContinerRight: {
-    width: "65%",
-    marginTop: PIXELS * 2,
-    alignSelf: "flex-end",
     zIndex: 13,
   },
   textTitle: {
@@ -154,28 +190,31 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "white",
   },
-  contentLeftWrap: {
-    width: (WIDTH * 3) / 4,
-    height: "50%",
-    paddingLeft: PIXELS,
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    overflow: "hidden",
-  },
-  contentRightWrap: {
-    height: "50%",
-    marginLeft: WIDTH / 4 + PIXELS,
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    overflow: "hidden",
-  },
   title: {
-    fontSize: 24,
+    fontSize: 38,
     fontWeight: "800",
-    color: HEADING_COLOR,
-    textTransform: "capitalize",
+    color: "rgba(255, 255, 255, 0.9)",
+    paddingHorizontal: PIXELS,
+    textAlign: "center",
+    zIndex: 12,
+  },
+  titleEffect: {
+    color: "transparent",
+    textShadowColor: "rgba(238, 103, 176, 0.4)",
+    textShadowRadius: 1,
+    position: "absolute",
+    top: 3,
+    right: 5,
+    zIndex: 11,
+  },
+  titleEffect2: {
+    color: "transparent",
+    textShadowColor: "rgba(56, 109, 189, 0.6)",
+    textShadowRadius: 1,
+    position: "absolute",
+    bottom: 3,
+    left: 5,
+    zIndex: 11,
   },
   paragraph: {
     fontSize: 14,
