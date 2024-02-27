@@ -27,42 +27,51 @@ const DrawsListScreen = () => {
       <Header />
       <MainContainer centered>
         {FilterButtons()}
-        <View style={styles.separator} />
-        
-        {loading ? <SkeletonDraw /> : (
-          <ScrollView style={styles.drawsContainer} contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
-            {!!draws && draws.length > 0 ? draws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)
-            : (
-                <Text style={{color: 'white'}}>There are no upcoming Draws, check again later!</Text>
+
+        {loading ? (
+          <SkeletonDraw />
+        ) : (
+          <ScrollView
+            style={styles.drawsContainer}
+            contentContainerStyle={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {!!draws && draws.length > 0 ? (
+              draws.map((draw) => <DrawListing key={draw.id} draw={draw} />)
+            ) : (
+              <Text style={{ color: "white" }}>
+                There are no upcoming Draws, check again later!
+              </Text>
             )}
 
             {/* Remove after testing time related lagorithms */}
             {/* {cDraws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)} */}
           </ScrollView>
         )}
-
       </MainContainer>
-   </>
-  )
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
   filterContainer: {
-    width: '100%',
+    width: "100%",
     height: PIXELS * 4,
     paddingHorizontal: PIXELS * 2,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-  }, 
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+  },
   drawsContainer: {
-    width: '100%',
+    width: "100%",
     height: MAIN_HEIGHT - PIXELS * 4,
-    display: 'flex',
+    display: "flex",
   },
   separator: {
-    width: '90%',
+    width: "90%",
     margin: 0,
     padding: 0,
     borderBottomColor: HEADING_FADE_COLOR,

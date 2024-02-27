@@ -5,15 +5,19 @@ import CustomTitle from "../general/CustomTitle";
 import CustomButton from "../general/CustomButton";
 
 import { COLOR3, HEADING_COLOR } from "../../utils/constants/styles/colors";
-import { HEADER_HEIGHT, MAIN_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
+import {
+  HEADER_HEIGHT,
+  MAIN_HEIGHT,
+  PIXELS,
+} from "../../utils/constants/styles/dimensions";
 
 import { sortData } from "../../utils/constants/data/dropdown/sortData";
 
 /* ------ Types ------ */
 type PropsType = {
-  enable: boolean; 
+  enable: boolean;
   selectedItem: object[] | null;
-  handleSort: (data: any) => void; 
+  handleSort: (data: any) => void;
 };
 
 /* ------------------- */
@@ -28,11 +32,14 @@ const DrawSort = ({ handleSort, enable, selectedItem }) => {
             const isSelected = selectedItem === value;
 
             return (
-              <CustomButton 
+              <CustomButton
                 key={value}
-                title={label} 
-                onPress={() => handleSort(value)} 
-                style={{...styles.button,  borderColor: isSelected ? COLOR3 : HEADING_COLOR }} 
+                title={label}
+                onPress={() => handleSort(value)}
+                style={{
+                  ...styles.button,
+                  borderColor: isSelected ? COLOR3 : HEADING_COLOR,
+                }}
                 textStyle={{ color: isSelected ? COLOR3 : HEADING_COLOR }}
               />
             );
@@ -45,31 +52,31 @@ const DrawSort = ({ handleSort, enable, selectedItem }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
-    height: MAIN_HEIGHT - PIXELS * 5,
+    width: "90%",
+    height: MAIN_HEIGHT - PIXELS * 4.5,
     padding: PIXELS * 2,
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.9)",
     borderRadius: PIXELS / 2,
-    position: 'absolute',
-    top: HEADER_HEIGHT + PIXELS * 5,
+    position: "absolute",
+    top: HEADER_HEIGHT + PIXELS * 4,
     left: PIXELS,
-    zIndex: 1001
+    zIndex: 1001,
   },
   title: {
     textAlign: "center",
     marginBottom: PIXELS,
   },
   buttonsContainer: {
-    width: '100%',
-    height: '80%',
+    width: "100%",
+    height: "80%",
     paddingVertical: PIXELS,
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   button: {
-    width: '80%',
-    backgroundColor: 'transparent',
+    width: "80%",
+    backgroundColor: "transparent",
     borderWidth: 1,
   },
 });

@@ -1,47 +1,74 @@
 import React from "react";
-import { View, TouchableHighlight, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 
 import SortIcon from "../icons/SortIcon";
 import FilterIcon from "../icons/FilterIcon";
+import InnerShadow from "../style/InnerShadow";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
-import { BUTTON_COLOR, HEADING_COLOR } from "../../utils/constants/styles/colors";
+import { BUTTON_COLOR } from "../../utils/constants/styles/colors";
 
 /* ------ Types ------ */
 type PropsType = {
-  isSortOpen: boolean; 
-  isFilterOpen: boolean; 
+  isSortOpen: boolean;
+  isFilterOpen: boolean;
   toggleSort: () => void;
-  toggleFilter: () => void; 
+  toggleFilter: () => void;
 };
 
 /* ------------------- */
 
 const FilterIcons = (props: PropsType) => {
   const { isSortOpen, isFilterOpen, toggleFilter, toggleSort } = props;
-  
+
   return (
-  <View style={styles.filterContainer}>
-    <TouchableHighlight onPress={toggleSort}>
-      <SortIcon size={26} color={isSortOpen ? 'gold' : HEADING_COLOR} />
-    </TouchableHighlight>
-    <TouchableHighlight onPress={toggleFilter}>
-      <FilterIcon size={24} color={isFilterOpen ? BUTTON_COLOR : HEADING_COLOR} />
-    </TouchableHighlight>
-  </View>
-  )
+    <View style={styles.container}>
+      <InnerShadow
+        width={36}
+        height={36}
+        borderRadius={18}
+        color="rgb(255, 255, 255)"
+        style={styles.filterContainer}
+        border
+      >
+        <TouchableOpacity onPress={toggleSort}>
+          <SortIcon size={26} color={isSortOpen ? BUTTON_COLOR : "#000"} />
+        </TouchableOpacity>
+      </InnerShadow>
+
+      <InnerShadow
+        width={36}
+        height={36}
+        borderRadius={18}
+        color="rgb(255, 255, 255)"
+        style={styles.filterContainer}
+        border
+      >
+        <TouchableOpacity onPress={toggleFilter}>
+          <FilterIcon size={24} color={isFilterOpen ? BUTTON_COLOR : "#000"} />
+        </TouchableOpacity>
+      </InnerShadow>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-  filterContainer: {
-    width: '100%',
+  container: {
+    width: "100%",
     height: PIXELS * 4,
-    paddingHorizontal: PIXELS * 2,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-  }, 
+    paddingHorizontal: PIXELS * 1.5,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "absolute",
+    top: 0,
+    zIndex: 21,
+  },
+  filterContainer: {
+    position: "relative",
+    top: 5,
+    left: 4,
+  },
 });
 
 export default FilterIcons;
