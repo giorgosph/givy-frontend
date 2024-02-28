@@ -1,21 +1,26 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React from "react";
+import { View, StyleSheet, TouchableOpacity, Image, Text } from "react-native";
 
-import { useNavigation } from '@react-navigation/native'; 
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import CustomText from '../general/CustomText';
-import CustomTitle from '../general/CustomTitle';
+import CustomTitle from "../general/CustomTitle";
 
-import { PIXELS } from '../../utils/constants/styles/dimensions';
-import { ClientSearchTabParamList } from '../../utils/navigation/types';
-import { AUTH_ACTIVE_COLOR, AUTH_INACTIVE_COLOR, HEADING_FADE_COLOR } from '../../utils/constants/styles/colors';
-import { DrawType } from '../../utils/types/objectTypes';
+import { formatDate } from "../../utils/dataFormater";
+import { DrawType } from "../../utils/types/objectTypes";
+import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { ClientSearchTabParamList } from "../../utils/navigation/types";
+import {
+  AUTH_ACTIVE_COLOR,
+  AUTH_INACTIVE_COLOR,
+  HEADING_COLOR,
+  HEADING_FADE_COLOR,
+} from "../../utils/constants/styles/colors";
 
 /* ------ Types ------ */
 type PropsType = {
   draw: DrawType;
-  opted?: boolean; 
+  opted?: boolean;
 };
 
 /* ------------------- */
@@ -23,96 +28,134 @@ type PropsType = {
 const DrawListing = (props: PropsType) => {
   const { draw, opted = false } = props;
 
-  const navigation = useNavigation<NativeStackNavigationProp<ClientSearchTabParamList, "DrawsList">>();
-  const handleNav = (draw: DrawType) => navigation.navigate('DrawDetails', { draw });
+  const navigation =
+    useNavigation<
+      NativeStackNavigationProp<ClientSearchTabParamList, "DrawsList">
+    >();
+  const handleNav = (draw: DrawType) =>
+    navigation.navigate("DrawDetails", { draw });
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => handleNav(draw)}>
+    <TouchableOpacity
+      style={[styles.container, opted && { height: 155 }]}
+      onPress={() => handleNav(draw)}
+    >
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: draw.imagePath }} resizeMode="cover" />
+        <Image
+          style={styles.image}
+          source={{ uri: draw.imagePath }}
+          resizeMode="cover"
+        />
       </View>
-      <View style={[styles.detailsContainer, opted && { paddingBottom: 0 }]}>
-        <CustomTitle text={draw.title} size={3} />
-        <CustomText text={draw.brief} size={5} extraStyles={styles.title} color={HEADING_FADE_COLOR} />
-        <CustomText text={draw.openingDate} extraStyles={styles.text} title={"Available From:"} titleExtraStyles={styles.textTitle} horizontal />
-        <CustomText text={draw.closingDate} extraStyles={styles.text} title={"Results On:"} titleExtraStyles={styles.textTitle} horizontal />
-      </View>
-      {!opted && 
-        <View style={styles.textContainer}>
-          <CustomTitle text="Click to Join!" color={HEADING_FADE_COLOR} extraStyles={styles.join} />
+      <View style={[styles.detailsContainer, opted && { height: "100%" }]}>
+        <View style={styles.detailsTitleContainer}>
+          <Text style={styles.title}>{draw.title}</Text>
+          <Text style={styles.textBrief}>{draw.brief}</Text>
         </View>
-      } 
+
+        <View style={styles.detailsTextContainer}>
+          <Text style={styles.textTitle}>Available From</Text>
+          <Text style={styles.text}>{formatDate(draw.openingDate)}</Text>
+
+          <Text style={styles.textTitle}>Results On</Text>
+          <Text style={styles.text}>{formatDate(draw.closingDate)}</Text>
+        </View>
+      </View>
+      {!opted && (
+        <View style={styles.textContainer}>
+          <CustomTitle
+            text="Click to Join!"
+            color={HEADING_FADE_COLOR}
+            extraStyles={styles.join}
+          />
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '80%',
-    height: '25%',
-    maxHeight: 180,
-    minHeight: 120,
-    padding: PIXELS * 2/6, 
+    width: "85%",
+    height: 200,
+    padding: PIXELS / 3,
     marginVertical: PIXELS / 2,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start', 
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
     backgroundColor: AUTH_INACTIVE_COLOR,
-    shadowColor: '#fff',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     borderWidth: 1,
     borderRadius: 24,
     borderColor: AUTH_ACTIVE_COLOR,
   },
   imageContainer: {
-    width: '40%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "40%",
+    height: "100%",
     marginRight: PIXELS / 4,
     zIndex: 100,
   },
   image: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 8,
-    margin: PIXELS,
+    width: "100%",
+    height: "100%",
+    borderRadius: 16,
     zIndex: 101,
   },
   detailsContainer: {
-    width: '60%',
-    display: 'flex',
-    paddingBottom: PIXELS * 1.5, 
-    overflow: 'hidden',   
+    width: "60%",
+    height: "80%",
+    overflow: "hidden",
+  },
+  detailsTitleContainer: {
+    height: "50%",
+    justifyContent: "flex-start",
+    overflow: "hidden",
+  },
+  detailsTextContainer: {
+    height: "50%",
+    justifyContent: "flex-end",
   },
   title: {
-    marginBottom: PIXELS / 4, 
-    paddingLeft: PIXELS / 2,
+    fontSize: 15,
+    fontWeight: "800",
+    textAlign: "center",
+    color: HEADING_COLOR,
   },
   text: {
-    paddingTop: PIXELS / 6,
+    fontSize: 14,
+    fontWeight: "600",
+    textAlign: "center",
+    color: HEADING_COLOR,
   },
   textTitle: {
-    paddingLeft: PIXELS / 2,
+    fontSize: 10,
+    fontWeight: "400",
+    textAlign: "center",
+    color: HEADING_COLOR,
+  },
+  textBrief: {
+    fontSize: 9,
+    fontWeight: "400",
+    textAlign: "center",
+    color: HEADING_FADE_COLOR,
   },
   textContainer: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    width: "100%",
+    height: "20%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     bottom: 6,
     zIndex: 1000,
   },
   join: {
-    textShadowRadius: 8,
-    textShadowColor: 'black',
-    shadowColor: 'white',
-    shadowRadius: 16,
+    textShadowColor: "black",
+    textShadowRadius: 6,
+    textShadowOffset: {
+      width: 2,
+      height: 2,
+    },
     zIndex: 1001,
-  }
+  },
 });
 
 export default DrawListing;
