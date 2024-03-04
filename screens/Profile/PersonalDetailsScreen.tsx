@@ -72,7 +72,7 @@ const PersonalDetailsScreen = ({
 
             <View style={styles.buttonsContainer}>
               <CustomButton
-                title={"My Draws"}
+                title={"My Raffles"}
                 style={styles.button1}
                 textStyle={styles.buttonText1}
                 onPress={() => navTo("MyDraws")}

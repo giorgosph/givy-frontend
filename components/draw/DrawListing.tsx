@@ -36,24 +36,24 @@ const DrawListing = (props: PropsType) => {
     navigation.navigate("DrawDetails", { draw });
 
   return (
-    <TouchableOpacity
-      style={[styles.container, opted && { height: 155 }]}
-      onPress={() => handleNav(draw)}
-    >
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={{ uri: draw.imagePath }}
-          resizeMode="cover"
-        />
+    <TouchableOpacity style={styles.container} onPress={() => handleNav(draw)}>
+      <View style={styles.detailsTitleContainer}>
+        <Text style={styles.title}>{draw.title}</Text>
+        <Text style={styles.textBrief}>{draw.brief}</Text>
       </View>
-      <View style={[styles.detailsContainer, opted && { height: "100%" }]}>
-        <View style={styles.detailsTitleContainer}>
-          <Text style={styles.title}>{draw.title}</Text>
-          <Text style={styles.textBrief}>{draw.brief}</Text>
+
+      <View style={styles.contentContainer}>
+        <View style={styles.imageContainer}>
+          <View style={styles.imageWrap}>
+            <Image
+              style={styles.image}
+              source={{ uri: draw.imagePath }}
+              resizeMode="stretch"
+            />
+          </View>
         </View>
 
-        <View style={styles.detailsTextContainer}>
+        <View style={[styles.detailsContainer, opted && { height: "100%" }]}>
           <Text style={styles.textTitle}>Available From</Text>
           <Text style={styles.text}>{formatDate(draw.openingDate)}</Text>
 
@@ -77,21 +77,39 @@ const DrawListing = (props: PropsType) => {
 const styles = StyleSheet.create({
   container: {
     width: "85%",
-    height: 200,
-    padding: PIXELS / 3,
+    height: 220,
     marginVertical: PIXELS / 2,
-    display: "flex",
-    flexDirection: "row",
+    alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: AUTH_INACTIVE_COLOR,
     borderWidth: 1,
     borderRadius: 24,
     borderColor: AUTH_ACTIVE_COLOR,
   },
+  detailsTitleContainer: {
+    width: "100%",
+    height: "25%",
+    paddingHorizontal: PIXELS / 2,
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  contentContainer: {
+    width: "100%",
+    height: "75%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   imageContainer: {
-    width: "40%",
+    width: "60%",
     height: "100%",
-    marginRight: PIXELS / 4,
+    alignItems: "center",
+    // justifyContent: "center",
+    zIndex: 100,
+  },
+  imageWrap: {
+    width: "90%",
+    aspectRatio: 5 / 4,
     zIndex: 100,
   },
   image: {
@@ -101,21 +119,14 @@ const styles = StyleSheet.create({
     zIndex: 101,
   },
   detailsContainer: {
-    width: "60%",
+    width: "40%",
     height: "80%",
+    alignItems: "center",
+    justifyContent: "center",
     overflow: "hidden",
-  },
-  detailsTitleContainer: {
-    height: "50%",
-    justifyContent: "flex-start",
-    overflow: "hidden",
-  },
-  detailsTextContainer: {
-    height: "50%",
-    justifyContent: "flex-end",
   },
   title: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "800",
     textAlign: "center",
     color: HEADING_COLOR,

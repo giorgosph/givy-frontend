@@ -17,37 +17,49 @@ const MyDraws = ({ navigation }: ClientProfileMyDrawsScreenProps) => {
   const { state, userDraws: draws } = useDraws(); // use to fetch draws if not already set
   const loading = state.reqStatus === apiStatus.LOADING;
 
-  const handlePress = async () => {
-    await navigation.goBack();
+  const handlePress = () => {
+    navigation.goBack();
     navigation.navigate("ClientSearchTab");
-  }
+  };
 
   return (
     <>
-      <CustomHeader title="My Draws" />
+      <CustomHeader title="My Raffles" />
       <MainContainer centered>
-        {loading ? <SkeletonDraw /> : (
-          <ScrollView style={styles.drawsContainer} contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
-            {!!draws && draws.length > 0 ? draws.map(draw => <DrawListing key={draw.id} draw={draw} opted />) 
-            : (
+        {loading ? (
+          <SkeletonDraw />
+        ) : (
+          <ScrollView
+            style={styles.drawsContainer}
+            contentContainerStyle={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {!!draws && draws.length > 0 ? (
+              draws.map((draw) => (
+                <DrawListing key={draw.id} draw={draw} opted />
+              ))
+            ) : (
               <View>
-                <Text style={{color: 'white'}}>You are not registered to any draw yet.</Text>
+                <Text style={{ color: "white" }}>
+                  You are not registered to any draw yet.
+                </Text>
                 <CustomButton title="Find a new Draw!" onPress={handlePress} />
               </View>
             )}
           </ScrollView>
         )}
-
       </MainContainer>
     </>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
   drawsContainer: {
-    width: '100%',
+    width: "100%",
     height: MAIN_HEIGHT - PIXELS * 4,
-    display: 'flex',
+    display: "flex",
   },
 });
 
