@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { Text, StyleSheet, ScrollView } from "react-native";
 
 import Header from "../../components/general/Header";
 import DrawListing from "../../components/draw/DrawListing";
@@ -9,7 +9,7 @@ import SkeletonDraw from "../../components/skeletons/SkeletonDraw";
 import { HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
 import { MAIN_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
 
-// import cDraws from "../../utils/constants/data/draw.json"
+// import cDraws from "../../utils/constants/data/draw.json";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 
 import useDrawsFilters from "../../hooks/components/useDrawsFilters";
@@ -47,7 +47,7 @@ const DrawsListScreen = () => {
             )}
 
             {/* Remove after testing time related lagorithms */}
-            {/* {cDraws.map((draw) => <DrawListing key={draw.id} draw={draw}/>)} */}
+            {/* {cDraws.map((draw) => <DrawListing key={draw.id} draw={draw} />)} */}
           </ScrollView>
         )}
       </MainContainer>

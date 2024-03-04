@@ -1,14 +1,14 @@
 import { useContext, useEffect } from "react";
 
-import useModal from "../useModal";
 import { HttpStatusCode } from "axios";
 import { useDispatch } from "react-redux";
-
-import useAxiosFetch from "../useAxiosFetch";
+import Toast from "react-native-root-toast";
 import { SubmitHandler } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
+import useModal from "../useModal";
+import useAxiosFetch from "../useAxiosFetch";
 import { AuthContext } from "../../context/store";
 import { setUser } from "../../redux/slices/userSlice";
 
@@ -86,7 +86,7 @@ const useAuth = () => {
         const mobileConfirmed = data.body.confirmed?.mobile;
 
         // Coming from forgot/reset password
-        data.body?.pass && alert("Password changed successfully!");
+        data.body?.pass && Toast.show("Password changed successfully!");
 
         // TODO -> if mobile provided && data.body.confirmed.mobile == false then set user to mobile not confirmed
         authCtx.holdToken(token);

@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 
 import AuthContextProvider from "./context/store";
 import NavigationHandler from "./components/NavigationHandler";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 import { HEADER_BG_COLOR } from "./utils/constants/styles/colors";
 
@@ -15,11 +16,13 @@ export default function App() {
     <SafeAreaProvider>
       <StatusBar animated={true} backgroundColor={HEADER_BG_COLOR} />
       <Provider store={store}>
-        <AuthContextProvider>
-          <SafeAreaView style={styles.androidSafeArea}>
-            <NavigationHandler />
-          </SafeAreaView>
-        </AuthContextProvider>
+        <RootSiblingParent>
+          <AuthContextProvider>
+            <SafeAreaView style={styles.androidSafeArea}>
+              <NavigationHandler />
+            </SafeAreaView>
+          </AuthContextProvider>
+        </RootSiblingParent>
       </Provider>
     </SafeAreaProvider>
   );
@@ -28,7 +31,7 @@ export default function App() {
 const styles = StyleSheet.create({
   androidSafeArea: {
     flex: 1,
-    flexDirection: 'column',
-    overflow: 'hidden',
+    flexDirection: "column",
+    overflow: "hidden",
   },
 });

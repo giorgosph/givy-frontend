@@ -3,9 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import useModal from "../useModal";
 import useAxiosFetch from "../useAxiosFetch";
 import { AuthContext } from "../../context/store";
-import { useNavigation } from "@react-navigation/native";
 
 import { HttpStatusCode } from "axios";
+import Toast from "react-native-root-toast";
+import { useNavigation } from "@react-navigation/native";
+
 import { RootState } from "../../redux/rootReducer";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -79,7 +81,7 @@ const usePersonalDetails = () => {
         authHeader: true,
       });
     } else {
-      alert("Your details are already up to date!");
+      Toast.show("Your details are already up to date!");
       setEditShipping(false);
     }
   };
@@ -97,7 +99,7 @@ const usePersonalDetails = () => {
       modalInfo = await contactWarning(fetch, () => setEditContact(false));
       setVisible(modalInfo);
     } else {
-      alert("Your details are already up to date!");
+      Toast.show("Your details are already up to date!");
       setEditContact(false);
     }
   };
@@ -111,7 +113,7 @@ const usePersonalDetails = () => {
           dispatch(updateShippingDetails({ user: data.body.shippingDetails }));
           setEditShipping(false);
 
-          alert("Details Updated Successfully!");
+          Toast.show("Details Updated Successfully!");
         } else if (data.body?.contactDetails) {
           const { email, mobile } = data.body.contactDetails;
 
@@ -129,7 +131,7 @@ const usePersonalDetails = () => {
           if (email) {
             dispatch(updateEmail({ email }));
             authCtx.logout();
-            alert("Email Changed!");
+            Toast.show("Email Changed!");
           }
         }
       }

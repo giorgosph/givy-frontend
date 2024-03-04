@@ -17,11 +17,12 @@ import { ClientSearchDrawDetailsScreenProps } from "../../utils/navigation/types
 import useDrawItems from "../../hooks/components/useDrawItems";
 
 // import drawItems from "../../utils/constants/data/drawItem.json";
+import AnimatedLottieView from "lottie-react-native";
 
 const DrawDetailsScreen = ({ route }: ClientSearchDrawDetailsScreenProps) => {
   const { draw } = route.params;
 
-  const { state, items, images, opted, timeRemaining, callback } =
+  const { state, items, images, opted, timeRemaining, progress, callback } =
     useDrawItems(draw);
   const loading = state.reqStatus === apiStatus.LOADING;
 
@@ -62,7 +63,7 @@ const DrawDetailsScreen = ({ route }: ClientSearchDrawDetailsScreenProps) => {
               )}
 
               {/* Remove after testing time related lagorithms */}
-              {/* {drawItems.map(item => <ItemListing key={item.id} item={item}/>)} */}
+              {/* {drawItems.map((item) => <ItemListing key={item.id} item={item} />)} */}
             </ScrollView>
           </>
         )}
@@ -78,6 +79,14 @@ const DrawDetailsScreen = ({ route }: ClientSearchDrawDetailsScreenProps) => {
             onPress={onPress}
           />
         </View>
+
+        {timeRemaining.expired && (
+          <AnimatedLottieView
+            source={require("../../assets/lottie/winning.json")}
+            progress={progress}
+            style={styles.lottie}
+          />
+        )}
       </MainContainer>
     </>
   );
@@ -94,7 +103,7 @@ const styles = StyleSheet.create({
   },
   itemsContainer: {
     width: "85%",
-    maxHeight: "45%",
+    maxHeight: "35%",
     padding: PIXELS,
     backgroundColor: BACKGROUND_SECONDARY_COLOR,
     borderRadius: 12,
@@ -109,6 +118,13 @@ const styles = StyleSheet.create({
   centered: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  lottie: {
+    width: "100%",
+    aspectRatio: 1,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 1000,
   },
 });
 

@@ -4,6 +4,7 @@ import useAxiosFetch from "../useAxiosFetch";
 import useNotification from "../useNotification";
 
 import { HttpStatusCode } from "axios";
+import Toast from "react-native-root-toast";
 import { AuthContext } from "../../context/store";
 import { useNavigation } from "@react-navigation/native";
 
@@ -57,11 +58,11 @@ const useConfirmation = () => {
 
         if (isEmail) {
           authCtx.authenticate(authCtx.tempToken as string);
-          alert("Email Address Confirmed Successfully!");
+          Toast.show("Email Address Confirmed Successfully!");
         } else if (isMobile) {
           // TODO -> Edit userSlice, set phone confirmed to true
           navigation.goBack();
-          alert("Phone Number Confirmed Successfully!");
+          Toast.show("Phone Number Confirmed Successfully!");
         }
       }
     } else if (status === apiStatus.ERROR) {

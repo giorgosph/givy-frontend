@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { HttpStatusCode } from "axios";
 import useAxiosFetch from "./useAxiosFetch";
+import Toast from "react-native-root-toast";
 
 import log from "../utils/logger";
 import { apiStatus } from "../utils/constants/data/apiStatus";
@@ -58,12 +59,16 @@ const useNotification = () => {
     if (status === apiStatus.SUCCESS) {
       if (data?.success) {
         setSent(true);
-        alert(`${data.body.type} sent successfully!`);
+        Toast.show(`${data.body.type} sent successfully!`);
+        // TODO -> Test and remove
+        // alert(`${data.body.type} sent successfully!`);
       }
     } else if (status === apiStatus.ERROR) {
       if (!data?.success) {
         if (statusCode == HttpStatusCode.Unauthorized)
-          alert("`Email cannot be sent!`");
+          Toast.show("`Email cannot be sent!`");
+        // TODO -> Test and remove
+        // alert("`Email cannot be sent!`");
         else if (statusCode == HttpStatusCode.Conflict)
           alert(
             "You are not allowed to submit a feedback more than once a day."

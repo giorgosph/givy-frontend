@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { CountdownTimeType } from "../../utils/types/objectTypes";
+
 import InnerShadow from "../style/InnerShadow";
+
+import { CountdownTimeType } from "../../utils/types/objectTypes";
 
 /* ------- Types -------*/
 type PropsType = {
