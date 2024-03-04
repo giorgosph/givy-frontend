@@ -7,6 +7,7 @@ import AnimatedBorder from "../style/AnimatedBorder";
 import CustomCountdown from "../general/CustomCountdown";
 import SkeletonUpcomingDraw from "../skeletons/SkeletonUpcomingDraw";
 
+import { formatPrice } from "../../utils/dataFormater";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 import {
   BEST_DRAW_HEIGHT,
@@ -48,7 +49,7 @@ const UpcomingDraw = () => {
             <Text style={styles.drawInfoTitle}>Total Raffle Value</Text>
             {/* function to style item.price */}
             <Text style={[styles.drawInfoText, styles.drawInfoLeftText]}>
-              £{draw.totalPrice}
+              £{formatPrice(draw.totalPrice)}
             </Text>
           </View>
           <View style={[styles.textContainer, styles.rightTextContainer]}>

@@ -40,3 +40,19 @@ export const formatDate = (timestamp: string) => {
 
   return `${day}-${month}-${year} ${hours}:${minutes}`;
 };
+
+/*
+ * Formats price values
+ *
+ * @returns amount -> the amount with spaces every 3 digits
+ */
+export const formatPrice = (amount: number) => {
+  const amountString = String(amount);
+  const parts = [];
+
+  for (let i = amountString.length - 1; i >= 0; i -= 3) {
+    parts.unshift(amountString.slice(Math.max(i - 2, 0), i + 1));
+  }
+
+  return parts.join(" ");
+};

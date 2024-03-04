@@ -1,17 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 
+import SkeletonLeaderboard from "../skeletons/SkeletonLeaderboard";
+
 import { TopWinnersType } from "../../utils/types/objectTypes";
-import { removeUsernamePrefix } from "../../utils/dataFormater";
+import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { formatPrice, removeUsernamePrefix } from "../../utils/dataFormater";
 import {
   BACKGROUND_SECONDARY_COLOR,
   HEADING_COLOR,
 } from "../../utils/constants/styles/colors";
 
 import useLeaderboard from "../../hooks/components/useLeaderboard";
-import { apiStatus } from "../../utils/constants/data/apiStatus";
-import SkeletonLeaderboard from "../skeletons/SkeletonLeaderboard";
 
 /* ----- Types ----- */
 type ItemPropsType = {
@@ -31,7 +32,7 @@ const Leaderboard = () => {
       <View style={[styles.row, index % 2 !== 0 ? styles.even : null]}>
         <Text style={styles.cell}>{removeUsernamePrefix(item.username)}</Text>
         <Text style={styles.cell}>{item.numberOfWins}</Text>
-        <Text style={styles.cell}>£{item.totalValue}</Text>
+        <Text style={styles.cell}>£{formatPrice(item.totalValue)}</Text>
       </View>
     );
   };

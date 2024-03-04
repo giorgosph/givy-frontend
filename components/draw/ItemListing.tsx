@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
+import { formatPrice } from "../../utils/dataFormater";
 import { ItemType } from "../../utils/types/objectTypes";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import {
@@ -25,7 +26,7 @@ const ItemListing = ({ item }: PropsType) => {
         <Text style={styles.textDesc}>{item.description}</Text>
 
         <Text style={styles.textPrice}>Price</Text>
-        <Text style={styles.textPriceValue}>£{item.price}</Text>
+        <Text style={styles.textPriceValue}>£{formatPrice(item.price)}</Text>
       </View>
     </>
   );
