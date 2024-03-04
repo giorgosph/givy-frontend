@@ -8,17 +8,21 @@ import CustomHeader from "../general/CustomHeader";
 import CustomButton from "../general/CustomButton";
 import MainContainer from "../general/MainContainer";
 
-import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { ContactDetailsType } from "../../utils/types/objectTypes";
 import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
+import { MAIN_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
 import { ContactDetailsFromType } from "../../utils/constants/data/formTypes";
-import { emailRegex, numbersRegex, required } from "../../utils/formValidations";
+import {
+  emailRegex,
+  numbersRegex,
+  required,
+} from "../../utils/formValidations";
 
 /* -------- Types -------- */
 type PropsType = {
   user: ContactDetailsType;
-  loading: boolean; 
-  setContact: React.Dispatch<React.SetStateAction<boolean>>; 
+  loading: boolean;
+  setContact: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit: (formData: any) => Promise<void>;
 };
 
@@ -30,37 +34,59 @@ const EditContactDetails = (props: PropsType) => {
   const { control, reset, handleSubmit } = useForm<ContactDetailsFromType>();
 
   const onPress = () => {
-    reset(); 
+    reset();
     setContact(false);
   };
 
   return (
     <>
-      <CustomHeader title='Contact Details' onPress={onPress}/>
+      <CustomHeader title="Contact Details" onPress={onPress} />
       <MainContainer>
         <View style={styles.container}>
-          <CustomInput control={control} name="email" defaultValue={user.email} rules={{ ...required, ...emailRegex }} autoComplete={AC.email} inputMode='email' />
-          <CustomInput control={control} name="mobile" title={'phone number'} defaultValue={user.mobile} rules={numbersRegex} autoComplete={AC.tel} inputMode='numeric' /> 
+          <CustomInput
+            control={control}
+            name="email"
+            defaultValue={user.email}
+            rules={{ ...required, ...emailRegex }}
+            autoComplete={AC.email}
+            inputMode="email"
+          />
+          <CustomInput
+            control={control}
+            name="mobile"
+            title={"phone number"}
+            defaultValue={user.mobile}
+            rules={numbersRegex}
+            autoComplete={AC.tel}
+            inputMode="numeric"
+          />
         </View>
         <View style={styles.buttonContainer}>
-          <CustomButton title='submit' disabled={loading} onPress={handleSubmit(onSubmit)} />
+          <CustomButton
+            title="submit"
+            disabled={loading}
+            onPress={handleSubmit(onSubmit)}
+          />
         </View>
       </MainContainer>
     </>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '80%',
-    paddingLeft: PIXELS,
+    width: "100%",
+    height: (MAIN_HEIGHT * 9) / 10,
+    maxHeight: MAIN_HEIGHT - 68,
+    paddingTop: PIXELS,
   },
   buttonContainer: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
+    width: "100%",
+    height: MAIN_HEIGHT / 10,
+    minHeight: 68,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default EditContactDetails;

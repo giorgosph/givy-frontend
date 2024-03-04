@@ -13,12 +13,17 @@ import { removeUsernamePrefix } from "../../utils/dataFormater";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import { ClientProfilePersonalDetailsScreenProps } from "../../utils/navigation/types";
-import { AUTH_ACTIVE_COLOR, BACKGROUND_COLOR, HEADING_FADE_COLOR } from "../../utils/constants/styles/colors";
+import {
+  AUTH_ACTIVE_COLOR,
+  BACKGROUND_COLOR,
+  HEADING_FADE_COLOR,
+} from "../../utils/constants/styles/colors";
 
 import usePersonalDetails from "../../hooks/components/usePersonalDetails";
-import { UserDetailsType } from "../../utils/types/objectTypes";
 
-const PersonalDetailsScreen = ({ navigation }: ClientProfilePersonalDetailsScreenProps) => {
+const PersonalDetailsScreen = ({
+  navigation,
+}: ClientProfilePersonalDetailsScreenProps) => {
   const { state, callback, user } = usePersonalDetails();
   const loading = state.reqStatus === apiStatus.LOADING;
 
@@ -29,30 +34,61 @@ const PersonalDetailsScreen = ({ navigation }: ClientProfilePersonalDetailsScree
   const navTo = navigation.navigate;
 
   return (
-   <>
+    <>
       {callback.renderModal()}
-      {contact ? 
-        <EditContactDetails loading={loading} setContact={setContact} onSubmit={callback.contact}  user={user} /> 
-      : shipping ? 
-        <EditShippingDetails loading={loading} setShipping={setShipping} onSubmit={callback.shipping} user={user} />
-      : (
+      {contact ? (
+        <EditContactDetails
+          loading={loading}
+          setContact={setContact}
+          onSubmit={callback.contact}
+          user={user}
+        />
+      ) : shipping ? (
+        <EditShippingDetails
+          loading={loading}
+          setShipping={setShipping}
+          onSubmit={callback.shipping}
+          user={user}
+        />
+      ) : (
         <>
           <Header showSettings />
-          <MainContainer >
+          <MainContainer>
             <View style={styles.detailsContainer}>
               <CustomTitle text={fullName} extraStyles={styles.title} />
-              <CustomTitle text={`@${removeUsernamePrefix(user.username)}`} size={4} lowercase extraStyles={styles.subTitle} />
-              <UserDetails user={user} setEditContact={setContact} setEditShipping={setShipping} />
+              <CustomTitle
+                text={`@${removeUsernamePrefix(user.username)}`}
+                size={4}
+                lowercase
+                extraStyles={styles.subTitle}
+              />
+
+              <UserDetails
+                user={user}
+                setEditContact={setContact}
+                setEditShipping={setShipping}
+              />
             </View>
+
             <View style={styles.buttonsContainer}>
-              <CustomButton title={'My Draws'} style={styles.button1} textStyle={styles.buttonText1} onPress={()=>navTo('MyDraws')} />
-              <CustomButton title={'My Wins'} style={styles.button2} textStyle={styles.buttonText2} onPress={()=>navTo('MyWins')} />
+              <CustomButton
+                title={"My Draws"}
+                style={styles.button1}
+                textStyle={styles.buttonText1}
+                onPress={() => navTo("MyDraws")}
+              />
+              <CustomButton
+                title={"My Wins"}
+                style={styles.button2}
+                textStyle={styles.buttonText2}
+                onPress={() => navTo("MyWins")}
+              />
             </View>
           </MainContainer>
         </>
       )}
-   </>
-  )
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -62,8 +98,8 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 32,
@@ -75,23 +111,23 @@ const styles = StyleSheet.create({
     color: HEADING_FADE_COLOR,
   },
   button1: {
-    margin: 0, 
-    width: '65%',
-    backgroundColor: AUTH_ACTIVE_COLOR
+    margin: 0,
+    width: "65%",
+    backgroundColor: AUTH_ACTIVE_COLOR,
   },
   buttonText1: {
     fontSize: 18,
-    color: BACKGROUND_COLOR
+    color: BACKGROUND_COLOR,
   },
   button2: {
-    width: '65%',
-    backgroundColor: 'transparent',
+    width: "65%",
+    backgroundColor: "transparent",
     borderWidth: 2,
-    borderColor: AUTH_ACTIVE_COLOR
+    borderColor: AUTH_ACTIVE_COLOR,
   },
   buttonText2: {
     fontSize: 18,
-    color: AUTH_ACTIVE_COLOR
+    color: AUTH_ACTIVE_COLOR,
   },
 });
 
