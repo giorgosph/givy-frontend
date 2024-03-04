@@ -6,16 +6,23 @@ import {
   TouchableWithoutFeedback,
   Platform,
 } from "react-native";
+import { PIXELS, WIDTH } from "../../utils/constants/styles/dimensions";
+import ArrowIcon from "../icons/ArrowIcon";
 
 /* ----- Types ----- */
 type PropsType = {
   images: string[];
+  width: number | string;
 };
 
 /* ----------------- */
 
-const FeaturedDrawListing = ({ images }: PropsType) => {
+const CustomImageCarousel = (props: PropsType) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { images, width } = props;
+
+  const numericWidth =
+    typeof width === "number" ? width : (parseFloat(width) / 100) * WIDTH;
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
@@ -31,19 +38,27 @@ const FeaturedDrawListing = ({ images }: PropsType) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
+      <View style={[styles.imageContainer, { width: numericWidth }]}>
         {images.map((image, index) => (
           <Image
             key={index}
             source={{ uri: image }}
-            style={[styles.image, { opacity: index === currentIndex ? 1 : 0 }]}
+            style={[
+              styles.image,
+              { width: numericWidth },
+              { opacity: index === currentIndex ? 1 : 0 },
+            ]}
           />
         ))}
         <TouchableWithoutFeedback onPress={handlePrevious}>
-          <View style={[styles.sideButton, styles.leftButton]} />
+          <View style={[styles.sideButton, styles.leftButton]}>
+            <ArrowIcon color="grey" direction="B" />
+          </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={handleNext}>
-          <View style={[styles.sideButton, styles.rightButton]} />
+          <View style={[styles.sideButton, styles.rightButton]}>
+            <ArrowIcon color="grey" direction="F" />
+          </View>
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.dotContainer}>
@@ -68,8 +83,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   imageContainer: {
-    width: 175,
-    height: 150,
+    aspectRatio: 5 / 4,
     overflow: "hidden",
     borderRadius: 16,
     shadowColor: "#000",
@@ -80,26 +94,27 @@ const styles = StyleSheet.create({
           height: 0,
         },
         shadowOpacity: 0.8,
-        shadowRadius: 24,
+        shadowRadius: 12,
       },
       android: {
-        elevation: 24,
+        elevation: 12,
       },
     }),
     position: "relative",
   },
   image: {
-    width: 175,
-    height: 150,
-    resizeMode: "cover",
+    aspectRatio: 5 / 4,
+    resizeMode: "stretch",
     position: "absolute",
     zIndex: 10,
   },
   sideButton: {
+    paddingHorizontal: PIXELS / 2,
+    alignItems: "center",
+    justifyContent: "center",
     position: "absolute",
     top: 0,
     bottom: 0,
-    width: "50%",
     zIndex: 11,
   },
   leftButton: {
@@ -128,4 +143,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FeaturedDrawListing;
+export default CustomImageCarousel;

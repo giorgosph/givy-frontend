@@ -2,8 +2,6 @@ const IP = "192.168.0.9";
 // const IP = "192.168.0.7"; // ilias
 const PORT = 3000;
 
-// TODO -> Improve types by specifing url instead of string
-
 export const BASE_URL = `http://${IP}:${PORT}/api/v1/`;
 export const BASE_URL_WS = `ws://${IP}:${PORT}/ws/`;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import FeaturedDrawListing from "./FetauredDrawListing";
+import CustomImageCarousel from "../general/CustomImageCarousel";
 import SkeletonFeaturedDraws from "../skeletons/SkeletonFeaturedDraws";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
@@ -29,7 +29,11 @@ const FeaturedDraws = () => {
         <Text style={styles.title}>Featured Draws</Text>
         <View style={styles.drawContainer}>
           {draws.map((draw) => (
-            <FeaturedDrawListing key={draw.id} images={draw.drawImages} />
+            <CustomImageCarousel
+              key={draw.id}
+              images={draw.drawImages}
+              width={"40%"}
+            />
           ))}
         </View>
       </View>
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
     marginVertical: PIXELS,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   title: {
     fontSize: 22,

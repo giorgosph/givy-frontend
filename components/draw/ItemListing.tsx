@@ -1,9 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-import CustomTitle from "../general/CustomTitle";
-import CustomText from "../general/CustomText";
-
+import { ItemType } from "../../utils/types/objectTypes";
 import { PIXELS } from "../../utils/constants/styles/dimensions";
 import {
   AUTH_ACTIVE_COLOR,
@@ -11,7 +9,6 @@ import {
   HEADING_COLOR,
   HEADING_FADE_COLOR,
 } from "../../utils/constants/styles/colors";
-import { ItemType } from "../../utils/types/objectTypes";
 
 /* ------ Types ------ */
 type PropsType = {
@@ -24,25 +21,11 @@ const ItemListing = ({ item }: PropsType) => {
   return (
     <>
       <View style={styles.container}>
-        {/* <CustomTitle text={item?.title} size={3} extraStyles={styles.title} /> */}
-        {/* <View style={styles.priceContainer}> */}
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.textDesc}>{item.description}</Text>
 
         <Text style={styles.textPrice}>Price</Text>
         <Text style={styles.textPriceValue}>£{item.price}</Text>
-        {/* </View> */}
-        {/* <CustomText
-          text={`£${item?.price}`}
-          extraStyles={[styles.text, { paddingTop: PIXELS / 4 }]}
-          title={"Price"}
-          horizontal
-        />
-        <CustomText
-          text={item?.description}
-          extraStyles={styles.text}
-          title={"Description"}
-        /> */}
       </View>
     </>
   );
@@ -88,9 +71,6 @@ const styles = StyleSheet.create({
       width: 1,
       height: 1,
     },
-  },
-  text: {
-    marginBottom: PIXELS / 4,
   },
 });
 
