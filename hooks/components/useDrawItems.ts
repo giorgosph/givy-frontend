@@ -124,11 +124,13 @@ const useDrawItems = (draw: DrawType) => {
     log({ type: "d", message: `wsData:\n ${wsData}` });
     if (wsData?.type === "runningDraws") {
       if (wsData.body.drawId === draw.id) {
-        // Display the winners
-        setVisible({ items, winners: wsData.body.winners });
         finishAnimation();
-        // TODO -> If this user is the winner set it to redux state (userSlice.setWinner)
-        // TODO -> Navigate user to searchTab or back
+        setTimeout(() => {
+          // Display the winners
+          setVisible({ items, winners: wsData.body.winners });
+          // TODO -> If this user is the winner set it to redux state (userSlice.setWinner)
+          // TODO -> Navigate user to searchTab or back
+        }, 3000);
       }
     }
   }, [wsData]);

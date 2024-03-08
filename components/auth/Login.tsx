@@ -18,11 +18,7 @@ import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
 type PropsType = {
   loading: boolean;
   logIn: (formData: LoginFormType) => void;
-  navigation: NativeStackNavigationProp<
-    DefaultProfileTabParamList,
-    "Auth",
-    undefined
-  >;
+  navigation: NativeStackNavigationProp<DefaultProfileTabParamList, "Auth">;
 };
 
 /* ------------------------- */

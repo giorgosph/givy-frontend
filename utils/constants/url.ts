@@ -20,13 +20,16 @@ export const FP_EP = `${BASE_URL}users/forgot-password/`;
 export const REFRESH_TOKEN_EP = `${BASE_URL}users/refresh-token/`;
 
 /* ------- Notifications ------- */
+export const PUSH_EP = `${BASE_URL}users/push/send/`;
+export const PUSH_SIGN_TOKEN_EP = `${BASE_URL}users/push/register/`;
+
+export const FEEDBACK_EP = `${BASE_URL}users/feedback/`;
+
 export const MOBILE_CODE_EP = `${BASE_URL}users/phone/code/`;
 
 export const EMAIL_FP_EP = `${BASE_URL}users/email/pass/`;
 export const EMAIL_CODE_EP = `${BASE_URL}users/email/code/`;
 export const CONTACT_US_EP = `${BASE_URL}users/email/contact/`;
-
-export const FEEDBACK_EP = `${BASE_URL}users/feedback/`;
 
 /* ------- Details ------- */
 export const CONTACT_DETAILS_EP = `${BASE_URL}users/details/contact/`;
