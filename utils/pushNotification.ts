@@ -1,3 +1,5 @@
+import { AppState } from "react-native";
+
 import * as Notifications from "expo-notifications";
 
 import log from "./logger";
@@ -62,11 +64,20 @@ export const registerForPushNotifications = async (authToken: string) => {
 
   // Configurations
   Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: false,
-    }),
+    handleNotification: async () =>
+      AppState.currentState === "background" ||
+      AppState.currentState === "inactive" ||
+      AppState.currentState === "unknown"
+        ? {
+            shouldShowAlert: true,
+            shouldPlaySound: true,
+            shouldSetBadge: false,
+          }
+        : {
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+          },
   });
 
   try {
