@@ -17,7 +17,6 @@ const SkeletonCustomCountdown = () => {
   const Item = () => (
     <MotiView style={styles.itemFrame}>
       <Skeleton width="100%" height="100%" colors={SKELETON_THREE_COLORS} />
-      <Text style={styles.digit}>0</Text>
     </MotiView>
   );
   return (

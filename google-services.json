@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "834502628892",
+    "project_id": "givy-8d85f",
+    "storage_bucket": "givy-8d85f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834502628892:android:6e8fe0810b3c7e58e871d9",
+        "android_client_info": {
+          "package_name": "com.givey.givyapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC61jd5uZZfChAbsDKrNjTAP5BrKYgnRVY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

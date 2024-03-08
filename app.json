@@ -21,10 +21,15 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.givey.givyapp",
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "extra": {
+      "eas": {
+        "projectId": "e40381fc-344b-439d-99a8-b093990dfc9c"
+      }
     }
   }
 }

@@ -7,7 +7,7 @@ type PropsType = {
   endpoint: string;
   body?: object;
   token?: string | false;
-  resetToken: (token: string) => void;
+  resetToken?: (token: string) => void;
 };
 
 /* ------------------------- */

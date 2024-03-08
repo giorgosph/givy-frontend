@@ -32,6 +32,8 @@ import {
 const DefaultHomeScreen = ({ navigation }: DefaultHomeScreenProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // const responseListener = useRef<Notifications.Subscription>();
+
   const navToProfileTab = () => navigation.navigate("DefaultProfileTab");
   const progress = useRef(new Animated.Value(0)).current;
 
@@ -77,6 +79,14 @@ const DefaultHomeScreen = ({ navigation }: DefaultHomeScreenProps) => {
 
   useEffect(() => {
     startAnimation();
+    // responseListener.current =
+    // Notifications.addNotificationResponseReceivedListener((response) => {
+    //   console.log("Response:", response.notification.request.trigger);
+    // });
+
+    // return () => {
+    //   Notifications.removeNotificationSubscription(responseListener.current);
+    // };
   }, []);
 
   return (

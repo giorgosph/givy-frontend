@@ -15,6 +15,7 @@ import { setUser } from "../../redux/slices/userSlice";
 import log from "../../utils/logger";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { mobileInfo } from "../../utils/constants/data/modalInfo";
+import { AuthResponseType } from "../../utils/types/responseTypes";
 import { DefaultProfileTabParamList } from "../../utils/navigation/types";
 import { FP_EP, LOGIN_EP, RP_EP, SIGNUP_EP } from "../../utils/constants/url";
 import { confirmationTypes as CT } from "../../utils/constants/data/confirmationTypes";
@@ -24,7 +25,7 @@ import {
   ResetPassFormType,
   SignupFormType,
 } from "../../utils/constants/data/formTypes";
-import { AuthResponseType } from "../../utils/types/responseTypes";
+import { registerForPushNotifications } from "../../utils/pushNotification";
 
 /* --------------------------------------------------------------
  * ------------------- Use for Authentication -------------------
@@ -34,7 +35,7 @@ const useAuth = () => {
   const dispatch = useDispatch();
   const navigation =
     useNavigation<
-      NativeStackNavigationProp<DefaultProfileTabParamList, "Auth", undefined>
+      NativeStackNavigationProp<DefaultProfileTabParamList, "Auth">
     >();
   const authCtx = useContext(AuthContext);
 
@@ -78,7 +79,6 @@ const useAuth = () => {
 
   useEffect(() => {
     if (status === apiStatus.SUCCESS) {
-      // TODO -> change data.success with statusCode checks
       if (data?.success) {
         const token = data.token;
         const user = data.body?.user;
@@ -98,7 +98,10 @@ const useAuth = () => {
             authCtx.authenticate(token)
           );
 
-          mobileConfirmed ? authCtx.authenticate(token) : setVisible(modalInfo);
+          if (mobileConfirmed) {
+            registerForPushNotifications(token);
+            authCtx.authenticate(token);
+          } else setVisible(modalInfo);
         } else if (emailConfirmed == false)
           navigation.navigate("AccountConfirmation", { type: CT.EMAIL });
         else navigation.goBack(); // Coming from reset password
