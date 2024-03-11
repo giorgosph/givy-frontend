@@ -34,21 +34,21 @@ const DrawsListScreen = () => {
       <MainContainer centered>
         {FilterButtons()}
 
-        <ScrollView
-          style={styles.drawsContainer}
-          contentContainerStyle={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          scrollEventThrottle={16}
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={hardRefetch} />
-          }
-        >
-          {loading ? (
-            <SkeletonDraw />
-          ) : (
+        {loading ? (
+          <SkeletonDraw />
+        ) : (
+          <ScrollView
+            style={styles.drawsContainer}
+            contentContainerStyle={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            scrollEventThrottle={16}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={loading} onRefresh={hardRefetch} />
+            }
+          >
             <>
               {!!draws && draws.length > 0 ? (
                 draws.map((draw) => <DrawListing key={draw.id} draw={draw} />)
@@ -58,8 +58,8 @@ const DrawsListScreen = () => {
                 </Text>
               )}
             </>
-          )}
-        </ScrollView>
+          </ScrollView>
+        )}
       </MainContainer>
     </>
   );

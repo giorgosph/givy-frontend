@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { REFRESH_TOKEN_EP } from "../constants/url";
 
 /* --------- Types --------- */
@@ -21,7 +21,7 @@ type PropsType = {
 export const fetchAxios = async (props: PropsType) => {
   const { type, endpoint, body = {}, token, resetToken = () => {} } = props;
 
-  const options = {
+  const options: AxiosRequestConfig = {
     url: endpoint,
     method: type,
     data: body,
