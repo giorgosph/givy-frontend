@@ -18,22 +18,24 @@ import { excludeByID, includeByID } from "../../utils/filters/drawFilters";
  * --------------------------------------------------------- */
 
 const useDraws = () => {
+  const [refetch, setRefetch] = useState(true);
   const [draws, setDraws] = useState<DrawType[]>();
   const [userDraws, setUserDraws] = useState<DrawType[]>();
 
-  const { fetchAPI, data, status, statusCode } =
+  const { fetchAPI, resetAxiosState, data, status, statusCode } =
     useAxiosFetch<DrawsResponseType>();
 
   const dispatch = useDispatch();
   const draw = useSelector((state: RootState) => state.draw);
   const user = useSelector((state: RootState) => state.user);
 
-  // TODO -> research for better algorithm
-  // Check if draws were fetched more than 1 day ago to refetch
-  const refetch = refetchPerDays(draw.date);
-
   const fecthData = async () =>
     await fetchAPI({ type: "get", endpoint: DRAWS_EP });
+
+  const hardRefetch = () => {
+    resetAxiosState();
+    setRefetch(true);
+  };
 
   useEffect(() => {
     setDraws(excludeByID(draw.draws, user.draws)); // not opted in
@@ -53,8 +55,12 @@ const useDraws = () => {
       );
     }
 
+    // TODO -> research for better algorithm
+    // Check if draws were fetched more than 1 day ago to refetch
+    setRefetch(refetchPerDays(draw.date));
+
     // TODO -> abort request if user leave the component
-  }, [status]);
+  }, [status, refetch]);
 
   return {
     state: {
@@ -62,6 +68,7 @@ const useDraws = () => {
     },
     draws,
     userDraws,
+    hardRefetch,
   };
 };
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, StyleSheet, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { Text, StyleSheet, ScrollView, RefreshControl } from "react-native";
 
 import Header from "../../components/general/Header";
 import DrawListing from "../../components/draw/DrawListing";
@@ -13,9 +13,15 @@ import { MAIN_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 
 import useDrawsFilters from "../../hooks/components/useDrawsFilters";
+import CustomButton from "../../components/general/CustomButton";
 
 const DrawsListScreen = () => {
-  const { state, filteredDraws: draws, component } = useDrawsFilters();
+  const {
+    state,
+    filteredDraws: draws,
+    component,
+    hardRefetch,
+  } = useDrawsFilters();
   const loading = state.reqStatus === apiStatus.LOADING;
 
   const { Filter, Sort, FilterButtons } = component;
@@ -28,28 +34,32 @@ const DrawsListScreen = () => {
       <MainContainer centered>
         {FilterButtons()}
 
-        {loading ? (
-          <SkeletonDraw />
-        ) : (
-          <ScrollView
-            style={styles.drawsContainer}
-            contentContainerStyle={{
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {!!draws && draws.length > 0 ? (
-              draws.map((draw) => <DrawListing key={draw.id} draw={draw} />)
-            ) : (
-              <Text style={{ color: "white" }}>
-                There are no upcoming Draws, check again later!
-              </Text>
-            )}
-
-            {/* Remove after testing time related lagorithms */}
-            {/* {cDraws.map((draw) => <DrawListing key={draw.id} draw={draw} />)} */}
-          </ScrollView>
-        )}
+        <ScrollView
+          style={styles.drawsContainer}
+          contentContainerStyle={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={hardRefetch} />
+          }
+        >
+          {loading ? (
+            <SkeletonDraw />
+          ) : (
+            <>
+              {!!draws && draws.length > 0 ? (
+                draws.map((draw) => <DrawListing key={draw.id} draw={draw} />)
+              ) : (
+                <Text style={{ color: "white" }}>
+                  There are no upcoming Draws, check again later!
+                </Text>
+              )}
+            </>
+          )}
+        </ScrollView>
       </MainContainer>
     </>
   );
@@ -77,6 +87,11 @@ const styles = StyleSheet.create({
     borderBottomColor: HEADING_FADE_COLOR,
     borderBottomWidth: 1,
     marginVertical: PIXELS / 4,
+  },
+  loaderContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 20,
   },
 });
 
