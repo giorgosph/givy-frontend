@@ -21,9 +21,15 @@ export const sendPushNotification = async () => {
       body: pushToken,
     });
 
-    console.log("Push notification sent successfully:\n", response);
+    log({
+      type: "i",
+      message: `Push notification sent successfully:\n ${response}`,
+    });
   } catch (err) {
-    console.error("Error sending Push Notification:\n", err);
+    log({
+      type: "e",
+      message: `Error sending Push Notification:\n ${err}`,
+    });
   }
 };
 
