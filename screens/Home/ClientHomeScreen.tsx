@@ -7,10 +7,14 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
+import { AuthContext } from "../../context/store";
+
+import AnimatedLottieView from "lottie-react-native";
 import Header from "../../components/general/Header";
+import Leaderboard from "../../components/home/Leaderboard";
+import UpcomingDraw from "../../components/home/UpcomingDraw";
 import MainContainer from "../../components/general/MainContainer";
 
-import { AuthContext } from "../../context/store";
 import {
   BACKGROUND_SECONDARY_COLOR,
   HEADING_COLOR,
@@ -29,9 +33,6 @@ import { confirmationTypes as CT } from "../../utils/constants/data/confirmation
 
 import useModal from "../../hooks/useModal";
 import { mobileInfo } from "../../utils/constants/data/modalInfo";
-import UpcomingDraw from "../../components/home/UpcomingDraw";
-import Leaderboard from "../../components/home/Leaderboard";
-import AnimatedLottieView from "lottie-react-native";
 
 const ClientHomeScreen = ({ navigation }: ClientHomeScreenProps) => {
   const { setVisible, renderModal } = useModal();

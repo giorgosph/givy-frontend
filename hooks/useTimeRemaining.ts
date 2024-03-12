@@ -17,27 +17,40 @@ type PropsType = {
 const useTimeRemaining = (props: PropsType) => {
   const { closingDate } = props;
 
-  const [timeRemaining, setTimeRemaining] = useState<CountdownTimeType>(
-    getTimeRemaining({ closingDate })
-  );
+  const [timeRemaining, setTimeRemaining] = useState<CountdownTimeType>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    closingSoon: false,
+    expired: false,
+  });
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  const clearTimer = () => {
+    clearInterval(intervalRef.current!);
+    intervalRef.current = null;
+  };
+
   useEffect(() => {
-    if (timeRemaining.expired || intervalRef.current || !closingDate.getTime())
-      return;
+    if (timeRemaining.expired || intervalRef.current || !closingDate) return;
 
-    intervalRef.current = setInterval(() => {
-      setTimeRemaining(getTimeRemaining({ closingDate }));
-    }, 1000);
+    if (!timeRemaining) setTimeRemaining(getTimeRemaining({ closingDate }));
+    else
+      intervalRef.current = setInterval(() => {
+        setTimeRemaining(getTimeRemaining({ closingDate }));
+      }, 850);
 
-    return () => {
-      clearInterval(intervalRef.current!);
-      intervalRef.current = null;
-    };
+    return () => clearTimer();
   }, [closingDate, timeRemaining.expired]);
 
-  return { timeRemaining };
+  return {
+    timer: {
+      clearTimer,
+      timeRemaining,
+    },
+  };
 };
 
 export default useTimeRemaining;

@@ -34,20 +34,20 @@ const useUpcomingDraw = () => {
   const draw = useSelector((state: RootState) => state.draw);
 
   const closingDate = new Date(draw.bestDraw?.closingDate);
-  const { timeRemaining } = useTimeRemaining({ closingDate });
+  const { timer } = useTimeRemaining({ closingDate });
 
   const fecthData = async () =>
     await fetchAPI({ type: "get", endpoint: BEST_DRAW_EP });
 
   useEffect(() => {
-    if (!!draw.bestDraw && timeRemaining.expired) {
+    if (!!draw.bestDraw && timer.timeRemaining.expired) {
       dispatch(removeBestDraw());
       resetAxiosState();
     } else if (draw.bestDraw) {
       const items = includeByDrawID(draw.items, [draw.bestDraw.id]);
       setBestItem(getHighestPricedItem(items) as ItemType);
     }
-  }, [timeRemaining, timeRemaining.expired]);
+  }, [timer.timeRemaining]);
 
   useEffect(() => {
     if (status === apiStatus.IDLE && !draw.bestDraw) fecthData();
@@ -72,7 +72,7 @@ const useUpcomingDraw = () => {
     },
     bestDraw: draw.bestDraw,
     bestItem,
-    timeRemaining,
+    timer,
   };
 };
 

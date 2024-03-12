@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
+import { useIsFocused } from "@react-navigation/native";
 
 import AnimatedBorder from "../style/AnimatedBorder";
 import CustomCountdown from "../general/CustomCountdown";
@@ -16,14 +17,17 @@ import {
 } from "../../utils/constants/styles/dimensions";
 
 import useUpcomingDraw from "../../hooks/components/useUpcomingDraw";
+import CustomButton from "../general/CustomButton";
 
 const UpcomingDraw = () => {
-  const {
-    state,
-    bestDraw: draw,
-    bestItem: item,
-    timeRemaining,
-  } = useUpcomingDraw();
+  const { state, bestDraw: draw, bestItem: item, timer } = useUpcomingDraw();
+  const { timeRemaining, clearTimer } = timer;
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    !isFocused && clearTimer();
+  }, [isFocused]);
 
   return state.reqStatus === apiStatus.LOADING ? (
     <SkeletonUpcomingDraw />
@@ -47,7 +51,6 @@ const UpcomingDraw = () => {
         <View style={styles.textParentContainer}>
           <View style={[styles.textContainer, styles.leftTextContainer]}>
             <Text style={styles.drawInfoTitle}>Total Raffle Value</Text>
-            {/* function to style item.price */}
             <Text style={[styles.drawInfoText, styles.drawInfoLeftText]}>
               £{formatPrice(draw.totalPrice)}
             </Text>
