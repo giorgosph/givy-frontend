@@ -39,7 +39,7 @@ const useDrawItems = (draw: DrawType) => {
   const { visible, setVisible, renderWinnerModal } = useModal();
 
   const closingDate = new Date(draw.closingDate);
-  const { timeRemaining } = useTimeRemaining({ closingDate });
+  const { timer } = useTimeRemaining({ closingDate });
 
   // Get Items and User Draws
   const dispatch = useDispatch();
@@ -115,8 +115,8 @@ const useDrawItems = (draw: DrawType) => {
   }, [data, status]);
 
   useEffect(() => {
-    timeRemaining.expired && startAnimation();
-  }, [timeRemaining.expired]);
+    timer.timeRemaining.expired && startAnimation();
+  }, [timer.timeRemaining.expired]);
 
   useEffect(() => {
     log({ type: "d", message: `wsData:\n ${wsData}` });
@@ -145,7 +145,7 @@ const useDrawItems = (draw: DrawType) => {
     items,
     images,
     opted,
-    timeRemaining,
+    timer,
     progress,
   };
 };

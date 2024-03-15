@@ -22,8 +22,9 @@ import AnimatedLottieView from "lottie-react-native";
 const DrawDetailsScreen = ({ route }: ClientSearchDrawDetailsScreenProps) => {
   const { draw } = route.params;
 
-  const { state, items, images, opted, timeRemaining, progress, callback } =
+  const { state, items, images, opted, timer, progress, callback } =
     useDrawItems(draw);
+  const { timeRemaining } = timer;
   const loading = state.reqStatus === apiStatus.LOADING;
 
   const buttonTitle = timeRemaining.expired

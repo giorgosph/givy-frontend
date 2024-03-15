@@ -17,7 +17,6 @@ import {
 } from "../../utils/constants/styles/dimensions";
 
 import useUpcomingDraw from "../../hooks/components/useUpcomingDraw";
-import CustomButton from "../general/CustomButton";
 
 const UpcomingDraw = () => {
   const { state, bestDraw: draw, bestItem: item, timer } = useUpcomingDraw();
