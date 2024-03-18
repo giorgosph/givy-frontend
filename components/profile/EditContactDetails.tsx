@@ -50,6 +50,7 @@ const EditContactDetails = (props: PropsType) => {
             rules={{ ...required, ...emailRegex }}
             autoComplete={AC.email}
             inputMode="email"
+            toLower
           />
           <CustomInput
             control={control}

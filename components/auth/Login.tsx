@@ -47,6 +47,7 @@ const Login = (props: PropsType) => {
           rules={usernameValidationLogIn}
           autoComplete={AC.username}
           clearErrors={formError}
+          toLower
         />
         <CustomInput
           control={control}

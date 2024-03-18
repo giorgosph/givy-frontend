@@ -10,11 +10,11 @@ import {
 import { Control, Controller, RegisterOptions } from "react-hook-form";
 
 import { PIXELS } from "../../utils/constants/styles/dimensions";
+import { AutoCompleteType } from "../../utils/constants/data/autoComplete";
 import {
   BACKGROUND_COLOR,
   HEADING_COLOR,
 } from "../../utils/constants/styles/colors";
-import { AutoCompleteType } from "../../utils/constants/data/autoComplete";
 
 /* --------- Types --------- */
 type InputModeType =
@@ -30,7 +30,7 @@ type InputModeType =
 type PropsType = {
   control: Control<any>;
   name: string;
-  rules?: RegisterOptions; // TODO -> make it mandatory (first handle clearErrors logic, used in Login)
+  rules?: RegisterOptions; // TODO -> handle clearErrors logic, used in Login
   title?: string;
   defaultValue?: any;
   autoComplete?: AutoCompleteType;
@@ -86,7 +86,6 @@ const CustomInput = (props: PropsType) => {
       rules={rules || {}}
       render={({ field: { onChange, value }, fieldState }) => {
         const hasValue = value && value.length > 0;
-        // const isString = typeof value === "string";
 
         const top = isFocused.interpolate({
           inputRange: [0, 1],

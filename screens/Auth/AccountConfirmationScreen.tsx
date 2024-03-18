@@ -16,16 +16,27 @@ import { apiStatus } from "../../utils/constants/data/apiStatus";
 import { confirmationCodeValidation } from "../../utils/formValidations";
 import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
 import { ConfirmationCodeFromType } from "../../utils/constants/data/formTypes";
-import { BACKGROUND_COLOR, BUTTON_COLOR } from "../../utils/constants/styles/colors";
+import {
+  BACKGROUND_COLOR,
+  BUTTON_COLOR,
+} from "../../utils/constants/styles/colors";
 import { ClientHomeAccountConfirmationScreenProps } from "../../utils/navigation/types";
 
-const AccountConfirmationScreen = ({ route }: ClientHomeAccountConfirmationScreenProps) => {
+const AccountConfirmationScreen = ({
+  route,
+}: ClientHomeAccountConfirmationScreenProps) => {
   const { type } = route.params;
 
-  const { control, handleSubmit, clearErrors } = useForm<ConfirmationCodeFromType>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+  const { control, handleSubmit, clearErrors } =
+    useForm<ConfirmationCodeFromType>({
+      mode: "onSubmit",
+      reValidateMode: "onSubmit",
+    });
 
   const { state, notificationState, callback } = useConfirmation();
-  const loading = state.reqStatus === apiStatus.LOADING || notificationState.reqStatus === apiStatus.LOADING;
+  const loading =
+    state.reqStatus === apiStatus.LOADING ||
+    notificationState.reqStatus === apiStatus.LOADING;
 
   const { buttonTitle, title, text } = type.text;
 
@@ -39,25 +50,35 @@ const AccountConfirmationScreen = ({ route }: ClientHomeAccountConfirmationScree
       <Header />
       <MainContainer centered>
         <CustomTitle text={title} size={1} extraStyles={styles.title} />
-        <CustomInput control={control} name="code" title="confirmation code" rules={confirmationCodeValidation} autoComplete={AC.oneTimeCode} inputMode="numeric" clearErrors={formError} />
-        <CustomText text={text} extraStyles={styles.text}/>
-        <CustomButton 
-          title="Submit" 
-          onPress={handleSubmit((formData) => callback.confirmAccount(type.value, formData))} 
-          disabled={loading} 
+        <CustomInput
+          control={control}
+          name="code"
+          title="confirmation code"
+          rules={confirmationCodeValidation}
+          autoComplete={AC.oneTimeCode}
+          inputMode="numeric"
+          clearErrors={formError}
+        />
+        <CustomText text={text} extraStyles={styles.text} />
+        <CustomButton
+          title="Submit"
+          onPress={handleSubmit((formData) =>
+            callback.confirmAccount(type.value, formData)
+          )}
+          disabled={loading}
           style={styles.button1}
           textStyle={styles.buttonText1}
         />
-        <CustomButton 
-          title={buttonTitle} 
-          onPress={() => callback.resend(type.value)} 
-          disabled={loading}  
+        <CustomButton
+          title={buttonTitle}
+          onPress={() => callback.resend(type.value)}
+          disabled={loading}
           style={styles.button2}
           textStyle={styles.buttonText2}
         />
       </MainContainer>
     </>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -73,20 +94,20 @@ const styles = StyleSheet.create({
   //   backgroundColor: 'white',
   // },
   text: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: PIXELS * 2,
   },
   button1: {
-    margin: 0, 
-    width: '80%',
+    margin: 0,
+    width: "80%",
   },
   buttonText1: {
     fontSize: 18,
-    color: BACKGROUND_COLOR
+    color: BACKGROUND_COLOR,
   },
   button2: {
-    width: '80%',
-    backgroundColor: 'transparent',
+    width: "80%",
+    backgroundColor: "transparent",
     borderWidth: 2,
     borderColor: BUTTON_COLOR,
   },
