@@ -59,7 +59,7 @@ const useDrawItems = (draw: DrawType) => {
     await fetchAPI({ type: "get", endpoint: `${DRAW_ITEMS_EP}${draw.id}` });
 
   const handleOptIn = async () => {
-    // ?? pop up ad
+    // ?? TODO -> pop up ad
     await fetchAPI({
       type: "post",
       endpoint: OPT_IN_EP,
@@ -126,8 +126,9 @@ const useDrawItems = (draw: DrawType) => {
         setTimeout(() => {
           // Display the winners
           setVisible({ items, winners: wsData.body.winners });
-          // TODO -> If this user is the winner set it to redux state (userSlice.setWinner)
           // TODO -> Navigate user to searchTab or back
+          // TODO -> If this user is the winner set it to redux state (userSlice.setWinner)
+          // TODO -> Remove the draw from redux (drawSlice), but keep the items
         }, 3000);
       }
     }

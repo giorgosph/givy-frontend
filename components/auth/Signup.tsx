@@ -59,6 +59,7 @@ const Signup = (props: PropsType) => {
           name="username"
           rules={usernameValidation}
           autoComplete={AC.username}
+          toLower
         />
 
         <CustomInput
@@ -67,6 +68,7 @@ const Signup = (props: PropsType) => {
           rules={{ ...required, ...emailRegex }}
           autoComplete={AC.email}
           inputMode="email"
+          toLower
         />
         <CustomInput
           control={control}
