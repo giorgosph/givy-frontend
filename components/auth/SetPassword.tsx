@@ -14,7 +14,7 @@ import { autoComplete as AC } from "../../utils/constants/data/autoComplete";
 type PropsType = {
   disabled: boolean;
   control: Control<ResetPassFormType>;
-  handleSubmit: (e: GestureResponderEvent) => Promise<any>; // TODO -> Check for better definition
+  handleSubmit: (e: GestureResponderEvent) => Promise<any>;
 };
 
 /* ------------------------- */

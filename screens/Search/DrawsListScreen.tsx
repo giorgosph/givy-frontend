@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, StyleSheet, ScrollView, RefreshControl } from "react-native";
 
 import Header from "../../components/general/Header";
@@ -13,7 +13,6 @@ import { MAIN_HEIGHT, PIXELS } from "../../utils/constants/styles/dimensions";
 import { apiStatus } from "../../utils/constants/data/apiStatus";
 
 import useDrawsFilters from "../../hooks/components/useDrawsFilters";
-import CustomButton from "../../components/general/CustomButton";
 
 const DrawsListScreen = () => {
   const {

@@ -35,6 +35,7 @@ type PropsType = {
   defaultValue?: any;
   autoComplete?: AutoCompleteType;
   inputMode?: InputModeType;
+  trim?: boolean;
   toLower?: boolean;
   textCentered?: boolean;
   clearErrors?: () => void;
@@ -51,6 +52,7 @@ const CustomInput = (props: PropsType) => {
     defaultValue,
     autoComplete,
     inputMode,
+    trim = true,
     toLower = false,
     textCentered = false,
     clearErrors,
@@ -132,8 +134,10 @@ const CustomInput = (props: PropsType) => {
                 value={
                   isPass
                     ? value
-                    : toLower
+                    : toLower && trim
                     ? value.toLowerCase().trim()
+                    : toLower
+                    ? value.toLowerCase()
                     : value.trim()
                 }
                 onChangeText={onChange}
