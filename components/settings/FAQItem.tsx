@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 
-import { PIXELS } from '../../utils/constants/styles/dimensions';
+import { PIXELS } from "../../utils/constants/styles/dimensions";
 
 /* ------- Types ------- */
 type PropsType = {
@@ -18,7 +18,10 @@ const FAQItem = ({ question, answer }: PropsType) => {
 
   return (
     <View style={styles.faqItem}>
-      <TouchableHighlight onPress={toggleExpansion} style={styles.questionContainer}>
+      <TouchableHighlight
+        onPress={toggleExpansion}
+        style={styles.questionContainer}
+      >
         <Text style={styles.question}>{question}</Text>
       </TouchableHighlight>
 
@@ -29,24 +32,25 @@ const FAQItem = ({ question, answer }: PropsType) => {
 
 const styles = StyleSheet.create({
   faqItem: {
-    width: '90%',
+    width: "90%",
     marginVertical: PIXELS,
   },
   questionContainer: {
-    backgroundColor: '#e6baba',
     padding: PIXELS / 2,
+    alignItems: "center",
+    backgroundColor: "#e6baba",
     borderRadius: 4,
   },
   question: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   answer: {
     marginTop: -PIXELS / 4,
     padding: PIXELS / 2,
     fontSize: 14,
-    color: 'white',
-    backgroundColor: 'rgba(230, 186, 186, 0.4)',
+    color: "white",
+    backgroundColor: "rgba(230, 186, 186, 0.4)",
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
   },
