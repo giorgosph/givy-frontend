@@ -94,9 +94,11 @@ const useAuth = () => {
 
         // User's email is confirmed
         if (emailConfirmed) {
-          const modalInfo = mobileInfo(navigation, () =>
-            authCtx.authenticate(token)
-          );
+          const modalInfo = mobileInfo(navigation, () => {
+            console.log("AAAA");
+            registerForPushNotifications(token);
+            authCtx.authenticate(token);
+          });
 
           if (mobileConfirmed) {
             registerForPushNotifications(token);
